@@ -1,0 +1,414 @@
+name,id,sis_id,root_account,section,section_id,section_sis_id,submitted,attempt,1244631: Enter your group name as shown on Canvas: Group xyz,1,1244632: Team members' names (including yours),1,1244635: Total Runtime (sec) of full execution (batch of 10),1,1244636: Average GigaOps/sec (achieved over full execution),1,1244637: average DRAM BW (GByte/sec) reads and writes by the fabric over the full execution,1,1244638: Arithmetic intensity (op/byte) over the full execution.,1,1244639: Kernel-only GigaOps/sec in Lab 3 (ideal),1,1244641: Kernel-only GigaOps/sec in Lab 2 (ideal),1,1244642: Any changes you made to the cnn_blocked_kernel() design and optimization from Lab 2 to Lab 3? Explain why. What are the effects of the changes?,1,1293933: Explain your final overall execution strategy (how it works? why did you choose to do it this way?),1,"1244643: What are your most-proud ""secret sauce"" optimization tricks in Lab 3? How effective are they?",1,1293924: Discuss any ideas you tried but not adopted for the final implementation.,1,1244644: Tm,1,1244646: Tn,1,1244648: Tr,1,1244650: Tc,1,1244652: LUT % of krnl_cnn,1,1244654: FF % of krnl_cnn,1,1244656: DSP % of krnl_cnn,1,1244658: B18K % of krnl_cnn,1,1244660: Fabric Clock frequency (MHz) (not HLS reported frequency),1,1293925: Discuss what and why you would do differently if you had more time for another try.,1,"1293926: At this moment, are you planning to Vitis for your project?",1,"1293927: The average (that is, total value for the batch divided by batch size N) number of times a data value is transferred between DRAM and fabric---count separately DRAM reads and DRAM writes and separately for weights, input feature maps and output feature maps. (6 numbers for each layer.)
+weight read:",1,1293928: weight write:,1,1293929: input feature read:,1,1293930: input feature write:,1,1293931: output feature read:,1,1293932: output feature write:,1,n correct,n incorrect,score
+Misho Alexandrov,97622,0EF43C1E-C062-11EC-8001-005056AE2541,canvas.cmu.edu,18643-A,129847,18643-A-54186,2026-11-09 04:43:28 UTC,1,AJS,0,"Mihail Alexandrov, Mizuki Jiang, Kaloyan Stefanov",0,0.056,0,13.398,0,0.205,0,65,0,120,0,120,0,"We moved the accumulator before the inner Ti loop so that we could reduce our initiation interval to 1. In the prior design we had an II of 2 and couldn't determine why before the lab was due, this allowed us to solve this issue from the last lab.",0,"For each iteration, the entire input image is first read in, at which point we start the blocked kernel. First, weights are read from the DRAM weight buffer, where we use sequential memory access in order to burst read, at which point blocked kernel is called. The blocked kernel code remains essentially as lab 2 except for the difference noted above, finally, the corresponding portion of the output tile is written out to DRAM. For the inner kernel, as before, we partition BRAM so that the inner, unrolled Krow, Kcol, and To loops can all read in the same cycle, set up an accumulator inside of the col loop that is set to zero, perform the convolution itself while updating the accumulator, and only write to bufO at the end in a fully unrolled loop. We can read in the entire input image from DRAM into the input buffer because our blocked kernel does not rely on the size of TN for its array partitioning and pipelining. If it did, sizing it to be so large would explode our DSP and BRAM count. This is also the reason for why we had to size our TM value to be relatively small. Any larger and or DSP and BRAM counts would exceed what would fit on the ultra96v2. The core of the execution strategy was to maximize DRAM BW, so we also favored burst writes and reads whenever we had to access DRAM, and would always focus on bringing as much data as possible at one time.",0,"Loading in the entire input image at once does help since DRAM access has overhead, by only doing this in one go we only have to pay the overhead once, reducing latency. This also lets us drop a loop we originally had in the code, removing the control logic overhead necessary for it, also providing some savings. While it did provide performance benefits, we found that more obvious optimizations did the bulk of the work for improving performance. ",0,"We tried to implement double buffering but could not make it work, forcing us to abandon it for the final implementation. Additionally, we tried to move the pipeline pragma up in the weight loading code, but this created designs that would not synthesize in a reasonable amount of time, which once again made us abandon that path due to upcoming deadlines. ",0,8,0,192,0,13,0,13,0,38.05,0,6.59,0,60.28,0,27.83,0,150,0,"If we had time, we would try to implement double buffering in order to hide the latency of the DRAM accesses",0,TRUE,1,"221,184",0,0,1,"43,200",0,0,1,0,1,"21,632",0,11,18,0
+Nicholas Ortiz,98313,20423DEC-C772-11EC-8001-005056AE2541,canvas.cmu.edu,18643-A,129847,18643-A-54186,2026-11-02 16:48:59 UTC,1,BJO,0,"T’sairus Beasley
+
+Wellington Jiang
+
+Nicholas Ortiz",0,0.039,0,19.3224,0,0.296,0,65.35,0,38.4,0,78.5,0,"We increased TR and TC from 4 to 13, TM from 16 to 128, and TN from 14 to 48. This lets each weight and input tile be used for the entire output feature map to reduce DRAM traffic by increasing BRAM utilization. Because of these dimensional changes, we changed the pipeline to process two output channels and 48 input channels each cycle, allowing 96 parallel multiplications. We used two memory banks for output channels and summed products locally before updating BufO to reduce memory accesses.",0,"Our strategy keeps the entire 128×13×13 output on-chip while processing input channels in groups of 48. Each input and weight tile is loaded, used to update the buffered outputs, and replaced by the next tile. Finished outputs are written to DRAM once. We chose this approach to maximize data reuse. Each input and weight value is read once per image, while partial sums remain on-chip.",0,"Our main optimization was separating tile size from compute parallelism: TM=128 provides input reuse, while unrolling only two output channels controls the number of DSPs and memory banking. Using TR=TC=13 also eliminates redundant weight and input loads. These changes increase calculated kernel arithmetic intensity drastically.",0,"Explicit double buffering yielded slightly reduced performance, so we retained the simpler implementation. The additional buffering and control did not provide a net benefit.
+
+Wider AXI ports did not produce a measurable performance improvement.
+
+Buffering all inputs, weights, and outputs on-chip exceeded the available BRAM capacity, so we buffered smaller tiles instead.",0,128,0,48,0,13,0,13,0,15.08,0,6.53,0,76.67,0,70.83,0,150,0,"With more time, we would tune the pipeline and timing constraints to reach a higher clock frequency and increase compute throughput. We would also inspect the HLS dataflow schedule to verify whether DRAM transfers overlap with computation, then refine the buffering and task structure to reduce time spent waiting for data.",0,TRUE,1,"221,184",0,0,1,"43,200",0,0,1,0,1,"21,632",0,11,18,0
+Upasana Sridhar,42546,A8FEDAA6-70CC-11E8-8000-FFFF26E713AC,canvas.cmu.edu,18643-A,129847,18643-A-54186,2026-11-09 16:13:01 UTC,1,BWS,0,"Abnash Bassi
+
+Upasana Sridhar
+
+Chenxi Wan",0,0.0867,0,8.6269,0,0.27,0,31.1,0,67.92,0,67.92,0,"We didn’t make any changes to the kernel we designed in Lab2.
+Our kernel already computed the full height and width of the output, and was blocked over the input and output channel dimensions.",0,"Our strategy was to see if using the kernel from lab2 would get us to a good point.
+We used the loops in krnl_cnn as is, and used a tiled kernel that updated an (R_OFM) x (C_OFM) x (TM) tile of the output.
+This approach has a high setup cost, as a whole tile of input elements must be loaded, but then the kernel can churn away at a large number of operations.
+A logistical benefit is that we did not have to deal with non-contiguous access into the input buffer in DRAM and all the data layout changes were handled within the blocked kernel.",0,I think the most interesting part was that the lab2 kernel already encompassed enough work that even naive loops around it in lab3 performed decently.,0,"We tried changing the tile size to iterate over smaller tiles of the output, with the loops as is. That performed about the same.",0,16,0,7,0,13,0,13,0,50.81,0,17.44,0,81.667,0,5.79,0,150,0,"Given that our current kernel shows that the entire height and width of the output and some configurable depth can be held on chip, there are 3 things we would do differently with more time, prioritized:
+1. Reuse weight buffer on chip. The loop enclosing the blocked kernel iterates over input depth, therefore not reusing either input. We’d change this to be over the output height (R_OFM) and width (C_OFM).
+2.Write output tiles to DRAM once. While the kernel updates a small tile, the loops around it will iterate over a larger output tile that is buffered on chip. So the next loop will be over the input depth (N_IFM)
+
+3.Utilize the strided-reuse of the input. To support the above, the time taken to load inputs for the kernel should take no longer than the time spent computing in the kernel. We would use the fact that most elements in BufI are shared between successive kernel calls to reduce the number of new elements required.",0,TRUE,1,1,0,0,1,8,0,0,1,0,1,1,0,11,18,0
+Mu-Wei Hsieh,151084,4B03CDFE-A0E3-11F0-8001-005056AF7578,canvas.cmu.edu,18643-A,129847,18643-A-54186,2026-11-08 02:04:59 UTC,1,CHL,0,"Mu-Wei Hsieh, Yosen Lin, Ryder Chou",0,0.1167,0,6.41,0,0.098,0,65.3,0,25.6,0,61.6,0,"In Lab 2 only the tile kernel was graded because tile loads were free, but in Lab 3 the kernel must feed itself from DRAM, so we chose tiles for data reuse first.
+
+1. TR = TC = 13 and the whole input image kept in BufI, so each input value crosses DRAM only once per image (starter does it ~63 times).
+
+2. TM = 32, TN = 2 with a tile-major weight layout, so each weight tile is one contiguous burst and each weight is read once per image (starter code read 16 times).
+
+3. Loop order changed to taps (i, j) outermost and pixels (r, c) inside, pipelined at II=1 with the To/Ti loops fully unrolled. This gives 64 multiply-adds per cycle over 1521 steps per tile and each BufI value is broadcast to all 32 output maps
+
+4. The Lab 2 BRAM interface pragmas are now dropped since the buffers are now internal, and the HLS target moved from 3.0 ns to 5 ns to match the 200 MHz PL clock.
+
+The effect is that the ideal kernel-only rate fell from 61.6 to 25.6 GOP/s due to fewer multipliers, slower clock, and 195 DSPs instead of 360. But DRAM traffic dropped a lot too, so the full layer runs in 116.7 ms instead of 1003.7 ms.",0,"For each image, the whole input image is loaded into on-chip BufI with one burst. Then, for each group of 32 output maps: clear BufO; for each group of 2 input maps, load the 32×2×3×3 weight tile and run 1521 pipelined steps (3×3 taps × 13×13 pixels) at II=1 with 64 multiply-adds per step. Then it finally writes the 32 output maps back with one burst.
+
+The reason for this method is that the starter is DRAM-bound (each input read ~63× and each weight 160× per batch). Keeping a whole image on chip makes every input cross DRAM once, and weights stream once per image. With the new strategy, the whole-plane tile gives long loops and no wasted edge work, and 64 multipliers keep timing margin at 200 MHz.",0,"1. BufI holds all 192 × 15 × 15 input values. Keeping the whole input image on chip cut input DRAM reads from ~63 to 1 per value.
+
+2. A tile-major weight layout with a flat loader made weight loads one long burst at II=1, where HLS reads all 96 tiles of an output group as one continuous burst
+
+3. Taps-outermost loop order with BufI broadcast to all 32 output maps gives 64 multiply-adds per cycle at II=1",0,"We tried changing only the weight layout with the starter's 4×4 tiles, where inputs were still re-read ~63× per image, so it couldn't reach 8×. We also tried a per-row-pointer weight loader but it risked 64 short DRAM reads per tile, so we replaced it with one flat loop.",0,32,0,2,0,13,0,13,0,26.9,0,8.15,0,54.17,0,20.28,0,200,0,"We would try using wider DRAM transfers and separate ports. Every port currently moves 32 bits per beat. Since in current implementation ~70 ms of the 116.7 ms is DRAM waiting, we would make the tile start addresses provably aligned so HLS uses 128-bit beats (4 values each), and give input, weights and output their own ports.",0,TRUE,1,1,0,0,1,1,0,0,1,0,1,1,0,11,18,0
+Andrew Kim,54121,81E20976-6729-11E9-8001-005056AE2541,canvas.cmu.edu,18643-A,129847,18643-A-54186,2026-11-09 06:22:45 UTC,1,CJK,0,"Ricky Cui
+
+Yanting Ji
+
+Andrew Kim",0,0.0422,0,17.7249,0,0.2765,0,64.11,0,44.57,0,71.92,0,"We changed from TM=32, TN=7, TR=TC=4 to TM=16, TN=7, TR=TC=13.
+
+We reduced TM because the previous configuration exceeded the Ultra96's DSP limit. Larger spatial tiles improved data reuse and reduced per-tile overhead. We retained unrolling of the input/output channel loops and pipelining with II=1.
+
+The estimated kernel-only throughput decreased from 71.92 to 44.57 GOPS, but the new configuration fits the device and supports the full-system memory optimizations.",0,"We retain all 128 output feature maps on-chip. Each seven-channel input tile is loaded once and reused across all eight output-channel groups. For each group, weights are loaded, convolution is performed, and partial sums are accumulated on-chip.
+
+Completed outputs are written to DRAM only once. This loop ordering minimizes repeated input transfers and eliminates intermediate output transfers.",0,"Our main optimization was enabling AXI weight bursts through uniform, contiguous weight loading.
+
+Since 192 is not divisible by TN=7, the final input tile overlaps earlier channels. We mask the duplicated inputs during loading to prevent double-counting without disrupting weight bursts.
+
+This reduced runtime from 183.36 ms to 50.07 ms at 150 MHz (3.66× speedup just from changing that).",0,"We initially considered retaining TM=32 and TN=7 from Lab 2, but this exceeded the Ultra96's DSP limit, so we reduced TM to 16. Realized that exceeding DSP is legal in c synth, and only becomes illegal when building hardware for some reason. (*Did more research on this and found out that this is because c synth's report is an estimate, and vivado may optimize to reduce DSP count when actually doing PNR.).
+
+We also experimented with conditional weight loading and separate loops for handling the final partial input-channel tile. Although these approaches were functionally correct, they either prevented AXI burst inference or increased the HLS scheduling latency.",0,16,0,7,0,13,0,13,0,32.1,0,25.54,0,95.28,0,19.21,0,200,0,"We would investigate double buffering and HLS dataflow to overlap weight loading with computation, reducing idle cycles. Hardware AXI profiling would help identify the remaining memory bottlenecks before further optimization.
+
+Would also try to increase clock frequency further (think we can reach 300MHz if we try a little harder).",0,TRUE,1,"225,792",0,0,1,"44,100",0,0,1,0,1,"21,632",0,11,18,0
+Shukang Jia,151205,5C9F99DA-A0E3-11F0-8001-005056AF7578,canvas.cmu.edu,18643-A,129847,18643-A-54186,2026-11-01 20:30:05 UTC,1,CJS,0,"Yi-Ching Chen
+
+Chieh-Hsin Shih
+
+ShuKang Jia",0,0.079,0,9.4661,0,0.1449,0,65.3462,0,28.5,0,90.6,0,"In Lab 3, we kept the main structure from Lab2.  The main change was adjusting the tile sizes:
+
+Lab 2: TR=8, TC=8, TM=2, TN=53
+
+Lab 3: TR=13, TC=13, TM=8, TN=12
+
+We increased TR and TC to 13 because our output feature map is 13×13. This allows us to process the entire spatial region in one tile, reducing unnecessary computation and repeated weight loading.
+
+We also increased TM from 2 to 8, so we can compute more output channels in parallel. At the same time, we reduced TN from 53 to 12 to balance the hardware resource usage. The new TM and TN also divide the total output and input channels evenly.",0,"Our final design mainly uses Input Reuse to reduce DRAM accesses. We changed the loop order from row → col → to → ti to row → col → ti → to. In this way, we only need to load each input tile once and reuse it for different output channels.
+
+We also added a Partial buffer to store the intermediate results, since different output channels need to keep their previous results for the next computation. After all input channels are processed, we write the final results to DRAM.
+
+We chose TR=13 and TC=13 to cover the whole output feature map and reduce repeated weight loading. We also kept the pipeline and unrolling from Lab 2 to maintain fast computation.
+
+We chose this design because it can reduce unnecessary memory accesses while keeping good compute performance.",0,"Our most effective optimization is Input Reuse. We changed the loop order so that the same input tile can be reused for different output channels, instead of loading it from DRAM multiple times. We also added a Partial buffer to save the intermediate results.
+
+Another optimization is setting TR=13 and TC=13 to cover the whole output feature map. This reduces repeated weight loading and unnecessary computation. We also kept the pipelining and unrolling from Lab 2.
+
+These optimizations worked very well. Our runtime decreased from 1.294 s to 0.078977 s, achieving about 16.39× speedup compared with the original baseline.",0,"We tried an Input Cache design, which stores the entire input feature map in BRAM. It reduced DRAM reads, but the HLS synthesis showed slightly higher latency and more BRAM usage compared with Input Reuse (122 vs. 104 BRAM).
+
+Therefore, we chose Input Reuse as our final design because it had better estimated performance and used fewer BRAM resources.",0,8,0,12,0,13,0,13,0,23,0,5,0,77,0,20,0,150,0,"If we had more time, we would try double buffering to overlap data loading and computation. This could reduce the time spent waiting for memory accesses.
+
+We would also try to reduce the overhead of restoring and saving partial sums, since our Input Reuse design still needs these operations many times.
+
+These changes may further improve the overall performance.",0,TRUE,1,"221,184",0,0,1,"43,200",0,0,1,0,1,"21,632",0,11,18,0
+Ania Krzyzanska,144325,BB89F0EC-1B4D-11F0-8001-005056AF7578,canvas.cmu.edu,18643-A,129847,18643-A-54186,2026-11-02 04:11:35 UTC,1,CKL,0,"David Chan, Ania Krzyzanska, Kody Liang",0,0.0515,0,14.5053,0,0.085,0,171,0,3.2944,0,14.35,0,"The baseline cnn_blocked_kernel() version given to us for Lab3 also eliminates storage_type=ram_1p interface pragma that was used in Lab2, which allows the compiler to use dual port BRAMs. We added the pragma “HLS DEPENDENCE variable=BufO inter false” to Lab 3’s implementation of cnn_blocked_kernel() which ensures that consecutive row_b, col_b iterations never collide, i.e. its safe to use both available memory ports simultaneously. Together these two changes allow the initiation interval of the BufO update to equal 1.",0,"* Our overall execution strategy was to attempt to minimize unnecessary DRAM traffic starting from our Lab2 design. We started by re-evaluating our decisions for the tile sizing metrics: TR, TC,  TM, and TN values. We set TR = R_OFM (13) and TC = C_OFM (13), thus spanning the entire output image size so the FPGA can hold a whole spatial slice on-chip. We also modified TM and TN to equal 8, so that they are divisors of M_OFM and N_IFM and as a result there are no partial tiles and no need for zero-padding.
+
+* We wanted to better exploit the available BRAM_18k blocks so we set B_TILE =5, which means we can store the output feature map and active input slice for 5 images (weights loaded 2x from DRAM instead of 10x)
+
+* In order for each input value to only be read from DRAM once, we iterate through the input channel tiles in the outer loop, which allows consecutive memory access. We also reindex ARRAYw such that it is read in tile-major order, i.e. the weights are read sequentially rather than being read in smaller bursts.
+
+* To further improve performance we modify the portion of the code that zeros out BufO and loads BufI and BufW to allow for pipelined execution with II=1 using the pipeline pragma. 
+
+* We also assign the inputs/outputs to gmem0 and the weights to gmem1 which synthesizes to two separate AXI master ports that can be used simultaneously.",0,"We buffer the full output feature maps and active input feature maps across 5 images on-chip simultaneously. This allows us to avoid unnecessary DRAM traffic by only reading each input pixel once and writing each output pixel once. Furthermore we only need to read the weights once for every 5 images. We also used LUT RAM instead of BRAM for the weight buffers, allowing us to use BRAM for the output images.",0,"We initially considered carrying over our Lab 2 tile sizes (TM = 4, TC = 4, TM = 6, and TN = 6) to Lab 3. However, since each output feature map is 13 x 13, having TR = TC = 4 forces the outer loops to execute ceil(13/4)*ceil(13/4) = 16 times per image, causing every weight in the layer to be fetched 16 times from DRAM per image. By changing TR and TC to 13, we avoided these unnecessary fetches. We also modified TM and TN to be 8 so that they would be divisible by M_OFM, which is 128.",0,8,0,8,0,13,0,13,0,19,0,7,0,58,0,65,0,150,0,"Right now, we left the fabric clock frequency at the default 150MHz but it's possible that we would’ve still closed timing closer to 200MHz. Our HLS synthesis estimated period was 4.818ns which translates to roughly 207MHz, so if our hardware build passed at 200MHz we could’ve attained an even higher GOP/s value.",0,TRUE,1,0.2,0,0,1,1,0,0,1,0,1,1,0,11,18,0
+Om Tank,151220,42709726-A0E3-11F0-8001-005056AF7578,canvas.cmu.edu,18643-A,129847,18643-A-54186,2026-11-02 00:30:51 UTC,1,CRT,0,"Jose Cestero, John Rogan, Om Tank, Christian Yu",0,0.0092,0,81.49,0,1.247,0,65.35,0,115.2,0,226.41,0,"We kept the proven parts of the Lab 2 kernel (Tr = Tc = 13 so one tile covers the whole output map, the 2-DSP 32-bit multiply with LUT-built mid pieces for multipliers beyond the DSP budget, and the compute-to-FIFO structure) and re-sized the rest. The tile went from 12x21 to 8x24: 8 and 24 divide M = 128 and N = 192 exactly, so a whole-layer kernel computes no padded blocks, and 192 multipliers fit in 358 of 360 DSPs. The HLS target went from 2.2 ns to 3.33 ns because in Lab 3 the kernel must close routed timing on a real PL clock next to the platform shell and three AXI data movers; 300 MHz routed with +0.070 ns slack. We removed the cnn_blocked_kernel() function boundary and its ap_memory/ram_1p buffer constraints, so BufO is now a simple dual-port RAM and the read-add-write of partial sums runs at II = 1 with taps outermost and pixels innermost. Effect: the ideal peak dropped from 226 to 115.2 GOP/s, but the Lab 2 figure was an unrouted estimate while the Lab 3 kernel actually runs at 92.2 GOP/s (8.11 ms per batch, 80% of ideal).",0,"Per image, the whole input feature map (172.8 KB) stays on chip in 24 banks and the weights stream past it one (output block, input block) pair at a time. krnl_cnn() is four DATAFLOW processes linked by FIFOs: read_input and read_weights burst from DRAM at 128 bits into sI and sW (sW holds two weight blocks so the reader stays a block ahead); compute pulls a block’s weights in 72 cycles then runs 8x24 multiply-adds per cycle for 9 taps x 169 pixels (1,521 cycles per block at II = 1); on the last tap of the last input block the finished sums go straight to sO and write_output drains them, so there is no write-back pass. The DRAM layouts (ARRAYi pixel-major, ARRAYw and ARRAYo block by block in the kernel’s order) make every transfer one contiguous run. We chose this because Lab 1 showed the starter is latency-bound on single-word DRAM reads, so the goal was to cross DRAM once per value (11.4 MB per batch), make every access a long burst, and hide the weight fetch behind compute. Measured traffic is 1.25 GB/s against 4.27 GB/s LPDDR4 peak, so the design is compute-bound and the multiplier count sets the runtime.",0,"* Exact 32-bit multiply on 2 DSPs plus 34 LUT-built mid pieces: only the low 32 product bits matter, so the top cross term is dropped. 192 multipliers in 358 DSPs instead of 128 (2-DSP only) or 96 (3-DSP). Per-image cycles 313k to 209k, 59.3 to 81.5 GOP/s.
+
+* DRAM layouts chosen for the kernel, with each block addressed relative to its base through the macros so HLS sees affine addresses: one 55,296-word 128-bit weight burst per image instead of 32-bit single-word reads at II = 16.
+
+* Weight prefetch through a 2-block FIFO: per-image cycles 548k (v1) to 313k (v2) with the same multipliers.
+
+* Every partitioned-array index comes from an unrolled loop, so each multiplier is wired to its own RAM; the input load went from II = 4 to bus-limited and the muxes left the critical path.
+
+* A full-range 32-bit test plus C/RTL co-simulation as gates before any hardware build; it caught a planted LUT-multiplier bug the course’s 0..255 data can never reach.",0,"Tn = 12 with run-time bank selection (II = 4 input load, real dividers, 3.34 ns estimate). Plain 3-DSP int multiply (capped at 96 multipliers). Absolute macro indices for weights (no burst inference). Sequential load-then-compute per block, v1c: 548k cycles per image, 30.1 ms on the board. Multiply helpers as separate HLS functions, which made HLS build both DSP and LUT versions of every multiplier (392 DSP, 125% LUT) until #pragma HLS INLINE folded the choice. Mapping the three AXI masters to separate HP ports, dropped because it needs a [connectivity] sp= edit to a workspace file the handout does not allow and 1.25 GB/s is well within one port. 16x16 = 256 multipliers was not attempted: ~20k more LUTs on a 99% DSP design at 300 MHz. Fallbacks measured but not submitted: v3 at 200 MHz (12.50 ms), v2 at 300 MHz (12.61 ms) and 200 MHz (17.74 ms).",0,8,0,24,0,13,0,13,0,44.67,0,25.51,0,99.44,0,39.8,0,300,0,"Find the ~1.1 ms the kernel spends beyond its HLS schedule (8.11 ms measured vs 6.96 ms scheduled) with the hardware stall trace, then size the FIFOs or pipeline read_weights accordingly; that is the largest gap and its cause is unknown. Double-buffer BufW to remove the 72-cycle weight fill per block (~4.5%) and BufI to overlap the next image’s copy (~3%); BRAM is at 40% so both fit. Sweep HLS target and uncertainty at 300 MHz to widen the +0.070 ns slack and possibly open 400 MHz. Not more multipliers: the remaining gap is half kernel overhead and half the fixed ~1 ms host cost, and 16x16 would not touch either of those bottlenecks.",0,TRUE,1,1,0,0,1,1,0,0,1,0,1,1,0,11,18,0
+Siena Lee,99082,83E1FE10-CDBB-11EC-8001-005056AE2541,canvas.cmu.edu,18643-A,129847,18643-A-54186,2026-11-02 07:07:49 UTC,1,DEL,0,"Siena Lee, Lilly Das, Feya Epel",0,0.036,0,20.9231,0,0.3178,0,65.346,0,38.4,0,120,0,"The cnn blocked kernel has a different loop ordering than the previous lab. This allows for an initiation interval of 1 instead of the previous interval of 2. This also allows for BufO’s output to be accumulated in a register for the innermost loop, saving TN unnecessary BufO writes.",0,"Each batch, we load in all of BufI and BufW from the initial arrays. BufI is partitioned into smaller chunks of size N_IFM/TN. BufW is partitioned completely along its outermost dimension and cyclicly into N_IFM/TN partitions along its second dimension.  BufO is partitioned completely by the first dimension. All of these partitions allow sequential accesses to not conflict in the cnn_blocked_kernel loop. This allows for the two innermost loops to be unrolled and have an initiation interval of 1. Overall, this minimizes total accesses to each data element across all three arrays and allows for TM * TN multiply-adds in parallel per cycle. TR and TC cover the whole output map with no spatial tiling so that the full buffer is kept nearby.",0,"* Keep a whole input image on-chip and tile the full 13x13 output map (Tr = Tc = 13). Each input value is read from DRAM once per image instead of around 63 times, and each weight once per image instead of 16 times. DRAM traffic per image is now around 22 times less than the baseline, and arithmetic intensity rose from around 12 to around 261 ops per word.
+
+* Reorder the compute loops to get rid of some dependencies. The accumulation loops (ti, i, j) are moved outside the spatial loops (row, col), and the TmxTn loops sit innermost and are fully unrolled. Consecutive iterations therefore update different BufO entries, so no iteration waits on the previous one’s sum.
+
+* Partition each buffer to match how it’s accessed. 
+
+* Effectiveness: together with pipelining and a 200 MHz clock, runtime went from 1296 ms to 35.7 ms (36x the baseline).",0,"* Other Tm x Tn sizes. We moved from 8x8 to 8x12. Anything with 128 or more multipliers needed more than the 360 DSPs.
+
+* Loading only Tn input channels at a time, as given in the starter code. This is not included in the final implementation because inputs would be reloaded 16 times per image (once per output-channel group).",0,8,0,12,0,13,0,13,0,31.5,0,6.9,0,77.2,0,22.7,0,200,0,"With some more time, we would try to further cut down the memory-loading time by widening the axi memory interface ports so that more data can be transferred to/from memory at a time, shortening the load/store loops on each end of the compute section. We would also try implementing some overlap between the load/compute/store sections in the kernel to hide some of the memory load/store latency, instead of running these serially with respect to each other (like by using ping pong buffers so the next block of data can come in while the current block’s compute is running). This would bring us closer to the compute-only limit of 38.4 GOPS for this choice of TM/TN.",0,TRUE,1,1,0,0,1,1,0,0,1,0,1,1,0,11,18,0
+Ming Gong,155701,9B0C11CC-1793-11F1-8001-005056AF7578,canvas.cmu.edu,18643-A,129847,18643-A-54186,2026-10-28 17:49:50 UTC,1,DGW,0,"Ming Gong, Tong Wu, Soren Dupont",0,0.0136,0,55.07,0,0.8427,0,65.35,0,67.17,0,84,0,"* Our lab 2 ran the loop order of row, col, Krow, Kcol, to, ti. The 3 unrolled Kcol reads hit the same BufI bank, and every iteration read and wrote the same BufO addresses, so the best HLS can do is II = 3. In lab 3, we changed the loop order to Zhang’s Krow, Kcol, row, col, to, ti.  Each cycle now reads one word per BufI bank, reducing II from 3 to 1.
+
+* We changed from TM x TN = 16x7 to TU x TN = 8x14. Both use 112 multipliers. Lab 3 keeps all 128 output channels on chip (TM = 128) and computes 8 of them per cycle. For each image (128x192 channels), lab 2 needs 8 x 28 = 224 calls, while lab 3 only needs 1 x 14 calls, reducing the pipeline fill time.
+
+* We eliminated lab 2’s explicit BufO zeroing pass by letting the blocked kernel’s accumulator start at 0, saving 21.6K cycles per image.
+
+The ideal kernel-only number drops from 83.9 to 67.2 GOP/s. Lab 2 and lab 3 use the same compute resource. However, lab 3 uses a 300 MHz clock, the real clock after place and route, while lab 2 uses a 377 MHz HLS clock. This is the main effect slowing it down.",0,"Our overall design is a 112-lane parallel MAC compute that unrolls the To, Ti dimensions. It stays busy on every cycle, and all DRAM traffic are hidden in the background
+
+For compute, we used a loop order of To_o, Krow, Kcol, Row, Col, To, Ti. 
+
+* The output channels are split across To_o and To loops, for reasons we will state below. 
+
+* To and Ti are fully unrolled into hardware, and the loops above are flattened and pipelined at II = 1. This gives clean data parallelism, using 8x14 = 112 multipliers (336/360 DSPs). TN=14 does not divide 192, so the last pass needs to be zero-padded, but it fills the DSP resources much better than TN=12. load_tile() handles the last block in its own branch, and every loop case is written to have a constant trip count for HLS to optimize easily.
+
+* Each cycle, from BRAM/LUTRAM, it reads one pixel from 14 input channels and 14x8 weights, computes the 112 products, and accumulates 8 output channel pixels in the output buffer.
+
+On-chip memory: We chose one tile to cover the whole image (TR=13, TC=13,  TM=128, TN = 14), so the entire BufO stays in BRAM across all input-channel blocks and is written to DRAM only once. The 13x13 whole-image tiles eliminates halo reloads and output roundtrips
+
+* Because only 8 output channels are computed each cycle, TM = 128 is split as 16 × 8: To (8) is unrolled, and To_o (16) becomes the outermost pipelined loop. Therefore, BufO and BufW only need 8 banks on the TM dimension, while the TN dimension is completely partitioned.
+
+* Each block brings in BufI[14][15][15] (12.6 KB), BufW[128][14][3][3] (64.5 KB) from DRAM, and writes BufO[128][13][13] (86.5 KB) back once
+
+We used ping-pong on all three buffers, hiding all load and store latencies behind compute, making this compute-bound!
+
+* While the current ti_b block is computing, we load the input and weights to the next block, hiding 19.4K load cycles under 24.3K compute cycles. 
+
+* On the last block of an image, the loader prefetches block 0 of the next image in the batch. 
+
+* Then, the next image starts accumulating while the output buffer of the previous image is stored on its own AXI port (so stores don’t compute with loads). 
+
+* On the first contribution to each output, the accumulator starts from 0 instead of reading from BufO, so the oldest value gets overwritten and BufO never needs a separate zeroing loop.
+
+In DRAM, the weights are stored as [N/TN][M][TN][K][K], so each block’s weights arrive as a contiguous burst of 16128 words (11520 for the last block). The input and output blocks are already contiguous. 
+
+This design achieves 55.07 GOP/s at 300 MHz (the fastest PL clock that met timing). The resource usage after place-and-route is 96% DSP, 75% LUT and 42% BRAM.",0,"All numbers are board runs on the batch of 10.
+
+We started with the basic Zhang loop order and banked BRAM. By increasing tile sizes from 4 × 4 × 4 × 4 to TR = 13, TC = 13, TM = 12, TN = 8, we drastically reduce repeated DRAM fetches. DRAM traffic per image drops 8.7×, from 6.27M to 718K words. One tile now covers the entire 13x13 image, with no halo overlap. We achieved 7.84 GOP/s at 150 MHz, already mogging the 8x requirement.
+
+* The basic Zhang design was at 83% DSP but only 8% BRAM, so we made the tile hold all 128 output channels, while the multipliers still compute TU=8 of them per cycle. Every input and weight crosses DRAM exactly once, and every output is written to DRAM exactly once and never read back. Kernel calls per image drop from 264 to 16. Performance improves to 12.46 GOP/s at 150 MHz (1.59x)
+
+* We optimized  DRAM layout for contiguous bursts. Each block's weights now arrive as one burst of 13,824 words instead of 128 bursts of 108. Performance improves to 15.37 GOP/s (1.23x)
+
+* By using ping-pong buffers to overlap load and compute, performance improves to 24.2 GOP/s (1.57x). However, HLS only overlaps the two if the trip counts are constant, and the calls are unconditional. Therefore, we picked the tile sizes that divide evenly, replaced the if around load call with an enable flag inside it, and disabled HLS inlining
+
+* At 300 MHz, HLS pessimistically predicted that timing would fail, but place-and-route actually met timing, improving performance to 46.2 GOP/s (1.91x over 150 MHz)
+
+* To further improve, each image still spent about 43K cycles zeroing and storing BufO, so we overlapped those with compute too. We added a second BufO so one image computes while the previous one is stored. We also start the accumulator from 0 on each output’s first contribution, so there’s no separate zeroing. This is actually challenging to implement, as we have to make HLS happy and recognize the parallelism. We need to:
+
+* Add control logic to prefetch block 0 of the next image
+
+* Give output its own AXI port so stores don’t compete with loads
+
+* Add __restrict to DRAM pointers to avoid HLS assuming stores may overwrite what loads read, and drop every read burst.
+
+* Simplify other loop control logic to meet 300 MHz timing.
+
+* Finally, to max out the number of DSPs, we changed TM from 12 to 14 and zero-padded the last input block. load_tile() loads the last block in its own branch with constant loop trip counts, allowing the HLS to optimize for bursts. The DSP usage goes to 96%, blocks per image drops down from 16 to 14, and performance improves to 55.07 GOP/s.
+
+Fortunately, our output overlap logic is fast enough to fit 300 MHz, with only 18 ps of slack!",0,"* We first carried over lab 2's loop order (Row, Col, Krow, Kcol, To, Ti). To partition the bank conflict from the unrolled Kcol window, we partitioned BufI cyclically by 3 on the column dimension, and we rewrote the load loops in bank order to remove the /3 and %3 in address calculation that broke timing. This version reached 18.93 GOP/s at 150 MHz, before we dropped it for Zhang's order, which has no bank conflicts and simpler addressing. At the same 150 MHz, Zhang's order with ping-pong buffers  reached 24.2 GOP/s.
+
+* Our first ping-pong buffer used conditional load_tile() calls for pipeline draining. HLS then serialized this load with compute. We replaced the if conditional with an enable flag, and used #pragma HLS INLINE off, so HLS keeps load_tile() as a hardware module parallelizable with compute.
+
+* We tried synthesizing the design at 400 MHz, but it failed place-and-route. HLS also can only achieve II = 2 on the input load and store loops.
+
+* We also considered of using wider AXI ports, but did not build it, as most of our loads are hidden under compute.",0,128,0,14,0,13,0,13,0,52,0,15.2,0,96.1,0,36.6,0,300,0,"* Systematically explore more of the design space, such as loop ordering and buffer dimensions. We would build a model like Zhang's roofline and rank the options.
+
+* Try bringing all N input channels on chip and stream M. The total DRAM traffic and compute cycles would be the same, but the big on-chip buffer would be the input, instead of the output. In return, the big input buffer would be read-only, instead of read-modify-write for output. With BRAM at only 37%, we can afford a larger buffer.
+
+* One group used LUT for higher-bit multiplication in lab 2, freeing more DSPs and reaching insane throughput. Our lab 3 is DSP bound. The LUTs would come from moving BufW out of LUTRAM (19K LUTs) into BRAM, which still has ample space.
+
+* Once the compute gets faster and the design is again memory-bound, we would explore wider AXI bursts (128 bits to 512 bits) with wide data types.",0,TRUE,1,1,0,0,1,1,0,0,1,0,1,1,0,11,18,0
+Yuyang Wu,141178,084D9F64-07A8-11F0-8001-005056AF7578,canvas.cmu.edu,18643-A,129847,18643-A-54186,2026-11-08 23:37:14 UTC,1,DLW,0,"Caleb Doan
+
+Diac Lu
+
+Yuyang Wu",0,0.0133,0,56.2,0,0.86,0,65.3,0,66.5,0,74,0,"Several moves to reduce memory traffic. Overall, the compute didn't change; DSPs increased from 337 to 348, and BRAM18 went up to 291:
+
+* Lab2 had BufI, BufO, BufW as top level bram ports filled by testbench. Now BufI is ram_s2p bram and BufW is ram_s2p LUTRAM. This makes reads and refills happen same cycle, so we don't waste compute cycles.
+
+* BufI and BufW are now double sized buffers. They hold the next tile when the current one computes.
+
+* We also removed dependency for BufI and BufW. We made sure the write and read half don't overlap.
+
+* Lab2 used single pass BufO with an external zero and unload loop. In this lab we remove zeroign and copyback loops to avoid partial sums from going through DRAM, so each output is written exactly once.
+
+2 moves to meet timing at 3.3ns. Lengthened kernel from 1535 cycles to 1540:
+
+* Lab2 indexed BufW to->ti->i->j and BufI ti->row->col. Now we use flat addresses for both. This was because the previous version failed timing budget as HLS auto registered those dimensions.
+
+* INLINE OFF and LOOP_FLATTEN OFF pragmas are added to avoid index-wrap logic miss.",0,"The kernel is a DATAFLOW region of four concurrent processes, joined by FIFOs.
+
+ 
+
+rd_input   --is-->  
+                                  cnn_compute  --os-->  wr_output
+rd_weights --ws-->
+
+ 
+
+rd_input and rd_weights read DRAM, cnn_compute does the math, and wr_output writes DRAM. Each array has its own AXI master, so the three streams never contend for a port.
+
+The whole current image and next image stays on chip, and input is read once per image to reduce DRAM traffic.
+
+Each of the 14 input channels of an input block sits in a separate bank to make multipliers get operands in the same cycle.
+
+The partial sums of an 8 channel output lock also stays on chip across all 14 input blocks. They are never written back to DRAM and re-read. The first input block starts from 0 instead of a zeroed BufO. On the last tap of the last block, each finished pixel streams straight to wr_output, so each output value goes to DRAM exactly once.
+
+Each 8x14x9 weight tile is also read once per image.
+
+We design BufI and BufW to be ping pong buffers to hide latency, so multipliers really only wait for DRAM during the first image and first tile.
+
+For DRAM layouts, ARRAYw=(M/Tm, N, K, K, Tm), ARRAYo=(B, M/Tm, R, C, Tm) to ensure each weight tile and output block is contiguous.",0,"Hand-built ping pong buffers. For both BufI and BufW, first half holds current and second half holds the next. This folds the next tile prefetch into compute, so we never have to wait for a load.
+
+Putting the whole image on chip and accessing only once per image. This brings input traffic down from 691k to 43k words per image.",0,"Keeping the dimensions of on-chip buffers. HLS partitions dimensions <=4 into registers and increased FF use. It also mapped adddress calculation to DSPs which is a waste.
+
+HLS flattening of loop nests. As mentioned above, it caused index-wrap logic to become critical path make us unable to reach 3.3ns target.",0,8,0,14,0,13,0,13,0,25.84,0,17.86,0,96.67,0,60.89,0,300,0,Use more BRAM headroom and push the clock beyond 300Hz.,0,TRUE,1,1,0,0,1,1,0,1,0,0,1,1,0,10,19,0
+Freddy Fu,135476,8525D9E6-935B-11EF-8001-005056AF7578,canvas.cmu.edu,18643-A,129847,18643-A-54186,2026-11-02 01:38:44 UTC,1,FLX,0,"Freddy Fu
+
+Wenzhuo Li
+
+Raymond Xiang",0,0.0744,0,10.0454,0,0.316,0,31.8,0,38,0,102.7,0,"We kept the Lab 2 kernel structure unchanged, we felt the kernel is already fairly well-optimized for this case based on the achieved performance",0,"Our strategy is to retune the tile dimensions to minimize redundant data transfers between DRAM and the fabric.
+
+We tested the baseline code at 150MHZ and 200MHZ fabric clock, the improvement in performance is almost negligible (+0.002Gop/s). This is a sign that most of the time is spent on something unrelated to fabric frequency, likely DRAM byte transfer (which we saw in lab1, is not very fast).
+
+In the krnl_cnn() starter design (Tr = Tc = Tm = Tn = 4, nested loop order: iter, row, col, to, ti), a new BufI and BufW tile is loaded on every iteration of the ti loop, i.e. once for every combination of (iter, row, col, to, ti).
+
+Since each data value’s DRAM address depends on only some of these indices, the same value gets reloaded once for every combination of the outer loop indices missing from its subscript. 
+
+For instance, bufW (to, ti, i, j) does not depend on iter, row, or col, so each weight is reloaded 10 * 4 * 4 = 160 times per batch (intuitively, for each of our 10 images in current batch, I need 4 * 4 tiles to go through the entire output feature map, meaning I need to fetch my kernel weights 10 * 4 * 4 times for convolution)
+
+Similarly, inputs do not depend on “to”, so each input is reloaded 32 times (a tile deals with 4 output channels each, need 32 iterations over 128 output channels). Computing the output tiles need some inputs that got used in the previous tile, so there is overlap and it leads to even more reloads.
+
+For the baseline design, the entire DRAM traffic for input & weight loading and output writing would approach 200+ MB. To minimize repetitive traffic, we choose Tr=13 Tc=13 Tm=16 Tn=6. These values cut DRAM traffic to about 23.5 MB (AI = ~32 ops/byte) and the number of kernel calls to 2,560, so each call moves larger, contiguous blocks and pays the DRAM latency fewer times.",0,"Instead of tuning by trial and error, we counted how many times each data value is reloaded by checking which outer loop indices are missing from its subscript. This showed that weights (160×) and inputs (~63x) dominated the traffic and pointed directly to Tr = Tc = 13 and a larger Tm. This change alone reduced DRAM traffic by about 10x and kernel calls by about 96x, giving a 14x end-to-end speedup without any new hardware structures.",0,"Our initial thought is to increase Tm as large as possible, if we let Tm = 128 (load each input only once), this would reduce input reloads to only once, and cut total DRAM traffic by more than half. BufO would need:
+128 channel * (13 * 13) int/channel * 4 bytes/int = ~86.5 KB, which easily fits on chip. 
+
+However, our kernel fully unrolls “to”, so Tm = 128 would require 128 * Tn multipliers, far beyond the DSP budget. Supporting it would mean restructuring the kernel so that only part of “to” is unrolled and the rest iterates in time. Since our design already exceeded the 8x target, we did not pursue this.",0,16,0,6,0,13,0,13,0,20.8,0,5.1,0,77.5,0,1.9,0,200,0,"Firstly, one possible approach we can try is double buffering. With two copies of BufI and BufW, the next tile can be loaded while the current one is being computed, turning total time from the “sum of the two” into roughly “the larger of the two”.
+
+We mentioned earlier that during DRAM transfer on krnl_cnn(), inputs do not depend on “to”. This means one same input pixel gets reloaded on chip for each iteration of “to”. If Tm = 128 (i.e. a single BufO can hold all 128 output channels), then looping through “to” only needs one iteration, there would be NO repetitive load for input pixels at all. We need to restructure the kernel to accommodate this, with “to” partially unrolled, such that only a few output channels are computed in each cycle, and the rest gets iterated through time. ",0,TRUE,1,"221,184",0,0,1,"345,600",0,0,1,0,1,"21,632",0,11,18,0
+Shengfei Gu,151161,55A22AB2-A0E3-11F0-8001-005056AF7578,canvas.cmu.edu,18643-A,129847,18643-A-54186,2026-11-02 15:05:11 UTC,1,GPY,0,"Shengfei Gu, Andrew Pan, Sutong Yao",0,0.017,0,43.87,0,0.412,0,106.5,0,61.44,0,81.28,0,"The Lab 2 kernel (Tm=7, Tn=17, 119 MACs, 359 DSPs) was tuned only for peak kernel throughput: 81.28 GOPS at the HLS-estimated 384.62 MHz. Lab 3 is limited by data movement and routed timing, so we changed:
+
+* Tiles: Tm=8, Tn=10, with two parallel engines. Tm=8 divides M=128 exactly. Tn=10 covers N=192 in 20 tiles (96% of slots useful).
+
+* Multiplier: a custom 32x32 low-word multiply uses 2 DSPs instead of 3. This gives 160 MACs instead of the 120 that 360 DSPs could support at 3 DSPs each.
+
+* Kernel boundary: we removed the cnn_blocked_kernel() boundary and rebuilt the design as a DATAFLOW pipeline with separate read-input, read-weight, compute and write-output stages.
+
+* Loop order: changed to to-tile, ti-tile, Krow, Kcol, Row, Col, with To and Ti unrolled, so each to-tile finishes before its outputs are drained.
+
+* Buffering: BufW is double buffered, and output drain overlaps compute of the next to-tile.
+
+* Frequency: we target 200 MHz. An 8x14 build at 300 MHz failed routed timing (WNS -0.245 ns), while the final design meets 200 MHz (WNS +0.486 ns).
+
+Effects: ideal kernel throughput fell from 81.28 to 61.44 GOPS because of the lower real clock, but ops per cycle rose from about 211 to 307.2. End-to-end throughput reached 43.87 GOPS, about 52x our measured starter result of 0.8365 GOPS at 300 MHz.
+
+Note that 81.28 uses the HLS-estimated clock, while 61.44 uses the real 200 MHz clock. At the HLS-estimated clock of about 340 MHz (2.941 ns), the Lab 3 kernel would be about 104.5 GOPS, so the Lab 3 kernel is faster per cycle (307.2 vs about 211 ops/cycle).",0,"The batch is processed in groups of two images. Both images are loaded into on-chip BufI once, with Tr=Tc=13 covering the whole output feature map, so each input value is read from DRAM only once. Compute waits during this load because four images do not fit in BRAM.
+
+Two engines then compute both images in lockstep from the same BufW, using 160 multipliers per cycle. While one BufW half is in use, the next weight block is prefetched into the other half. When a to-tile finishes, the old accumulator value is streamed out in the same cycle that the next to-tile's sum overwrites it.
+
+DATAFLOW and FIFOs decouple DRAM from compute. The weights and outputs use tiled DRAM layouts so that all three m_axi ports access memory strictly sequentially in long bursts.
+
+We chose this because weights are the dominant traffic: 221,184 words per pass, versus 43,200 per input image and 21,632 per output image. Sharing one weight pass between two images halves that traffic. By our calculation, about 12.17 ms goes to compute and 2.16 ms to image loading, out of the measured 17.041 ms. The remaining time was not separately measured.",0,"* Sharing weights between two images: with the same 160 multipliers, the two-engine design ran in 17.041 ms versus 18.600 ms for the one-engine 8x20 design, about 8% faster, while reading weights half as often (0.5 vs 1 pass per image).
+
+* 2-DSP multiplier: only the low 32 bits of the product are needed, so the terms that overflow past bit 31 can be dropped. This allows 160 MACs instead of 120 within the 360 DSP limit, 33% more parallelism at the same DSP budget.
+
+* Whole image on chip plus sequential DRAM layouts: each input value is read once, each output value is written once, and all ports access DRAM sequentially. Arithmetic intensity is 106.5 op/byte.
+
+* Overlapping compute with weight prefetch and output drain: the only compute stall we designed in is the image load. Achieved throughput is 71.4% of the kernel-only ideal (43.87 of 61.44 GOPS).",0,"* One-engine 8x20 at 200 MHz: 18.600 ms, 40.19 GOPS, TEST PASSED. Its ideal compute time is only about 12.2 ms, so the extra multipliers were not fully used. We replaced it with the two-engine design.
+
+* 8x14 at 300 MHz: failed routed timing (WNS -0.245 ns), so we did not use it.
+
+* An earlier 16x4 design in which transfer and compute took turns: 84.4 ms, 8.85 GOPS at 150 MHz. This showed that overlapping compute with data movement matters.
+
+* Double-buffering BufI in the two-engine design: dropped because four images do not fit in BRAM.
+
+* One-engine 8x14 at 200 MHz: 22.016 ms, 33.96 GOPS, TEST PASSED. It uses fewer DSPs, but it is slower.",0,8,0,10,0,13,0,13,0,20.9,0,16.16,0,92.78,0,69.91,0,200,0,"* Add profiling to measure actual DRAM bandwidth and stalls. About 2.7 ms of the runtime is not explained by our compute and load estimates, and we have not measured where it goes.
+
+* Remove the 2.16 ms image-load stall by overlapping the next group's load with compute, for example with a more compact input buffer, since four full images do not fit in BRAM.
+
+* Shorten the critical paths to reach the next platform clock of 300 MHz. Our 200 MHz design has only 0.486 ns of slack, and the 8x14 build missed 300 MHz by 0.245 ns.
+
+* Run C/RTL co-simulation earlier to catch hardware-only issues before the long place-and-route runs.",0,TRUE,1,0.5,0,0,1,1,0,0,1,0,1,1,0,11,18,0
+Gary Su,142283,B3D4C634-104D-11F0-8001-005056AF7578,canvas.cmu.edu,18643-A,129847,18643-A-54186,2026-11-02 05:40:40 UTC,1,JJS,0,"Yanxin Jiang
+
+Rachel Jiang
+
+Gary Su",0,0.041,0,18.2431,0,0.2792,0,65.3462,0,38.1741,0,36.052,0,"* Yes, We made several changes to the cnn_blocked_kernel() design from Lab 2 to Lab 3. 
+
+* Tile Size: Changed TM from 4 to 8 and TN from 16 to 12 to adjust channel-level parallelism and balance hardware resource usage.
+
+* Loop Optimization: Changed from sequential input-channel accumulation to unrolled channel computations, and reduced the target pipeline II from 3 to 1 to improve computational throughput.
+
+* Memory Optimization: Changed the loop ordering from output-channel-first to input-channel-first, allowing each input tile to be reused across multiple output-channel groups. We also expanded the output buffer to retain partial sums on-chip.
+
+* Memory Access Optimization: Reorganized the data layout to support wider memory transfers (128-bit input and 256-bit weights/output), improving DRAM access efficiency.
+
+* Dataflow Optimization: Changed from loading weights before computation to overlapping weight loading and computation using DATAFLOW, reducing potential memory stalls and improving performance.",0,"* Tiled Computation: We divide the computation into 13x13 spatial tiles, with TM=8 output channels and TN=12 input channels. Both loops are unrolled, and the spatial computation is pipelined with a target II=1 to increase parallelism and throughput. 
+
+* Input Loading and Reuse: For each input-channel group, we load the input tile into on-chip buffers using 128-bit packed reads and reuse it across all output-channel groups, reducing redundant DRAM accesses.
+
+* Memory Access Optimization: We reorganized the data layout to support contiguous, wider DRAM transfers (128-bit input, 256-bit weights and output), improving memory bandwidth utilization.
+
+* Overlapped Execution: We use DATAFLOW and a FIFO to prefetch upcoming weight tiles while computing the current output-channel group, reducing waiting time caused by weight loading. 
+
+* Overall, we chose this strategy to balance computation parallelism, on-chip data reuse, and memory bandwidth efficiency to improve throughput while reducing memory-access overhead.",0,"The main trick was combining wider memory transfers with early weight loading. Data was grouped in memory so several values could be moved together and sent to the matching on-chip buffer banks. While the current group was being computed, weights for later groups were loaded into a FIFO, reducing the time spent waiting between groups. These changes worked well together: wider transfers made loading faster, and the FIFO allowed upcoming weights to be prepared while the compute unit was busy. Together, they improved throughput by roughly 3 GOPS without changing the clock frequency.",0,"* Alternative channel tiling and shared 3*3 window computations were tested, but lower throughput was obtained by loading each input once and reusing it across each output group.
+
+* Local partial-sum accumulation passed correctness checks, but synthesis latency increase than the original design, so this was not adopted.
+
+* Unrolled input reads were tested, but the AXI port remained 32 bits and the loading loop reached only II=4. Explicit 128b input packing was then used instead.",0,8,0,12,0,13,0,13,0,15.86,0,5.7,0,76.94,0,24.07,0,200,0,"Our final design is compute-bound, which means we need to focus more on throughput in order to raise performance even higher. Due to the limitations of time, especially for the time to do Hardware builds, we were not able to fully sweep through a finer level of clock frequencies; since runtime scales with with clock period, sweeping at a finer grain could have given us better performance when we are able to get closer to the maximum frequency.
+
+Another action item we could try is adding more MACs using LUT-based multipliers. Since each 32-bit floating point multiply operation takes 3 DSPs, we get capped at a specific number of DSPs. However, our LUT usage is quite low, which means there’s a possibility we can also try implementing some multipliers in fabric to increase the number of multiplier operations in parallel. 
+
+One more optimization we thought about doing if we had time was to overlap the weight-buffer fill with compute. We noticed that every kernel call spends an initial hundred of cycles copying weights from the FIFO into BufW before it does its regular compute. If we double-buffer BufW inside the consumer, we can hide that initial latency of the compute, which can help amortize its cost. We could also try double-buffering BufI to hide the latency of input loads, which can also bring us back some performance. 
+
+ ",0,TRUE,1,1,0,0,1,1,0,0,1,0,1,1,0,11,18,0
+Zach Moore,97958,9AE0EF5C-C516-11EC-8000-005056AE2541,canvas.cmu.edu,18643-A,129847,18643-A-54186,2026-11-08 23:14:22 UTC,2,JMM,0,"Jason Jagielo, Kyle Minihan, Zach Moore",0,0.0279,0,26.75,0,0.409,0,65.35,0,28.8,0,76.8,0,"Our final Lab 2 design optimized the standalone cnn_blocked_kernel() with data supplied through local-buffer interfaces. It used Tr=Tc=4, Tm=16, and Tn=15 and achieved an estimated 76.8 GOP/s. In Lab 3, we optimized the complete memory-connected kernel. Tr=Tc=13 covers the entire output image, and Tm=128 includes all output channels, allowing each input and weight to be loaded only once per image.
+
+We selected Tn=8 to fit the arithmetic and ping-pong storage while evenly dividing 192 input channels. Parallelism moved from input/output channels in Lab 2 to input channels and the 3x3 filter in Lab 3, giving 72 products per cycle and an ideal ceiling of 28.8 GOP/s at 200 MHz. Although this ceiling is lower, greater data reuse and overlapped transfers improve end-to-end efficiency. Lab 2's estimate describes a standalone compute block, while lab 3 accommodated DRAM interfaces, buffering, and platform resources.",0,"Our final strategy used dataflow kernels with tile dimensions that minimize the number of times inputs must be loaded and overlaps compute with memory access as much as possible. We chose this approach because the application was heavily DRAM-bounded, so we were able to maximize performance by minimizing the amount of DRAM access and by overlapping compute with DRAM requests.
+
+The final design uses Tr=13, Tc=13, Tm=128, and Tn=8 at 200 MHz. These dimensions facilitate maximal data reuse, and therefore minimizes DRAM accesses. Each image is processed in 24 input-channel tiles.  Full spatial and output-channel tiles let us read each input and weight once per image and retain partial outputs on chip.
+
+Four HLS DATAFLOW kernels load inputs, load weights, compute convolution, and write outputs interconnected with FIFOs. The compute stage uses ping-pong input and weight buffers to load the next tile while processing the current one in order to better saturate memory bandwidth. Nonblocking FIFO reads allow computation to continue when next-tile data is unavailable, as the buffers switch only when loading and computation are complete.
+
+The compute stage loop achieves II=1 with 8*3*3=72 parallel products per output update. Inputs are partitioned across channels and cyclically across spatial dimensions, while weights are partitioned across channels and filter positions. Small input banks use LUTRAM, while weights and output accumulation use BRAM. The first channel tile starts each sum at zero, and the last streams completed outputs directly to the writer in order to  remove separate zeroing and writeback sweeps. Weights are packed by channel tile, and outputs by row, column, then output channel, to support sequential DRAM accesses.",0,"We identified a false dependency on BufO that was killing our key iteration interval for our compute stage. The compiler thought one iteration might read an element that the previous was still updating, but by our indexing scheme, this is not a valid case, so there was no reason to block our II to 2. This was a major performance change motivated from the system guidance info Vitis gives.",0,"We tried Tn=12 with DATAFLOW to increase the compute ceiling to 43.2 GOP/s, but the implementation required 91,411 LUTs, about 130% of device capacity, and could not be placed. We retained Tn=8, which fit and passed the board check. An earlier ping-pong version combined direct DRAM reads and computation in one pipeline and achieved only about 6.5 GOP/s. ",0,128,0,8,0,13,0,13,0,50.83,0,12.79,0,72.22,0,47.69,0,200,0,"We would profile compute activity and FIFO/AXI stalls to identify the remaining overhead. Since Tn=8 already approaches its compute ceiling, we would focus on the Tn=12 LUT bottleneck by comparing arithmetic mappings, memory replication, and bank-selection logic. If Tn=12 still could not fit, we would explore Tn=10 with proper partial-tile handling and matching host weight packing as a compromise between parallelism and resources.",0,TRUE,1,"221,184",0,0,1,"43,200",0,0,1,0,1,"21,632",0,11,18,0
+Jieun Lim,95470,9A2916E6-B735-11EC-8001-005056AE2541,canvas.cmu.edu,18643-A,129847,18643-A-54186,2026-11-09 15:45:34 UTC,1,LSX,0,"Jieun Lim, Serena Shih, Aaron Xu",0,0.0652,0,11.47,0,0.175,0,65.3,0,19.2,0,64.7,0,"The estimated peak performance in Lab 2 was 64.7 GOPS, compared to 19.2 GOPS in Lab 3. Lab 2 was higher because we were wasting resources on the padding (the 8x8 tiles didn’t fit onto the 13x13 output evenly) which we did not have to worry about for Lab 3. 
+
+One of our goals was to reduce the II to 1 from 2, which is now possible since we’re no longer limited by the number of ports to the buffer. Another thing was to retune Tm, Tn, Tr, Tc in order to prevent edge waste and to have the whole input image on chip so that it’s only read once from the DRAM.",0,"We wanted to keep as much data on the chip as possible, in order to avoid repeated DRAM accesses. For the input map, we were able to keep the entire image in BRAM. As such, we only need to access DRAM once to load the entire image, decreasing our memory accesses in exchange for BRAMs. Because we no longer need to repeatedly access the input, we are able to use the bandwidth to access the weights, which is less memory usage in total.",0,"Our biggest “secret sauce” was keeping the entire input image on chip in BRAM, so each input value is read from DRAM only once per image instead of being reloaded for every output tile. This cut our input traffic so that most of our DRAM traffic is the weights, which we stream in small tiles. As a result, our arithmetic intensity is about 65 operations per byte, and we use only about 0.175 GB/s of DRAM bandwidth, around 4% of the ~4 GB/s available. Another change was retuning Tm, Tn, Tr and Tc: Tr = Tc = 13 covers the full 13 × 13 output, removing the edge waste from Lab 2’s 8 × 8 tiles, and Tm = 16 and Tn = 4 divide 128 and 192 evenly. Since we were no longer limited by the number of buffer ports, we also brought the II down from 2 to 1, so the MAC array produces results every cycle instead of every other cycle. Overall, this gave us a 19.8 times speedup over the baseline (11.47 GOPS vs 0.58 GOPS) and reached about 60% of our estimated kernel peak of 19.2 GOPS. The remaining gap is mostly from weight loads not overlapping with compute, which is why double-buffering the weights would be our next step.",0,"We tried different variations of Kernel643, starting from our lab 2 implementation. One of the things we tried was to make a more aggressive version of the kernel by widening the MAC array and double buffering the input tiles. Though a good starting point, particularly the buffering, it ultimately did not work and ended up lowering our performance from the baseline or not really changing the performance at all (if given more time, though, this is one thing we can take a look at).",0,16,0,4,0,13,0,13,0,17.2,0,5,0,54.7,0,30.6,0,150,0,"If we had more time, one thing to do is to change the clock to see if we can heighten performance even further as recommended previously. We would also take a closer look into data-reuse, particularly double buffering as we have mentioned previously.",0,TRUE,1,1,0,0,1,1,0,0,1,0,1,1,0,11,18,0
+Suchir Vemulapalli,144662,21C98C2C-1C17-11F0-8001-005056AF7578,canvas.cmu.edu,18643-A,129847,18643-A-54186,2026-11-02 16:58:06 UTC,1,MPV,0,"Kaeshav Mandyam, Krish Patel, Suchir Vemulapalli",0,0.0302,0,24.755,0,0.2324,0,106.5421,0,39.5038,0,91.62,0,"We retained the core Lab 2 optimizations which were spatial input banking, partitioned and reshaped weight buffers, parallel output-channel computation, and a pipelined pixel loop. We reduced Tm from 13 to 12 to provide more resource and routing headroom. It decreases the parallel multiplications from 13 × 3 × 3 = 117 to 12 × 3 × 3 = 108, a 7.7% reduction. Assuming three DSP slices per 32-bit multiplication, this reduces the multiplication requirement from approximately 351 to 324 DSPs, leaving 36 rather than 9 of the device’s 360 DSPs for additional logic. The tradeoff is that processing 128 output channels requires 11 tiles instead of 10. Our final design estimated 326 DSPs in HLS and used 288 after implementation, meeting 200 MHz timing. This timing result reflects the combined tile-size and pipelining changes. We also note the Lab 2 kernel was meeting HLS timing at 495 MHz, but we were not able to meet timing at the same frequency in Lab 3 hence necessitating the changes discussed above. Even after the changes, we only met timing at 200 MHz.
+
+We added an input-buffer offset so the same compute hardware can process either of two buffered images. Since each call now accumulates all 192 input channels, we initialize the accumulators directly to zero instead of first clearing and then reading the output buffer. We also requested three-cycle DSP multiplication and pipelined BRAM access to help timing closure. The compute loop maintained II=1. Although ideal kernel-only throughput decreased from Lab 2, the full-layer design performs less repeated DRAM traffic.
+
+Our cnn_blocked_kernel() from Lab 2 had sufficiently high arithmetic intensity that its performance was not limited by the 4 GB/s memory bandwidth bottleneck. Consequently, we focused less on modifying the compute kernel itself and instead targeted the outer kernel code, where we identified opportunities to improve data loading, and weight reuse.",0,"We process the batch of 10 images in five pairs. Both complete input feature maps are loaded into BRAM once and retained while all output-channel tiles are computed, avoiding repeated input loads. With Tn=192 and Tr=Tc=13, each compute call covers all input channels and the full output spatial area. For each tile of 12 output channels, we load its weights once, compute and store the first image’s outputs, and then process the second image using the same weights and compute hardware. The final tile contains eight valid output channels; unused lanes are zeroed and only valid outputs are stored.
+
+Transfers use the provided array-access macros and preserve the natural contiguous layout. Each input value is read once, each weight is read five times across the batch, and each output is written once. Compared with single-image reuse, this reduces total DRAM traffic from by around 40% (from approximately 11.44 MB to 7.02 MB ). The strategy trades additional BRAM capacity for fewer DRAM reads without duplicating the compute engine. We note that we designed our execution strategy with the intent to minimize DRAM traffic since those memory transfers take the longest time and maximize our use of the fast and abundant BRAM resources on the board.",0,"Our main optimization was reorganizing the loops to reuse both inputs and weights in BRAM. We moved input loading outside the output-channel tile loop so each image is fetched only once. We then buffered two images and placed weight loading outside the loop that processes them, allowing the same weight tile to serve both images without duplicating the compute engine.
+
+This halves weight reads across the batch from ten copies to five. Compared with single-image reuse, total DRAM traffic decreases by 40%, and arithmetic intensity increases from 65.35 to 106.54 operations/byte. The key tradeoff was using more BRAM to reduce external-memory traffic and keep our existing parallel compute hardware fully supplied with data. ",0,"We initially implemented single-image input reuse, where one image was loaded into BRAM and retained while all output-channel tiles were computed. This eliminated repeated input feature-map loads, but weights still had to be fetched separately for each of the ten images in the batch. We ultimately replaced this approach with two-image buffering, allowing each weight tile to be reused across two images. This reduced total weight traffic without duplicating the compute hardware.
+
+We also experimented with several alternative DRAM weight layouts and corresponding loop orderings in an attempt to improve weight-loading efficiency. Our first experiment changed the weight layout from [M][N][K][K] to [N][K][K][M], making output channels the innermost contiguous dimension. We correspondingly changed the loading loop order to N -> R -> C -> M, with the expectation that contiguous accesses across output channels would improve memory efficiency. However, this configuration increased runtime to 47.8 ms, achieving only 15.64 GOP/s.
+
+For our second experiment, we retained the original [M][N][K][K] memory layout but changed the loading loop order to N -> R -> C -> M. This allowed us to isolate the effect of loop ordering without changing the underlying memory layout. However, performance deteriorated further, with runtime increasing to 83.1 ms and throughput dropping to 9.00 GOP/s. This suggested that traversing output channels in the innermost loop was inefficient for our existing on-chip weight-buffer organization.
+
+In our third experiment, we changed the weight layout to [M][K][K][N], making input channels the innermost contiguous dimension, and changed the loading loop order to M -> R -> C -> N. We expected this arrangement to improve sequential accesses across input-channel weights. However, runtime increased to 51.5 ms, achieving 14.53 GOP/s, which was still substantially worse than our original configuration.
+
+Ultimately, we retained the original [M][N][K][K] weight layout and M -> N -> R -> C loading order, since it provided the best performance. These experiments demonstrated that making a particular dimension contiguous in DRAM does not necessarily improve overall performance. The access pattern must also align with the on-chip buffer organization and the memory-write behavior generated by HLS. Our original layout allowed weights to be loaded sequentially into each output-channel buffer and proved more effective than the alternative arrangements we explored.",0,12,0,192,0,13,0,13,0,50,0,11,0,90,0,80,0,200,0,"We would first profile transfer and computation time to identify the remaining bottleneck. Our current design reduces repeated DRAM accesses, but transfers remain 32 bits wide and do not overlap computation. We would investigate aligned, wider transfers and double-buffering weights so the next tile can load while the current tile computes. These changes would require checking BRAM capacity and routing pressure. We would also finish evaluating Tm=13 against Tm=12, comparing measured throughput and timing closure rather than DSP utilization alone.
+
+Buffering more than two images: This would increase weight reuse further, but our two-image design already uses about 80.6% of the available BRAM according to the HLS report. Larger buffers would leave less space for other storage and could increase routing difficulty.
+
+Overlapping weight loading with computation: A second weight buffer could hold the next tile while the current tile computes. We did not implement this because it requires additional BRAM and more complex scheduling and synchronization.
+
+Wider DRAM transfers: Transferring multiple values per cycle could improve bandwidth utilization. However, HLS reported alignment limitations with our existing accesses. Addressing these would require restructuring transfers or padding the layout, so we prioritized reducing the number of transfers first.
+
+ ",0,TRUE,1,0.5,0,0,1,1,0,0,1,0,1,1,0,11,18,0
+Rock Zhang,144493,340830CA-1B4D-11F0-8001-005056AF7578,canvas.cmu.edu,18643-A,129847,18643-A-54186,2026-11-09 03:08:25 UTC,1,SZZ,0,"Rock Zhang
+
+Sanjay Seshan
+
+Rayyan Zamir",0,0.0416,0,17.9535,0,0.7422,0,24.19,0,34.31,0,61.9,0,"Yes, there are some changes from the Lab2 to Lab3.
+
+Write partial sum directly into the BufO instead of on-chip buffer bufO. remove some redundancy on the write and read per call.
+
+Change the partition of bufO and BufO (original BRAM partition for BufO and bufO is too shallow). higher utilization of BRAM.
+
+Disable Row/Col flattening, this is for critical path. (basically this is the main reason for drop of ideal performance)
+
+Also I perform retune of the parameters because my previous implementation was 100% usage, but the surround logic introduces some DSP usage so I have to reconfigure my parameter a little bit. (not too many drop on ideal performance for this one)
+
+ 
+
+ ",0,"For lab3, there are several important optimizations.
+
+1. input tile reuse for output channels, does not reload input when it moves to the next output. group 8 outputs together and 1 input will contribute all of these 8 outputs, only reload the input for the next 8 outputs.
+
+2. batch data reuse. sharing of the weight data across images in the batch. because weight is fixed across different batches. This reduces significant weight data read from DRAM across batches.
+
+3. compute and load overlap for the weight value (ping-pong buffer). When it is doing compute, preload the weight into the buffer for the next tile, it is straight-forward since it is the natural of hiding the latency.
+
+4. different layout of the weight in DRAM. trying to organize the data in the way we want to access is sequential. (good for burst DRAM read)
+
+5. Keep the output on chip until the result is finished. (keep partial output on chip) Save the DRAM bandwidth since when you have a lot of on chip memory you can keep them on chip instead of throwing it to DRAM.
+
+ 
+
+ ",0,"It is definitely the weight ping-pong (load and compute overlap). With a single buffer, the compute has to finish using the current weights before the load could overwrite them. This is the most obvious one since loading the next weight tile is independent of computing with the current tile, you can naturally preload all of the weight required in the next stage. When the compute uses the weights in buffer A, the load fills buffer B with the next tile. Then they swap roles. If the next tile is ready, the compute can start the next group. (I do not remember the exact number, but it pops the GOPS value from single digit to double digit). 
+
+ 
+
+ ",0,"We initially considered swapping the input and output channel loops so we could load each input tile once and use it for every output channel. But we would need to keep all the unfinished output values on the chip at the same time. So we decided not to use that strategy.
+
+We also tried processing just two output tiles at a time, but it takes same input more often and we have abundant FPGA on chip buffer. So we decided to keep more output on chip and reuse more input for it. (uh)
+
+ 
+
+ ",0,7,0,16,0,13,0,13,0,42,0,13,0,97,0,78,0,200,0,"We will try packing several output values into one memory write. The current one writes the values in order, but report shows that each write transferred only 4 bytes on average (for some reason). Also I would like to increase the time utilization of DSPs.
+
+(I feel like I tried almost everything I can think of)
+
+ ",0,FALSE,0,"44,236.80",0,0,1,"43,200",0,0,1,0,1,"21,632",0,10,19,0
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
