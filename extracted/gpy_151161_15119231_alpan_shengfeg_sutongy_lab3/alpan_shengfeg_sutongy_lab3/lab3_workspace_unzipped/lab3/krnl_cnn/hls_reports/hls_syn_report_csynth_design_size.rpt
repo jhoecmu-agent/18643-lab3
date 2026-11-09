@@ -1,0 +1,66 @@
+================================================================
+== Design Size Report
+================================================================
+
+* Total Instructions per Compilation Phase
++---------------+-----------------------------+--------------+----------------------------------------------------------------------------------------+
+| Phase         | Step                        | Instructions | Description                                                                            |
++---------------+-----------------------------+--------------+----------------------------------------------------------------------------------------+
+| Compile/Link  |                             |  7,182       | After all functions are compiled and linked into a single design                       |
+|               |                             |              |                                                                                        |
+| Unroll/Inline |                             |              | After user unroll and inline pragmas are applied                                       |
+|               | (1) unroll                  |  8,349       | user unroll pragmas are applied                                                        |
+|               | (2) simplification          |  6,361       | simplification of applied user unroll pragmas                                          |
+|               | (3) inline                  |  6,304       | user inline pragmas are applied                                                        |
+|               | (4) simplification          |  6,298       | simplification of applied user inline pragmas                                          |
+|               |                             |              |                                                                                        |
+| Array/Struct  |                             |              | After user array partition and struct aggregate/disaggregate pragmas are applied       |
+|               | (1) array partition         | 15,249       | user array partition pragmas are applied                                               |
+|               | (2) simplification          |  7,406       | simplification of applied user array partition & struct aggregate/disaggregate pragmas |
+|               | (3) aggregate/disaggregate  |  7,412       | user struct aggregate/disaggregate pragmas are applied                                 |
+|               | (4) array reshape           |  7,672       | apply array reshape pragmas                                                            |
+|               | (5) access patterns         |  7,702       | array access pattern optmizations                                                      |
+|               |                             |              |                                                                                        |
+| Performance   |                             |              | After transformations are applied to meet performance pragma targets                   |
+|               | (1) loop simplification     |  7,682       | loop and instruction simplification                                                    |
+|               | (2) parallelization         |  7,677       | loops are unrolled or pipelined to meet performance targets                            |
+|               | (3) array partition         |  7,677       | arrays are partitioned to meet performance targets                                     |
+|               | (4) simplification          |  7,677       | simplification of design after performance transformations                             |
+|               |                             |              |                                                                                        |
+| HW Transforms |                             |              | After hardware transfomations                                                          |
+|               | (1) lowering                |  7,691       | initial conversion to HW specific instructions                                         |
+|               | (2) optimizations           |  7,516       | high level synthesis optimizations                                                     |
++---------------+-----------------------------+--------------+----------------------------------------------------------------------------------------+
+
+* Instructions per Function for each Compilation Phase
++------------------+------------------+-----------------+---------------+--------------+-------------+---------------+
+| Function         | Location         | Compile/Link    | Unroll/Inline | Array/Struct | Performance | HW Transforms |
++------------------+------------------+-----------------+---------------+--------------+-------------+---------------+
+| + krnl_cnn       | krnl_cnn.cpp:461 | 7,182           | 6,298         | 7,702        | 7,677       | 7,516         |
+|    read_input    | krnl_cnn.cpp:203 |   54            |   39          |   44         |   44        |   46          |
+|    read_weights  | krnl_cnn.cpp:220 |   81            |   54          |   49         |   48        |   58          |
+|  + compute       | krnl_cnn.cpp:319 | 6,790           | 6,009         | 7,288        | 7,267       | 6,995         |
+|     bi_addr      | krnl_cnn.cpp:192 |  380 (2 calls)  |               |              |             |               |
+|   + next_in      | krnl_cnn.cpp:291 |  769            |               |              |             |               |
+|      inc_wrap<4> | krnl_cnn.cpp:185 |  326 (2 calls)  |               |              |             |               |
+|      inc_wrap<5> | krnl_cnn.cpp:185 |  163            |               |              |             |               |
+|     bw_addr      | krnl_cnn.cpp:197 |  288 (3 calls)  |               |              |             |               |
+|   + next_w       | krnl_cnn.cpp:310 | 1,120 (2 calls) |               |              |             |               |
+|      inc_wrap<4> | krnl_cnn.cpp:185 |  652 (4 calls)  |               |              |             |               |
+|     mul32lo      | krnl_cnn.cpp:162 |  964            |               |              |             |               |
+|     inc_wrap<4>  | krnl_cnn.cpp:185 |  489 (3 calls)  |               |              |             |               |
+|     inc_wrap<8>  | krnl_cnn.cpp:185 |  163            |               |              |             |               |
+|     inc_wrap<2>  | krnl_cnn.cpp:185 |  326 (2 calls)  |               |              |             |               |
+|     inc_wrap<5>  | krnl_cnn.cpp:185 |  326 (2 calls)  |               |              |             |               |
+|    split_output  | krnl_cnn.cpp:240 |   88            |   58          |  171         |  170        |  229          |
+|    write_output  | krnl_cnn.cpp:262 |  105            |   92          |  119         |  117        |  146          |
++------------------+------------------+-----------------+---------------+--------------+-------------+---------------+
+
+* Design Size Message Settings
++---------------------------------------------+--------+------------------------------------------------------------------+
+| Message Setting                             | Value  | Description                                                      |
++---------------------------------------------+--------+------------------------------------------------------------------+
+| config_compile -design_size_maximum_warning | 100000 | Show a warning when total design instructions exceeds this value |
++---------------------------------------------+--------+------------------------------------------------------------------+
+
+

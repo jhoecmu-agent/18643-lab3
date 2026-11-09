@@ -1,0 +1,58 @@
+[
+  {
+    "directory": "/scratch/643_vitis_freddyfu/lab3/krnl_cnn",
+    "arguments": [
+      "/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis_HLS/2023.2/tps/lnx64/gcc-8.3.0/bin/g++",
+      "-isystem/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis_HLS/2023.2/include",
+      "-isystem/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis_HLS/2023.2/include/etc",
+      "-isystem/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis_HLS/2023.2/include/ap_sysc",
+      "-isystem/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis_HLS/2023.2/lnx64/tools/auto_cc/include",
+      "-isystem/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis_HLS/2023.2/lnx64/tools/systemc/include",
+      "--compile",
+      "/scratch/643_vitis_freddyfu/lab3/cnn_host/util643.h"
+    ],
+    "file": "/scratch/643_vitis_freddyfu/lab3/cnn_host/util643.h"
+  },
+  {
+    "directory": "/scratch/643_vitis_freddyfu/lab3/krnl_cnn",
+    "arguments": [
+      "/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis_HLS/2023.2/tps/lnx64/gcc-8.3.0/bin/g++",
+      "-isystem/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis_HLS/2023.2/include",
+      "-isystem/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis_HLS/2023.2/include/etc",
+      "-isystem/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis_HLS/2023.2/include/ap_sysc",
+      "-isystem/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis_HLS/2023.2/lnx64/tools/auto_cc/include",
+      "-isystem/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis_HLS/2023.2/lnx64/tools/systemc/include",
+      "--compile",
+      "/scratch/643_vitis_freddyfu/lab3/18643_cnn_src/krnl_cnn.cpp"
+    ],
+    "file": "/scratch/643_vitis_freddyfu/lab3/18643_cnn_src/krnl_cnn.cpp"
+  },
+  {
+    "directory": "/scratch/643_vitis_freddyfu/lab3/krnl_cnn",
+    "arguments": [
+      "/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis_HLS/2023.2/tps/lnx64/gcc-8.3.0/bin/g++",
+      "-isystem/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis_HLS/2023.2/include",
+      "-isystem/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis_HLS/2023.2/include/etc",
+      "-isystem/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis_HLS/2023.2/include/ap_sysc",
+      "-isystem/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis_HLS/2023.2/lnx64/tools/auto_cc/include",
+      "-isystem/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis_HLS/2023.2/lnx64/tools/systemc/include",
+      "--compile",
+      "/scratch/643_vitis_freddyfu/lab3/cnn_host/kernel643.h"
+    ],
+    "file": "/scratch/643_vitis_freddyfu/lab3/cnn_host/kernel643.h"
+  },
+  {
+    "directory": "/scratch/643_vitis_freddyfu/lab3/krnl_cnn",
+    "arguments": [
+      "/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis_HLS/2023.2/tps/lnx64/gcc-8.3.0/bin/g++",
+      "-isystem/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis_HLS/2023.2/include",
+      "-isystem/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis_HLS/2023.2/include/etc",
+      "-isystem/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis_HLS/2023.2/include/ap_sysc",
+      "-isystem/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis_HLS/2023.2/lnx64/tools/auto_cc/include",
+      "-isystem/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis_HLS/2023.2/lnx64/tools/systemc/include",
+      "--compile",
+      "/scratch/643_vitis_freddyfu/lab3/cnn_host/instance643.h"
+    ],
+    "file": "/scratch/643_vitis_freddyfu/lab3/cnn_host/instance643.h"
+  }
+]

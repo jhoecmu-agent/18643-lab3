@@ -1,0 +1,223 @@
+
+
+================================================================
+== Vitis HLS Report for 'p_anonymous_namespace_load_weights'
+================================================================
+* Date:           Sun Nov  8 12:26:37 2026
+
+* Version:        2023.2 (Build 4023990 on Oct 11 2023)
+* Project:        krnl_cnn
+* Solution:       hls (Vitis Kernel Flow Target)
+* Product family: zynquplus
+* Target device:  xczu3eg-sbva484-1-i
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing: 
+    * Summary: 
+    +--------+---------+----------+------------+
+    |  Clock |  Target | Estimated| Uncertainty|
+    +--------+---------+----------+------------+
+    |ap_clk  |  5.00 ns|  3.650 ns|     1.35 ns|
+    +--------+---------+----------+------------+
+
++ Latency: 
+    * Summary: 
+    +---------+---------+----------+----------+-----+-----+---------+
+    |  Latency (cycles) |  Latency (absolute) |  Interval | Pipeline|
+    |   min   |   max   |    min   |    max   | min | max |   Type  |
+    +---------+---------+----------+----------+-----+-----+---------+
+    |        ?|        ?|         ?|         ?|    ?|    ?|       no|
+    +---------+---------+----------+----------+-----+-----+---------+
+
+    + Detail: 
+        * Instance: 
+        +--------------------------------------------------------------------+---------------------------------------------------------+---------+---------+-----------+-----------+------+------+---------+
+        |                                                                    |                                                         |  Latency (cycles) |   Latency (absolute)  |   Interval  | Pipeline|
+        |                              Instance                              |                          Module                         |   min   |   max   |    min    |    max    |  min |  max |   Type  |
+        +--------------------------------------------------------------------+---------------------------------------------------------+---------+---------+-----------+-----------+------+------+---------+
+        |grp_p_anonymous_namespace_load_weights_Pipeline_WeightBurst_fu_110  |p_anonymous_namespace_load_weights_Pipeline_WeightBurst  |     9219|     9219|  46.095 us|  46.095 us|  9219|  9219|       no|
+        +--------------------------------------------------------------------+---------------------------------------------------------+---------+---------+-----------+-----------+------+------+---------+
+
+        * Loop: 
+        +--------------------+---------+---------+----------+-----------+-----------+------+----------+
+        |                    |  Latency (cycles) | Iteration|  Initiation Interval  | Trip |          |
+        |      Loop Name     |   min   |   max   |  Latency |  achieved |   target  | Count| Pipelined|
+        +--------------------+---------+---------+----------+-----------+-----------+------+----------+
+        |- VITIS_LOOP_89_1   |        ?|        ?|    221377|          -|          -|     ?|        no|
+        | + VITIS_LOOP_90_2  |   221304|   221304|      9221|          -|          -|    24|        no|
+        +--------------------+---------+---------+----------+-----------+-----------+------+----------+
+
+
+
+================================================================
+== Utilization Estimates
+================================================================
+* Summary: 
++-----------------+---------+-----+--------+-------+-----+
+|       Name      | BRAM_18K| DSP |   FF   |  LUT  | URAM|
++-----------------+---------+-----+--------+-------+-----+
+|DSP              |        -|    -|       -|      -|    -|
+|Expression       |        -|    -|       0|    168|    -|
+|FIFO             |        -|    -|       -|      -|    -|
+|Instance         |        -|    -|    1015|    139|    -|
+|Memory           |        -|    -|       -|      -|    -|
+|Multiplexer      |        -|    -|       -|    581|    -|
+|Register         |        -|    -|     337|      -|    -|
++-----------------+---------+-----+--------+-------+-----+
+|Total            |        0|    0|    1352|    888|    0|
++-----------------+---------+-----+--------+-------+-----+
+|Available        |      432|  360|  141120|  70560|    0|
++-----------------+---------+-----+--------+-------+-----+
+|Utilization (%)  |        0|    0|      ~0|      1|    0|
++-----------------+---------+-----+--------+-------+-----+
+
++ Detail: 
+    * Instance: 
+    +--------------------------------------------------------------------+---------------------------------------------------------+---------+----+------+-----+-----+
+    |                              Instance                              |                          Module                         | BRAM_18K| DSP|  FF  | LUT | URAM|
+    +--------------------------------------------------------------------+---------------------------------------------------------+---------+----+------+-----+-----+
+    |grp_p_anonymous_namespace_load_weights_Pipeline_WeightBurst_fu_110  |p_anonymous_namespace_load_weights_Pipeline_WeightBurst  |        0|   0|  1015|  139|    0|
+    +--------------------------------------------------------------------+---------------------------------------------------------+---------+----+------+-----+-----+
+    |Total                                                               |                                                         |        0|   0|  1015|  139|    0|
+    +--------------------------------------------------------------------+---------------------------------------------------------+---------+----+------+-----+-----+
+
+    * DSP: 
+    N/A
+
+    * Memory: 
+    N/A
+
+    * FIFO: 
+    N/A
+
+    * Expression: 
+    +---------------------+----------+----+---+----+------------+------------+
+    |    Variable Name    | Operation| DSP| FF| LUT| Bitwidth P0| Bitwidth P1|
+    +---------------------+----------+----+---+----+------------+------------+
+    |add_ln90_fu_164_p2   |         +|   0|  0|  12|           5|           1|
+    |b_2_fu_152_p2        |         +|   0|  0|  71|          64|           1|
+    |icmp_ln89_fu_147_p2  |      icmp|   0|  0|  71|          64|          64|
+    |icmp_ln90_fu_158_p2  |      icmp|   0|  0|  12|           5|           5|
+    |ap_block_state1      |        or|   0|  0|   2|           1|           1|
+    +---------------------+----------+----+---+----+------------+------------+
+    |Total                |          |   0|  0| 168|         139|          72|
+    +---------------------+----------+----+---+----+------------+------------+
+
+    * Multiplexer: 
+    +-----------------------------+-----+-----------+-----+-----------+
+    |             Name            | LUT | Input Size| Bits| Total Bits|
+    +-----------------------------+-----+-----------+-----+-----------+
+    |ap_NS_fsm                    |  404|         76|    1|         76|
+    |ap_done                      |    9|          2|    1|          2|
+    |b_fu_76                      |    9|          2|   64|        128|
+    |gmem_weights_blk_n_AR        |    9|          2|    1|          2|
+    |m_axi_gmem_weights_ARADDR    |   14|          3|   64|        192|
+    |m_axi_gmem_weights_ARBURST   |    9|          2|    2|          4|
+    |m_axi_gmem_weights_ARCACHE   |    9|          2|    4|          8|
+    |m_axi_gmem_weights_ARID      |    9|          2|    1|          2|
+    |m_axi_gmem_weights_ARLEN     |   14|          3|   32|         96|
+    |m_axi_gmem_weights_ARLOCK    |    9|          2|    2|          4|
+    |m_axi_gmem_weights_ARPROT    |    9|          2|    3|          6|
+    |m_axi_gmem_weights_ARQOS     |    9|          2|    4|          8|
+    |m_axi_gmem_weights_ARREGION  |    9|          2|    4|          8|
+    |m_axi_gmem_weights_ARSIZE    |    9|          2|    3|          6|
+    |m_axi_gmem_weights_ARUSER    |    9|          2|    1|          2|
+    |m_axi_gmem_weights_ARVALID   |   14|          3|    1|          3|
+    |m_axi_gmem_weights_RREADY    |    9|          2|    1|          2|
+    |tile_reg_99                  |    9|          2|    5|         10|
+    |weight_fifo_write            |    9|          2|    1|          2|
+    +-----------------------------+-----+-----------+-----+-----------+
+    |Total                        |  581|        115|  195|        561|
+    +-----------------------------+-----+-----------+-----+-----------+
+
+    * Register: 
+    +---------------------------------------------------------------------------------+----+----+-----+-----------+
+    |                                       Name                                      | FF | LUT| Bits| Const Bits|
+    +---------------------------------------------------------------------------------+----+----+-----+-----------+
+    |add_ln90_reg_207                                                                 |   5|   0|    5|          0|
+    |ap_CS_fsm                                                                        |  75|   0|   75|          0|
+    |ap_done_reg                                                                      |   1|   0|    1|          0|
+    |b_2_reg_199                                                                      |  64|   0|   64|          0|
+    |b_fu_76                                                                          |  64|   0|   64|          0|
+    |gmem_weights_addr_reg_191                                                        |  64|   0|   64|          0|
+    |grp_p_anonymous_namespace_load_weights_Pipeline_WeightBurst_fu_110_ap_start_reg  |   1|   0|    1|          0|
+    |tile_reg_99                                                                      |   5|   0|    5|          0|
+    |trunc_ln_reg_186                                                                 |  58|   0|   58|          0|
+    +---------------------------------------------------------------------------------+----+----+-----+-----------+
+    |Total                                                                            | 337|   0|  337|          0|
+    +---------------------------------------------------------------------------------+----+----+-----+-----------+
+
+
+
+================================================================
+== Interface
+================================================================
+* Summary: 
++-----------------------------+-----+-----+------------+-----------------------------------+--------------+
+|          RTL Ports          | Dir | Bits|  Protocol  |           Source Object           |    C Type    |
++-----------------------------+-----+-----+------------+-----------------------------------+--------------+
+|ap_clk                       |   in|    1|  ap_ctrl_hs|  (anonymous namespace)load_weights|  return value|
+|ap_rst                       |   in|    1|  ap_ctrl_hs|  (anonymous namespace)load_weights|  return value|
+|ap_start                     |   in|    1|  ap_ctrl_hs|  (anonymous namespace)load_weights|  return value|
+|ap_done                      |  out|    1|  ap_ctrl_hs|  (anonymous namespace)load_weights|  return value|
+|ap_continue                  |   in|    1|  ap_ctrl_hs|  (anonymous namespace)load_weights|  return value|
+|ap_idle                      |  out|    1|  ap_ctrl_hs|  (anonymous namespace)load_weights|  return value|
+|ap_ready                     |  out|    1|  ap_ctrl_hs|  (anonymous namespace)load_weights|  return value|
+|m_axi_gmem_weights_AWVALID   |  out|    1|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_AWREADY   |   in|    1|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_AWADDR    |  out|   64|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_AWID      |  out|    1|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_AWLEN     |  out|   32|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_AWSIZE    |  out|    3|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_AWBURST   |  out|    2|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_AWLOCK    |  out|    2|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_AWCACHE   |  out|    4|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_AWPROT    |  out|    3|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_AWQOS     |  out|    4|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_AWREGION  |  out|    4|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_AWUSER    |  out|    1|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_WVALID    |  out|    1|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_WREADY    |   in|    1|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_WDATA     |  out|  512|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_WSTRB     |  out|   64|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_WLAST     |  out|    1|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_WID       |  out|    1|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_WUSER     |  out|    1|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_ARVALID   |  out|    1|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_ARREADY   |   in|    1|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_ARADDR    |  out|   64|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_ARID      |  out|    1|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_ARLEN     |  out|   32|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_ARSIZE    |  out|    3|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_ARBURST   |  out|    2|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_ARLOCK    |  out|    2|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_ARCACHE   |  out|    4|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_ARPROT    |  out|    3|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_ARQOS     |  out|    4|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_ARREGION  |  out|    4|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_ARUSER    |  out|    1|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_RVALID    |   in|    1|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_RREADY    |  out|    1|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_RDATA     |   in|  512|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_RLAST     |   in|    1|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_RID       |   in|    1|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_RFIFONUM  |   in|    9|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_RUSER     |   in|    1|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_RRESP     |   in|    2|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_BVALID    |   in|    1|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_BREADY    |  out|    1|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_BRESP     |   in|    2|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_BID       |   in|    1|       m_axi|                       gmem_weights|       pointer|
+|m_axi_gmem_weights_BUSER     |   in|    1|       m_axi|                       gmem_weights|       pointer|
+|weights                      |   in|   64|     ap_none|                            weights|        scalar|
+|weight_fifo_din              |  out|   32|     ap_fifo|                        weight_fifo|       pointer|
+|weight_fifo_num_data_valid   |   in|    9|     ap_fifo|                        weight_fifo|       pointer|
+|weight_fifo_fifo_cap         |   in|    9|     ap_fifo|                        weight_fifo|       pointer|
+|weight_fifo_full_n           |   in|    1|     ap_fifo|                        weight_fifo|       pointer|
+|weight_fifo_write            |  out|    1|     ap_fifo|                        weight_fifo|       pointer|
+|batch_size                   |   in|   64|     ap_none|                         batch_size|        scalar|
++-----------------------------+-----+-----+------------+-----------------------------------+--------------+
+

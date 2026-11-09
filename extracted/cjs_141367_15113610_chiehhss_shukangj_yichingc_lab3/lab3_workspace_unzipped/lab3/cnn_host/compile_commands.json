@@ -1,0 +1,7 @@
+[
+  {
+    "directory": "/scratch/643_vitis_shukangj/lab3/cnn_host/_ide/_build",
+    "command": "/usr/bin/g++ -DVITIS_MAJOR_VERSION\u003d2023 -DVITIS_MINOR_VERSION\u003d2 -DVITIS_VERSION\u003d2023.2 -D__USE_XOPEN2K8 -I/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis_HLS/2023.2/include -I/usr/local/cuda/include -I/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/local_xrt/2023.2/opt/xilinx/xrt/include -g -Wall -Wextra -O0 -g3 -std\u003dc++14 -o CMakeFiles/cnn_host.dir/cnn.cpp.o -c /scratch/643_vitis_shukangj/lab3/cnn_host/cnn.cpp",
+    "file": "/scratch/643_vitis_shukangj/lab3/cnn_host/cnn.cpp"
+  }
+]

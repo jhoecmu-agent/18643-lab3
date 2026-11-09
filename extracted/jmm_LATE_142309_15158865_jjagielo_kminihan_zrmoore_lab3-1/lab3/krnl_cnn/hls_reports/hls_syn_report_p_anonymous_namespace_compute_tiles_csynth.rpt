@@ -1,0 +1,487 @@
+
+
+================================================================
+== Vitis HLS Report for 'p_anonymous_namespace_compute_tiles'
+================================================================
+* Date:           Sun Nov  8 12:26:46 2026
+
+* Version:        2023.2 (Build 4023990 on Oct 11 2023)
+* Project:        krnl_cnn
+* Solution:       hls (Vitis Kernel Flow Target)
+* Product family: zynquplus
+* Target device:  xczu3eg-sbva484-1-i
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing: 
+    * Summary: 
+    +--------+---------+----------+------------+
+    |  Clock |  Target | Estimated| Uncertainty|
+    +--------+---------+----------+------------+
+    |ap_clk  |  5.00 ns|  3.650 ns|     1.35 ns|
+    +--------+---------+----------+------------+
+
++ Latency: 
+    * Summary: 
+    +---------+---------+----------+----------+-----+-----+---------+
+    |  Latency (cycles) |  Latency (absolute) |  Interval | Pipeline|
+    |   min   |   max   |    min   |    max   | min | max |   Type  |
+    +---------+---------+----------+----------+-----+-----+---------+
+    |        ?|        ?|         ?|         ?|    ?|    ?|       no|
+    +---------+---------+----------+----------+-----+-----+---------+
+
+    + Detail: 
+        * Instance: 
+        +---------------------------------------------------------------+---------------------------------------------------+---------+---------+----------+----------+-----+-----+---------+
+        |                                                               |                                                   |  Latency (cycles) |  Latency (absolute) |  Interval | Pipeline|
+        |                            Instance                           |                       Module                      |   min   |   max   |    min   |    max   | min | max |   Type  |
+        +---------------------------------------------------------------+---------------------------------------------------+---------+---------+----------+----------+-----+-----+---------+
+        |grp_p_anonymous_namespace_compute_tiles_Pipeline_Step_fu_1254  |p_anonymous_namespace_compute_tiles_Pipeline_Step  |        ?|        ?|         ?|         ?|    ?|    ?|       no|
+        +---------------------------------------------------------------+---------------------------------------------------+---------+---------+----------+----------+-----+-----+---------+
+
+        * Loop: 
+        +--------------------------+---------+---------+----------+-----------+-----------+------+----------+
+        |                          |  Latency (cycles) | Iteration|  Initiation Interval  | Trip |          |
+        |         Loop Name        |   min   |   max   |  Latency |  achieved |   target  | Count| Pipelined|
+        +--------------------------+---------+---------+----------+-----------+-----------+------+----------+
+        |- VITIS_LOOP_124_1_Phase  |        ?|        ?|         ?|          -|          -|     ?|        no|
+        +--------------------------+---------+---------+----------+-----------+-----------+------+----------+
+
+
+
+================================================================
+== Utilization Estimates
+================================================================
+* Summary: 
++-----------------+---------+-----+--------+-------+-----+
+|       Name      | BRAM_18K| DSP |   FF   |  LUT  | URAM|
++-----------------+---------+-----+--------+-------+-----+
+|DSP              |        -|    -|       -|      -|    -|
+|Expression       |        -|    -|       0|    231|    -|
+|FIFO             |        -|    -|       -|      -|    -|
+|Instance         |        -|  252|   41158|  38076|    -|
+|Memory           |      186|    -|    4608|   1872|    -|
+|Multiplexer      |        -|    -|       -|    121|    -|
+|Register         |        -|    -|     222|      -|    -|
++-----------------+---------+-----+--------+-------+-----+
+|Total            |      186|  252|   45988|  40300|    0|
++-----------------+---------+-----+--------+-------+-----+
+|Available        |      432|  360|  141120|  70560|    0|
++-----------------+---------+-----+--------+-------+-----+
+|Utilization (%)  |       43|   70|      32|     57|    0|
++-----------------+---------+-----+--------+-------+-----+
+
++ Detail: 
+    * Instance: 
+    +---------------------------------------------------------------+---------------------------------------------------+---------+-----+-------+-------+-----+
+    |                            Instance                           |                       Module                      | BRAM_18K| DSP |   FF  |  LUT  | URAM|
+    +---------------------------------------------------------------+---------------------------------------------------+---------+-----+-------+-------+-----+
+    |mul_64ns_6ns_69_5_1_U698                                       |mul_64ns_6ns_69_5_1                                |        0|    4|    441|    249|    0|
+    |grp_p_anonymous_namespace_compute_tiles_Pipeline_Step_fu_1254  |p_anonymous_namespace_compute_tiles_Pipeline_Step  |        0|  248|  40717|  37827|    0|
+    +---------------------------------------------------------------+---------------------------------------------------+---------+-----+-------+-------+-----+
+    |Total                                                          |                                                   |        0|  252|  41158|  38076|    0|
+    +---------------------------------------------------------------+---------------------------------------------------+---------+-----+-------+-------+-----+
+
+    * DSP: 
+    N/A
+
+    * Memory: 
+    +------------+-------------------------------------------------------------+---------+----+----+-----+-------+-----+------+-------------+
+    |   Memory   |                            Module                           | BRAM_18K| FF | LUT| URAM| Words | Bits| Banks| W*Bits*Banks|
+    +------------+-------------------------------------------------------------+---------+----+----+-----+-------+-----+------+-------------+
+    |BufI_U      |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_1_U    |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_2_U    |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_3_U    |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_4_U    |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_5_U    |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_6_U    |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_7_U    |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_8_U    |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_9_U    |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_10_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_11_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_12_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_13_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_14_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_15_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_16_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_17_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_18_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_19_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_20_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_21_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_22_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_23_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_24_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_25_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_26_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_27_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_28_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_29_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_30_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_31_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_32_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_33_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_34_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_35_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_36_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_37_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_38_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_39_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_40_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_41_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_42_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_43_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_44_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_45_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_46_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_47_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_48_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_49_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_50_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_51_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_52_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_53_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_54_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_55_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_56_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_57_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_58_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_59_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_60_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_61_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_62_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_63_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_64_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_65_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_66_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_67_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_68_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_69_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_70_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_71_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_72_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_73_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_74_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_75_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_76_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_77_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_78_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_79_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_80_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_81_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_82_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_83_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_84_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_85_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_86_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_87_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_88_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_89_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_90_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_91_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_92_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_93_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_94_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_95_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_96_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_97_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_98_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_99_U   |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_100_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_101_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_102_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_103_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_104_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_105_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_106_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_107_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_108_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_109_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_110_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_111_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_112_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_113_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_114_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_115_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_116_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_117_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_118_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_119_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_120_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_121_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_122_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_123_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_124_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_125_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_126_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_127_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_128_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_129_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_130_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_131_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_132_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_133_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_134_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_135_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_136_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_137_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_138_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_139_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_140_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_141_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_142_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufI_143_U  |p_anonymous_namespace_compute_tiles_BufI_RAM_1P_LUTRAM_1R1W  |        0|  32|  13|    0|     25|   32|     1|          800|
+    |BufO_U      |p_anonymous_namespace_compute_tiles_BufO_RAM_S2P_BRAM_1R1W   |       42|   0|   0|    0|  21632|   32|     1|       692224|
+    |BufW_U      |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_1_U    |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_2_U    |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_3_U    |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_4_U    |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_5_U    |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_6_U    |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_7_U    |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_8_U    |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_9_U    |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_10_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_11_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_12_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_13_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_14_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_15_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_16_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_17_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_18_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_19_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_20_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_21_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_22_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_23_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_24_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_25_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_26_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_27_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_28_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_29_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_30_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_31_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_32_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_33_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_34_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_35_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_36_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_37_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_38_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_39_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_40_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_41_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_42_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_43_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_44_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_45_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_46_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_47_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_48_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_49_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_50_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_51_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_52_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_53_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_54_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_55_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_56_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_57_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_58_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_59_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_60_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_61_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_62_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_63_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_64_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_65_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_66_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_67_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_68_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_69_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_70_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_71_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_72_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_73_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_74_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_75_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_76_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_77_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_78_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_79_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_80_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_81_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_82_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_83_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_84_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_85_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_86_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_87_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_88_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_89_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_90_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_91_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_92_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_93_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_94_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_95_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_96_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_97_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_98_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_99_U   |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_100_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_101_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_102_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_103_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_104_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_105_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_106_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_107_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_108_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_109_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_110_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_111_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_112_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_113_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_114_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_115_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_116_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_117_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_118_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_119_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_120_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_121_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_122_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_123_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_124_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_125_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_126_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_127_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_128_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_129_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_130_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_131_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_132_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_133_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_134_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_135_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_136_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_137_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_138_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_139_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_140_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_141_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_142_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    |BufW_143_U  |p_anonymous_namespace_compute_tiles_BufW_RAM_1P_BRAM_1R1W    |        1|   0|   0|    0|    128|   32|     1|         4096|
+    +------------+-------------------------------------------------------------+---------+----+----+-----+-------+-----+------+-------------+
+    |Total       |                                                             |      186|4608|1872|    0|  43664| 9248|   289|      1397248|
+    +------------+-------------------------------------------------------------+---------+----+----+-----+-------+-----+------+-------------+
+
+    * FIFO: 
+    N/A
+
+    * Expression: 
+    +-------------------------+----------+----+---+----+------------+------------+
+    |      Variable Name      | Operation| DSP| FF| LUT| Bitwidth P0| Bitwidth P1|
+    +-------------------------+----------+----+---+----+------------+------------+
+    |add_ln124_fu_1585_p2     |         +|   0|  0|  76|          69|           1|
+    |phase_1_fu_1641_p2       |         +|   0|  0|  12|           5|           1|
+    |cmp100_fu_1634_p2        |      icmp|   0|  0|  12|           5|           5|
+    |cmp96_fu_1627_p2         |      icmp|   0|  0|  12|           5|           1|
+    |compute_done_fu_1620_p2  |      icmp|   0|  0|  12|           5|           1|
+    |icmp_ln124_fu_1580_p2    |      icmp|   0|  0|  76|          69|          69|
+    |icmp_ln125_fu_1594_p2    |      icmp|   0|  0|  12|           5|           4|
+    |input_done_fu_1613_p2    |      icmp|   0|  0|  12|           5|           5|
+    |ap_block_state1          |        or|   0|  0|   2|           1|           1|
+    |select_ln124_fu_1600_p3  |    select|   0|  0|   5|           1|           1|
+    +-------------------------+----------+----+---+----+------------+------------+
+    |Total                    |          |   0|  0| 231|         170|          89|
+    +-------------------------+----------+----+---+----+------------+------------+
+
+    * Multiplexer: 
+    +----------------------+----+-----------+-----+-----------+
+    |         Name         | LUT| Input Size| Bits| Total Bits|
+    +----------------------+----+-----------+-----+-----------+
+    |ap_NS_fsm             |  49|          9|    1|          9|
+    |ap_done               |   9|          2|    1|          2|
+    |batch_size_blk_n      |   9|          2|    1|          2|
+    |batch_size_c_blk_n    |   9|          2|    1|          2|
+    |indvar_flatten_fu_80  |   9|          2|   69|        138|
+    |input_fifo_read       |   9|          2|    1|          2|
+    |output_fifo_write     |   9|          2|    1|          2|
+    |phase_fu_76           |   9|          2|    5|         10|
+    |weight_fifo_read      |   9|          2|    1|          2|
+    +----------------------+----+-----------+-----+-----------+
+    |Total                 | 121|         25|   81|        169|
+    +----------------------+----+-----------+-----+-----------+
+
+    * Register: 
+    +----------------------------------------------------------------------------+----+----+-----+-----------+
+    |                                    Name                                    | FF | LUT| Bits| Const Bits|
+    +----------------------------------------------------------------------------+----+----+-----+-----------+
+    |ap_CS_fsm                                                                   |   8|   0|    8|          0|
+    |ap_done_reg                                                                 |   1|   0|    1|          0|
+    |batch_size_2_reg_1671                                                       |  64|   0|   64|          0|
+    |bound_reg_1681                                                              |  69|   0|   69|          0|
+    |cmp100_reg_1709                                                             |   1|   0|    1|          0|
+    |cmp96_reg_1704                                                              |   1|   0|    1|          0|
+    |compute_done_reg_1699                                                       |   1|   0|    1|          0|
+    |grp_p_anonymous_namespace_compute_tiles_Pipeline_Step_fu_1254_ap_start_reg  |   1|   0|    1|          0|
+    |indvar_flatten_fu_80                                                        |  69|   0|   69|          0|
+    |input_done_reg_1694                                                         |   1|   0|    1|          0|
+    |phase_fu_76                                                                 |   5|   0|    5|          0|
+    |trunc_ln125_reg_1689                                                        |   1|   0|    1|          0|
+    +----------------------------------------------------------------------------+----+----+-----+-----------+
+    |Total                                                                       | 222|   0|  222|          0|
+    +----------------------------------------------------------------------------+----+----+-----+-----------+
+
+
+
+================================================================
+== Interface
+================================================================
+* Summary: 
++-----------------------------+-----+-----+------------+------------------------------------+--------------+
+|          RTL Ports          | Dir | Bits|  Protocol  |            Source Object           |    C Type    |
++-----------------------------+-----+-----+------------+------------------------------------+--------------+
+|ap_clk                       |   in|    1|  ap_ctrl_hs|  (anonymous namespace)compute_tiles|  return value|
+|ap_rst                       |   in|    1|  ap_ctrl_hs|  (anonymous namespace)compute_tiles|  return value|
+|ap_start                     |   in|    1|  ap_ctrl_hs|  (anonymous namespace)compute_tiles|  return value|
+|ap_done                      |  out|    1|  ap_ctrl_hs|  (anonymous namespace)compute_tiles|  return value|
+|ap_continue                  |   in|    1|  ap_ctrl_hs|  (anonymous namespace)compute_tiles|  return value|
+|ap_idle                      |  out|    1|  ap_ctrl_hs|  (anonymous namespace)compute_tiles|  return value|
+|ap_ready                     |  out|    1|  ap_ctrl_hs|  (anonymous namespace)compute_tiles|  return value|
+|input_fifo_dout              |   in|   32|     ap_fifo|                          input_fifo|       pointer|
+|input_fifo_num_data_valid    |   in|    9|     ap_fifo|                          input_fifo|       pointer|
+|input_fifo_fifo_cap          |   in|    9|     ap_fifo|                          input_fifo|       pointer|
+|input_fifo_empty_n           |   in|    1|     ap_fifo|                          input_fifo|       pointer|
+|input_fifo_read              |  out|    1|     ap_fifo|                          input_fifo|       pointer|
+|weight_fifo_dout             |   in|   32|     ap_fifo|                         weight_fifo|       pointer|
+|weight_fifo_num_data_valid   |   in|    9|     ap_fifo|                         weight_fifo|       pointer|
+|weight_fifo_fifo_cap         |   in|    9|     ap_fifo|                         weight_fifo|       pointer|
+|weight_fifo_empty_n          |   in|    1|     ap_fifo|                         weight_fifo|       pointer|
+|weight_fifo_read             |  out|    1|     ap_fifo|                         weight_fifo|       pointer|
+|output_fifo_din              |  out|   32|     ap_fifo|                         output_fifo|       pointer|
+|output_fifo_num_data_valid   |   in|    9|     ap_fifo|                         output_fifo|       pointer|
+|output_fifo_fifo_cap         |   in|    9|     ap_fifo|                         output_fifo|       pointer|
+|output_fifo_full_n           |   in|    1|     ap_fifo|                         output_fifo|       pointer|
+|output_fifo_write            |  out|    1|     ap_fifo|                         output_fifo|       pointer|
+|batch_size_dout              |   in|   64|     ap_fifo|                          batch_size|       pointer|
+|batch_size_num_data_valid    |   in|    3|     ap_fifo|                          batch_size|       pointer|
+|batch_size_fifo_cap          |   in|    3|     ap_fifo|                          batch_size|       pointer|
+|batch_size_empty_n           |   in|    1|     ap_fifo|                          batch_size|       pointer|
+|batch_size_read              |  out|    1|     ap_fifo|                          batch_size|       pointer|
+|batch_size_c_din             |  out|   64|     ap_fifo|                        batch_size_c|       pointer|
+|batch_size_c_num_data_valid  |   in|    3|     ap_fifo|                        batch_size_c|       pointer|
+|batch_size_c_fifo_cap        |   in|    3|     ap_fifo|                        batch_size_c|       pointer|
+|batch_size_c_full_n          |   in|    1|     ap_fifo|                        batch_size_c|       pointer|
+|batch_size_c_write           |  out|    1|     ap_fifo|                        batch_size_c|       pointer|
++-----------------------------+-----+-----+------------+------------------------------------+--------------+
+

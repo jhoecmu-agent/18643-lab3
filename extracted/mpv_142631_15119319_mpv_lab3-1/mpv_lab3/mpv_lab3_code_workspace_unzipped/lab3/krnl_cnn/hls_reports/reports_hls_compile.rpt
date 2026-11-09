@@ -1,0 +1,466 @@
+
+
+================================================================
+== Synthesis Summary Report of 'krnl_cnn'
+================================================================
++ General Information: 
+    * Date:           Mon Nov  2 00:22:17 2026
+    * Version:        2023.2 (Build 4023990 on Oct 11 2023)
+    * Project:        krnl_cnn
+    * Solution:       hls (Vitis Kernel Flow Target)
+    * Product family: zynquplus
+    * Target device:  xczu3eg-sbva484-1-i
+    
+
++ Performance & Resource Estimates: 
+    
+    PS: '+' for module; 'o' for loop; '*' for dataflow
+    +--------------------------------------------------------------------------------------+------+------+---------+-----------+----------+---------+-------+----------+-----------+-----------+-------------+-------------+-----+
+    |                                        Modules                                       | Issue|      | Latency |  Latency  | Iteration|         |  Trip |          |           |           |             |             |     |
+    |                                        & Loops                                       | Type | Slack| (cycles)|    (ns)   |  Latency | Interval| Count | Pipelined|   BRAM    |    DSP    |      FF     |     LUT     | URAM|
+    +--------------------------------------------------------------------------------------+------+------+---------+-----------+----------+---------+-------+----------+-----------+-----------+-------------+-------------+-----+
+    |+ krnl_cnn                                                                            |     -|  0.00|        -|          -|         -|        -|      -|        no|  402 (93%)|  327 (90%)|  20453 (14%)|  41602 (58%)|    -|
+    | o ImagePairs                                                                         |     -|  3.65|        -|          -|   1218524|        -|      -|        no|          -|          -|            -|            -|    -|
+    |  + krnl_cnn_Pipeline_LoadImages_VITIS_LOOP_83_1_VITIS_LOOP_84_2_VITIS_LOOP_85_3      |     -|  0.00|    86478|  4.324e+05|         -|    86478|      -|        no|          -|    1 (~0%)|   1357 (~0%)|    3025 (4%)|    -|
+    |   o LoadImages_VITIS_LOOP_83_1_VITIS_LOOP_84_2_VITIS_LOOP_85_3                       |     -|  3.65|    86476|  4.324e+05|        78|        1|  86400|       yes|          -|          -|            -|            -|    -|
+    |  o OutputTiles                                                                       |     -|  3.65|  1132043|  5.660e+06|    102913|        -|     11|        no|          -|          -|            -|            -|    -|
+    |   + krnl_cnn_Pipeline_LoadWeights_VITIS_LOOP_94_4_VITIS_LOOP_95_5_VITIS_LOOP_96_6    |     -|  0.00|    20741|  1.037e+05|         -|    20741|      -|        no|          -|          -|   1370 (~0%)|  15751 (22%)|    -|
+    |    o LoadWeights_VITIS_LOOP_94_4_VITIS_LOOP_95_5_VITIS_LOOP_96_6                     |     -|  3.65|    20739|  1.037e+05|         5|        1|  20736|       yes|          -|          -|            -|            -|    -|
+    |   + krnl_cnn_Pipeline_PadWeights_VITIS_LOOP_103_7_VITIS_LOOP_104_8_VITIS_LOOP_105_9  |     -|  0.05|     6914|  3.457e+04|         -|     6914|      -|        no|          -|          -|     90 (~0%)|    1905 (2%)|    -|
+    |    o PadWeights_VITIS_LOOP_103_7_VITIS_LOOP_104_8_VITIS_LOOP_105_9                   |     -|  3.65|     6912|  3.456e+04|         2|        1|   6912|       yes|          -|          -|            -|            -|    -|
+    |   o ReuseWeights                                                                     |     -|  3.65|    75180|  3.759e+05|     37590|        -|      2|        no|          -|          -|            -|            -|    -|
+    |    + cnn_blocked_kernel                                                              |     -|  0.42|    35484|  1.774e+05|         -|    35484|      -|        no|    12 (2%)|  325 (90%)|   13578 (9%)|  12183 (17%)|    -|
+    |     + cnn_blocked_kernel_Pipeline_LoadO                                              |     -|  0.90|      171|    855.000|         -|      171|      -|        no|          -|          -|     10 (~0%)|     57 (~0%)|    -|
+    |      o LoadO                                                                         |     -|  3.65|      169|    845.000|         1|        1|    169|       yes|          -|          -|            -|            -|    -|
+    |     + cnn_blocked_kernel_Pipeline_StoreO                                             |     -|  0.95|      174|    870.000|         -|      174|      -|        no|          -|    1 (~0%)|     89 (~0%)|    100 (~0%)|    -|
+    |      o StoreO                                                                        |     -|  3.65|      172|    860.000|         5|        1|    169|       yes|          -|          -|            -|            -|    -|
+    |     o Ti                                                                             |     -|  3.65|    35136|  1.757e+05|       183|        -|    192|        no|          -|          -|            -|            -|    -|
+    |      + cnn_blocked_kernel_Pipeline_Compute                                           |     -|  0.42|      180|    900.000|         -|      180|      -|        no|          -|  324 (90%)|    9989 (7%)|  10848 (15%)|    -|
+    |       o Compute                                                                      |     -|  3.65|      178|    890.000|        11|        1|    169|       yes|          -|          -|            -|            -|    -|
+    |    + krnl_cnn_Pipeline_StoreImage_VITIS_LOOP_112_10_VITIS_LOOP_113_11                |     -|  0.00|     2102|  1.051e+04|         -|     2102|      -|        no|          -|    1 (~0%)|    932 (~0%)|    2894 (4%)|    -|
+    |     o StoreImage_VITIS_LOOP_112_10_VITIS_LOOP_113_11                                 |     -|  3.65|     2100|  1.050e+04|        74|        1|   2028|       yes|          -|          -|            -|            -|    -|
+    +--------------------------------------------------------------------------------------+------+------+---------+-----------+----------+---------+-------+----------+-----------+-----------+-------------+-------------+-----+
+
+
+================================================================
+== HW Interfaces
+================================================================
+* M_AXI
++------------+------------+---------------+---------+--------+----------+-----------+--------------+--------------+-------------+-------------+-------------------+
+| Interface  | Data Width | Address Width | Latency | Offset | Register | Max Widen | Max Read     | Max Write    | Num Read    | Num Write   | Resource Estimate |
+|            | (SW->HW)   |               |         |        |          | Bitwidth  | Burst Length | Burst Length | Outstanding | Outstanding |                   |
++------------+------------+---------------+---------+--------+----------+-----------+--------------+--------------+-------------+-------------+-------------------+
+| m_axi_gmem | 32 -> 512  | 64            | 64      | slave  | 0        | 512       | 16           | 16           | 16          | 16          | BRAM=58           |
++------------+------------+---------------+---------+--------+----------+-----------+--------------+--------------+-------------+-------------+-------------------+
+
+* S_AXILITE Interfaces
++---------------+------------+---------------+--------+----------+
+| Interface     | Data Width | Address Width | Offset | Register |
++---------------+------------+---------------+--------+----------+
+| s_axi_control | 32         | 6             | 16     | 0        |
++---------------+------------+---------------+--------+----------+
+
+* S_AXILITE Registers
++---------------+--------------+--------+-------+--------+----------------------------------+------------------------------------------------------------------------------------+
+| Interface     | Register     | Offset | Width | Access | Description                      | Bit Fields                                                                         |
++---------------+--------------+--------+-------+--------+----------------------------------+------------------------------------------------------------------------------------+
+| s_axi_control | CTRL         | 0x00   | 32    | RW     | Control signals                  | 0=AP_START 1=AP_DONE 2=AP_IDLE 3=AP_READY 4=AP_CONTINUE 7=AUTO_RESTART 9=INTERRUPT |
+| s_axi_control | GIER         | 0x04   | 32    | RW     | Global Interrupt Enable Register | 0=Enable                                                                           |
+| s_axi_control | IP_IER       | 0x08   | 32    | RW     | IP Interrupt Enable Register     | 0=CHAN0_INT_EN 1=CHAN1_INT_EN                                                      |
+| s_axi_control | IP_ISR       | 0x0c   | 32    | RW     | IP Interrupt Status Register     | 0=CHAN0_INT_ST 1=CHAN1_INT_ST                                                      |
+| s_axi_control | input_r_1    | 0x10   | 32    | W      | Data signal of input_r           |                                                                                    |
+| s_axi_control | input_r_2    | 0x14   | 32    | W      | Data signal of input_r           |                                                                                    |
+| s_axi_control | weights_1    | 0x1c   | 32    | W      | Data signal of weights           |                                                                                    |
+| s_axi_control | weights_2    | 0x20   | 32    | W      | Data signal of weights           |                                                                                    |
+| s_axi_control | output_r_1   | 0x28   | 32    | W      | Data signal of output_r          |                                                                                    |
+| s_axi_control | output_r_2   | 0x2c   | 32    | W      | Data signal of output_r          |                                                                                    |
+| s_axi_control | batch_size_1 | 0x34   | 32    | W      | Data signal of batch_size        |                                                                                    |
+| s_axi_control | batch_size_2 | 0x38   | 32    | W      | Data signal of batch_size        |                                                                                    |
++---------------+--------------+--------+-------+--------+----------------------------------+------------------------------------------------------------------------------------+
+
+* TOP LEVEL CONTROL
++-----------+---------------+-----------+
+| Interface | Type          | Ports     |
++-----------+---------------+-----------+
+| ap_clk    | clock         | ap_clk    |
+| ap_rst_n  | reset         | ap_rst_n  |
+| interrupt | interrupt     | interrupt |
+| ap_ctrl   | ap_ctrl_chain |           |
++-----------+---------------+-----------+
+
+
+================================================================
+== SW I/O Information
+================================================================
+* Top Function Arguments
++------------+-----------+-------------------+
+| Argument   | Direction | Datatype          |
++------------+-----------+-------------------+
+| input      | inout     | int const *       |
+| weights    | inout     | int const *       |
+| output     | inout     | int*              |
+| batch_size | in        | long unsigned int |
++------------+-----------+-------------------+
+
+* SW-to-HW Mapping
++------------+---------------+-----------+----------+----------------------------------------+
+| Argument   | HW Interface  | HW Type   | HW Usage | HW Info                                |
++------------+---------------+-----------+----------+----------------------------------------+
+| input      | m_axi_gmem    | interface |          |                                        |
+| input      | s_axi_control | interface | offset   |                                        |
+| weights    | m_axi_gmem    | interface |          |                                        |
+| weights    | s_axi_control | register  | offset   | name=weights_1 offset=0x1c range=32    |
+| weights    | s_axi_control | register  | offset   | name=weights_2 offset=0x20 range=32    |
+| output     | m_axi_gmem    | interface |          |                                        |
+| output     | s_axi_control | interface | offset   |                                        |
+| batch_size | s_axi_control | register  |          | name=batch_size_1 offset=0x34 range=32 |
+| batch_size | s_axi_control | register  |          | name=batch_size_2 offset=0x38 range=32 |
++------------+---------------+-----------+----------+----------------------------------------+
+
+
+================================================================
+== M_AXI Burst Information
+================================================================
+ Note: All burst requests might be further partitioned into multiple requests during RTL generation based on max_read_burst_length or max_write_burst_length settings.
+
+* Inferred Burst Summary
++--------------+-----------+----------+-------+
+| HW Interface | Direction | Length   | Width |
++--------------+-----------+----------+-------+
+| m_axi_gmem   | read      | variable | 512   |
++--------------+-----------+----------+-------+
+
+* All M_AXI Variable Accesses
++--------------+----------+-------------------------------------------------------------------+-----------+--------------+----------+-------------------+-------------------------------------------------------------------+------------+------------------------------------------+
+| HW Interface | Variable | Access Location                                                   | Direction | Burst Status | Length   | Loop              | Loop Location                                                     | Resolution | Problem                                  |
++--------------+----------+-------------------------------------------------------------------+-----------+--------------+----------+-------------------+-------------------------------------------------------------------+------------+------------------------------------------+
+| m_axi_gmem   | input    | /scratch/643_vitis_suchirv/lab3/18643_cnn_src/krnl_cnn.cpp:87:27  | read      | Widen Fail   |          | VITIS_LOOP_85_3   | /scratch/643_vitis_suchirv/lab3/18643_cnn_src/krnl_cnn.cpp:85:28  | 214-235    | Start index of the access is unaligned   |
+| m_axi_gmem   | input    | /scratch/643_vitis_suchirv/lab3/18643_cnn_src/krnl_cnn.cpp:87:27  | read      | Fail         |          | ImagePairs        | /scratch/643_vitis_suchirv/lab3/18643_cnn_src/krnl_cnn.cpp:79:14  | 214-230    | Stride is incompatible                   |
+| m_axi_gmem   | input    | /scratch/643_vitis_suchirv/lab3/18643_cnn_src/krnl_cnn.cpp:87:27  | read      | Inferred     | variable | LoadImages        | /scratch/643_vitis_suchirv/lab3/18643_cnn_src/krnl_cnn.cpp:82:14  |            |                                          |
+| m_axi_gmem   | weights  | /scratch/643_vitis_suchirv/lab3/18643_cnn_src/krnl_cnn.cpp:99:16  | read      | Widened      | variable | VITIS_LOOP_96_6   | /scratch/643_vitis_suchirv/lab3/18643_cnn_src/krnl_cnn.cpp:96:26  |            |                                          |
+| m_axi_gmem   | weights  | /scratch/643_vitis_suchirv/lab3/18643_cnn_src/krnl_cnn.cpp:99:16  | read      | Fail         |          | OutputTiles       | /scratch/643_vitis_suchirv/lab3/18643_cnn_src/krnl_cnn.cpp:90:15  | 214-232    | Access call is in the conditional branch |
+| m_axi_gmem   | weights  | /scratch/643_vitis_suchirv/lab3/18643_cnn_src/krnl_cnn.cpp:99:16  | read      | Inferred     | variable | LoadWeights       | /scratch/643_vitis_suchirv/lab3/18643_cnn_src/krnl_cnn.cpp:93:14  |            |                                          |
+| m_axi_gmem   | output   | /scratch/643_vitis_suchirv/lab3/18643_cnn_src/krnl_cnn.cpp:115:82 | write     | Widen Fail   |          | VITIS_LOOP_113_11 | /scratch/643_vitis_suchirv/lab3/18643_cnn_src/krnl_cnn.cpp:113:32 | 214-235    | Start index of the access is unaligned   |
+| m_axi_gmem   | output   | /scratch/643_vitis_suchirv/lab3/18643_cnn_src/krnl_cnn.cpp:115:82 | write     | Fail         |          | ReuseWeights      | /scratch/643_vitis_suchirv/lab3/18643_cnn_src/krnl_cnn.cpp:109:16 | 214-230    | Stride is incompatible                   |
+| m_axi_gmem   | output   | /scratch/643_vitis_suchirv/lab3/18643_cnn_src/krnl_cnn.cpp:115:82 | write     | Inferred     | variable | StoreImage        | /scratch/643_vitis_suchirv/lab3/18643_cnn_src/krnl_cnn.cpp:111:14 |            |                                          |
++--------------+----------+-------------------------------------------------------------------+-----------+--------------+----------+-------------------+-------------------------------------------------------------------+------------+------------------------------------------+
+
+    * Resolution URL: docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1448-hls-guidance&resourceid=XXX-YYY.html (replace XXX-YYY with column value)
+
+================================================================
+== Bind Op Report
+================================================================
++------------------------------------------------------------------------------------+-----+--------+--------------+-----+-----------+---------+
+| Name                                                                               | DSP | Pragma | Variable     | Op  | Impl      | Latency |
++------------------------------------------------------------------------------------+-----+--------+--------------+-----+-----------+---------+
+| + krnl_cnn                                                                         | 327 |        |              |     |           |         |
+|   add_ln79_fu_605_p2                                                               |     |        | add_ln79     | add | fabric    | 0       |
+|   add_ln79_1_fu_624_p2                                                             |     |        | add_ln79_1   | add | fabric    | 0       |
+|   add_ln79_2_fu_660_p2                                                             |     |        | add_ln79_2   | add | fabric    | 0       |
+|   add_ln79_4_fu_666_p2                                                             |     |        | add_ln79_4   | add | fabric    | 0       |
+|   add_ln79_3_fu_677_p2                                                             |     |        | add_ln79_3   | add | fabric    | 0       |
+|   add_ln90_3_fu_710_p2                                                             |     |        | add_ln90_3   | add | fabric    | 0       |
+|   add_ln90_4_fu_716_p2                                                             |     |        | add_ln90_4   | add | fabric    | 0       |
+|   add_ln90_2_fu_728_p2                                                             |     |        | add_ln90_2   | add | fabric    | 0       |
+|   add_ln91_fu_738_p2                                                               |     |        | add_ln91     | add | fabric    | 0       |
+|   sub_ln91_fu_743_p2                                                               |     |        | sub_ln91     | sub | fabric    | 0       |
+|   mul_4ns_12ns_15_1_1_U432                                                         |     |        | mul_ln93     | mul | auto      | 0       |
+|   sub_ln102_fu_846_p2                                                              |     |        | sub_ln102    | sub | fabric    | 0       |
+|   mul_4ns_12ns_15_1_1_U433                                                         |     |        | mul_ln102    | mul | auto      | 0       |
+|   mul_4ns_9ns_12_1_1_U434                                                          |     |        | mul_ln102_1  | mul | auto      | 0       |
+|   add_ln109_1_fu_895_p2                                                            |     |        | add_ln109_1  | add | fabric    | 0       |
+|   add_ln109_fu_906_p2                                                              |     |        | add_ln109    | add | fabric    | 0       |
+|   sub_ln110_fu_950_p2                                                              |     |        | sub_ln110    | sub | fabric    | 0       |
+|   add_ln90_fu_957_p2                                                               |     |        | add_ln90     | add | fabric    | 0       |
+|   add_ln90_1_fu_963_p2                                                             |     |        | add_ln90_1   | add | fabric    | 0       |
+|   batch_1_fu_777_p2                                                                |     |        | batch_1      | add | fabric    | 0       |
+|  + krnl_cnn_Pipeline_LoadImages_VITIS_LOOP_83_1_VITIS_LOOP_84_2_VITIS_LOOP_85_3    | 1   |        |              |     |           |         |
+|    add_ln82_1_fu_530_p2                                                            |     |        | add_ln82_1   | add | fabric    | 0       |
+|    add_ln82_fu_575_p2                                                              |     |        | add_ln82     | add | fabric    | 0       |
+|    add_ln83_1_fu_612_p2                                                            |     |        | add_ln83_1   | add | fabric    | 0       |
+|    add_ln84_fu_717_p2                                                              |     |        | add_ln84     | add | fabric    | 0       |
+|    mul_2ns_17ns_17_1_1_U1                                                          |     |        | mul_ln82     | mul | auto      | 0       |
+|    mac_muladd_8ns_8ns_17ns_17_4_1_U2                                               | 1   |        | mul_ln83     | mul | dsp_slice | 3       |
+|    mac_muladd_8ns_8ns_17ns_17_4_1_U2                                               | 1   |        | add_ln83     | add | dsp_slice | 3       |
+|    add_ln87_1_fu_829_p2                                                            |     |        | add_ln87_1   | add | fabric    | 0       |
+|    add_ln85_fu_777_p2                                                              |     |        | add_ln85     | add | fabric    | 0       |
+|    add_ln84_1_fu_639_p2                                                            |     |        | add_ln84_1   | add | fabric    | 0       |
+|    add_ln83_2_fu_542_p2                                                            |     |        | add_ln83_2   | add | fabric    | 0       |
+|  + krnl_cnn_Pipeline_LoadWeights_VITIS_LOOP_94_4_VITIS_LOOP_95_5_VITIS_LOOP_96_6   | 0   |        |              |     |           |         |
+|    add_ln93_1_fu_419_p2                                                            |     |        | add_ln93_1   | add | fabric    | 0       |
+|    add_ln93_fu_589_p2                                                              |     |        | add_ln93     | add | fabric    | 0       |
+|    add_ln94_fu_609_p2                                                              |     |        | add_ln94     | add | fabric    | 0       |
+|    add_ln95_fu_629_p2                                                              |     |        | add_ln95     | add | fabric    | 0       |
+|    add_ln96_fu_541_p2                                                              |     |        | add_ln96     | add | fabric    | 0       |
+|    add_ln95_1_fu_547_p2                                                            |     |        | add_ln95_1   | add | fabric    | 0       |
+|    add_ln94_1_fu_431_p2                                                            |     |        | add_ln94_1   | add | fabric    | 0       |
+|  + krnl_cnn_Pipeline_PadWeights_VITIS_LOOP_103_7_VITIS_LOOP_104_8_VITIS_LOOP_105_9 | 0   |        |              |     |           |         |
+|    add_ln102_1_fu_367_p2                                                           |     |        | add_ln102_1  | add | fabric    | 0       |
+|    add_ln102_fu_385_p2                                                             |     |        | add_ln102    | add | fabric    | 0       |
+|    add_ln103_fu_582_p2                                                             |     |        | add_ln103    | add | fabric    | 0       |
+|    add_ln104_fu_467_p2                                                             |     |        | add_ln104    | add | fabric    | 0       |
+|    add_ln105_fu_508_p2                                                             |     |        | add_ln105    | add | fabric    | 0       |
+|    add_ln104_1_fu_514_p2                                                           |     |        | add_ln104_1  | add | fabric    | 0       |
+|    add_ln103_1_fu_528_p2                                                           |     |        | add_ln103_1  | add | fabric    | 0       |
+|  + cnn_blocked_kernel                                                              | 325 |        |              |     |           |         |
+|    add_ln174_fu_621_p2                                                             |     |        | add_ln174    | add | fabric    | 0       |
+|    add_fu_647_p2                                                                   |     |        | add          | add | fabric    | 0       |
+|   + cnn_blocked_kernel_Pipeline_LoadO                                              | 0   |        |              |     |           |         |
+|     add_ln162_fu_290_p2                                                            |     |        | add_ln162    | add | fabric    | 0       |
+|   + cnn_blocked_kernel_Pipeline_StoreO                                             | 1   |        |              |     |           |         |
+|     add_ln212_fu_454_p2                                                            |     |        | add_ln212    | add | fabric    | 0       |
+|     mac_muladd_4ns_4ns_4ns_8_4_1_U338                                              | 1   |        | mul_ln216    | mul | dsp_slice | 3       |
+|     mac_muladd_4ns_4ns_4ns_8_4_1_U338                                              | 1   |        | add_ln216    | add | dsp_slice | 3       |
+|   + cnn_blocked_kernel_Pipeline_Compute                                            | 324 |        |              |     |           |         |
+|     add_ln176_fu_3408_p2                                                           |     |        | add_ln176    | add | fabric    | 0       |
+|     add_ln178_fu_3465_p2                                                           |     |        | add_ln178    | add | fabric    | 0       |
+|     add_ln178_1_fu_3470_p2                                                         |     |        | add_ln178_1  | add | fabric    | 0       |
+|     add_ln179_fu_3475_p2                                                           |     |        | add_ln179    | add | fabric    | 0       |
+|     add_ln179_1_fu_3480_p2                                                         |     |        | add_ln179_1  | add | fabric    | 0       |
+|     mul_32s_32s_32_4_1_U66                                                         | 3   | yes    | product_108  | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U67                                                         | 3   | yes    | product      | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U68                                                         | 3   | yes    | product_2    | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U69                                                         | 3   | yes    | product_3    | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U70                                                         | 3   | yes    | product_4    | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U71                                                         | 3   | yes    | product_5    | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U72                                                         | 3   | yes    | product_6    | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U73                                                         | 3   | yes    | product_7    | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U74                                                         | 3   | yes    | product_8    | mul | dsp       | 1       |
+|     add_ln206_fu_3987_p2                                                           |     |        | add_ln206    | add | fabric    | 0       |
+|     mul_32s_32s_32_4_1_U75                                                         | 3   | yes    | product_109  | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U76                                                         | 3   | yes    | product_10   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U77                                                         | 3   | yes    | product_11   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U78                                                         | 3   | yes    | product_12   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U79                                                         | 3   | yes    | product_13   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U80                                                         | 3   | yes    | product_14   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U81                                                         | 3   | yes    | product_15   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U82                                                         | 3   | yes    | product_16   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U83                                                         | 3   | yes    | product_17   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U84                                                         | 3   | yes    | product_110  | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U85                                                         | 3   | yes    | product_19   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U86                                                         | 3   | yes    | product_20   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U87                                                         | 3   | yes    | product_21   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U88                                                         | 3   | yes    | product_22   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U89                                                         | 3   | yes    | product_23   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U90                                                         | 3   | yes    | product_24   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U91                                                         | 3   | yes    | product_25   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U92                                                         | 3   | yes    | product_26   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U93                                                         | 3   | yes    | product_111  | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U94                                                         | 3   | yes    | product_28   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U95                                                         | 3   | yes    | product_29   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U96                                                         | 3   | yes    | product_30   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U97                                                         | 3   | yes    | product_31   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U98                                                         | 3   | yes    | product_32   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U99                                                         | 3   | yes    | product_33   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U100                                                        | 3   | yes    | product_34   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U101                                                        | 3   | yes    | product_35   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U102                                                        | 3   | yes    | product_112  | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U103                                                        | 3   | yes    | product_37   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U104                                                        | 3   | yes    | product_38   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U105                                                        | 3   | yes    | product_39   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U106                                                        | 3   | yes    | product_40   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U107                                                        | 3   | yes    | product_41   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U108                                                        | 3   | yes    | product_42   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U109                                                        | 3   | yes    | product_43   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U110                                                        | 3   | yes    | product_44   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U111                                                        | 3   | yes    | product_113  | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U112                                                        | 3   | yes    | product_46   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U113                                                        | 3   | yes    | product_47   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U114                                                        | 3   | yes    | product_48   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U115                                                        | 3   | yes    | product_49   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U116                                                        | 3   | yes    | product_50   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U117                                                        | 3   | yes    | product_51   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U118                                                        | 3   | yes    | product_52   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U119                                                        | 3   | yes    | product_53   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U120                                                        | 3   | yes    | product_114  | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U121                                                        | 3   | yes    | product_55   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U122                                                        | 3   | yes    | product_56   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U123                                                        | 3   | yes    | product_57   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U124                                                        | 3   | yes    | product_58   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U125                                                        | 3   | yes    | product_59   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U126                                                        | 3   | yes    | product_60   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U127                                                        | 3   | yes    | product_61   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U128                                                        | 3   | yes    | product_62   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U129                                                        | 3   | yes    | product_115  | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U130                                                        | 3   | yes    | product_64   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U131                                                        | 3   | yes    | product_65   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U132                                                        | 3   | yes    | product_66   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U133                                                        | 3   | yes    | product_67   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U134                                                        | 3   | yes    | product_68   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U135                                                        | 3   | yes    | product_69   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U136                                                        | 3   | yes    | product_70   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U137                                                        | 3   | yes    | product_71   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U138                                                        | 3   | yes    | product_116  | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U139                                                        | 3   | yes    | product_73   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U140                                                        | 3   | yes    | product_74   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U141                                                        | 3   | yes    | product_75   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U142                                                        | 3   | yes    | product_76   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U143                                                        | 3   | yes    | product_77   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U144                                                        | 3   | yes    | product_78   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U145                                                        | 3   | yes    | product_79   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U146                                                        | 3   | yes    | product_80   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U147                                                        | 3   | yes    | product_117  | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U148                                                        | 3   | yes    | product_82   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U149                                                        | 3   | yes    | product_83   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U150                                                        | 3   | yes    | product_84   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U151                                                        | 3   | yes    | product_85   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U152                                                        | 3   | yes    | product_86   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U153                                                        | 3   | yes    | product_87   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U154                                                        | 3   | yes    | product_88   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U155                                                        | 3   | yes    | product_89   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U156                                                        | 3   | yes    | product_118  | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U157                                                        | 3   | yes    | product_91   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U158                                                        | 3   | yes    | product_92   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U159                                                        | 3   | yes    | product_93   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U160                                                        | 3   | yes    | product_94   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U161                                                        | 3   | yes    | product_95   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U162                                                        | 3   | yes    | product_96   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U163                                                        | 3   | yes    | product_97   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U164                                                        | 3   | yes    | product_98   | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U165                                                        | 3   | yes    | product_119  | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U166                                                        | 3   | yes    | product_100  | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U167                                                        | 3   | yes    | product_101  | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U168                                                        | 3   | yes    | product_102  | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U169                                                        | 3   | yes    | product_103  | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U170                                                        | 3   | yes    | product_104  | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U171                                                        | 3   | yes    | product_105  | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U172                                                        | 3   | yes    | product_106  | mul | dsp       | 1       |
+|     mul_32s_32s_32_4_1_U173                                                        | 3   | yes    | product_107  | mul | dsp       | 1       |
+|     add_ln206_9_fu_4031_p2                                                         |     |        | add_ln206_9  | add | fabric    | 0       |
+|     add_ln206_18_fu_4075_p2                                                        |     |        | add_ln206_18 | add | fabric    | 0       |
+|     add_ln206_27_fu_4119_p2                                                        |     |        | add_ln206_27 | add | fabric    | 0       |
+|     add_ln206_36_fu_4163_p2                                                        |     |        | add_ln206_36 | add | fabric    | 0       |
+|     add_ln206_45_fu_4207_p2                                                        |     |        | add_ln206_45 | add | fabric    | 0       |
+|     add_ln206_54_fu_4251_p2                                                        |     |        | add_ln206_54 | add | fabric    | 0       |
+|     add_ln206_63_fu_4295_p2                                                        |     |        | add_ln206_63 | add | fabric    | 0       |
+|     add_ln206_72_fu_4339_p2                                                        |     |        | add_ln206_72 | add | fabric    | 0       |
+|     add_ln206_81_fu_4383_p2                                                        |     |        | add_ln206_81 | add | fabric    | 0       |
+|     add_ln206_90_fu_4427_p2                                                        |     |        | add_ln206_90 | add | fabric    | 0       |
+|     add_ln206_99_fu_4471_p2                                                        |     |        | add_ln206_99 | add | fabric    | 0       |
+|  + krnl_cnn_Pipeline_StoreImage_VITIS_LOOP_112_10_VITIS_LOOP_113_11                | 1   |        |              |     |           |         |
+|    add_ln111_1_fu_385_p2                                                           |     |        | add_ln111_1  | add | fabric    | 0       |
+|    add_ln111_fu_397_p2                                                             |     |        | add_ln111    | add | fabric    | 0       |
+|    add_ln112_fu_480_p2                                                             |     |        | add_ln112    | add | fabric    | 0       |
+|    mac_muladd_4ns_8ns_8ns_11_4_1_U412                                              | 1   |        | mul_ln111    | mul | dsp_slice | 3       |
+|    mul_4ns_5ns_8_1_1_U410                                                          |     |        | mul_ln115    | mul | auto      | 0       |
+|    mac_muladd_4ns_8ns_8ns_11_4_1_U412                                              | 1   |        | empty        | add | dsp_slice | 3       |
+|    add_ln115_3_fu_539_p2                                                           |     |        | add_ln115_3  | add | fabric    | 0       |
+|    add_ln115_fu_619_p2                                                             |     |        | add_ln115    | add | fabric    | 0       |
+|    add_ln113_fu_507_p2                                                             |     |        | add_ln113    | add | fabric    | 0       |
+|    add_ln112_1_fu_421_p2                                                           |     |        | add_ln112_1  | add | fabric    | 0       |
++------------------------------------------------------------------------------------+-----+--------+--------------+-----+-----------+---------+
+
+
+================================================================
+== Storage Report
+================================================================
++-----------------------+---------------+-----------+------+------+--------+----------+------+---------+------------------+
+| Name                  | Usage         | Type      | BRAM | URAM | Pragma | Variable | Impl | Latency | Bitwidth, Depth, |
+|                       |               |           |      |      |        |          |      |         | Banks            |
++-----------------------+---------------+-----------+------+------+--------+----------+------+---------+------------------+
+| + krnl_cnn            |               |           | 402  | 0    |        |          |      |         |                  |
+|   control_s_axi_U     | interface     | s_axilite |      |      |        |          |      |         |                  |
+|   gmem_m_axi_U        | interface     | m_axi     | 58   |      |        |          |      |         |                  |
+|   BufI_U              | ram_s2p array |           | 14   |      | yes    | BufI     | bram | 1       | 32, 6144, 1      |
+|   BufI_1_U            | ram_s2p array |           | 14   |      | yes    | BufI_1   | bram | 1       | 32, 6144, 1      |
+|   BufI_2_U            | ram_s2p array |           | 14   |      | yes    | BufI_2   | bram | 1       | 32, 6144, 1      |
+|   BufI_3_U            | ram_s2p array |           | 14   |      | yes    | BufI_3   | bram | 1       | 32, 6144, 1      |
+|   BufI_4_U            | ram_s2p array |           | 14   |      | yes    | BufI_4   | bram | 1       | 32, 6144, 1      |
+|   BufI_5_U            | ram_s2p array |           | 14   |      | yes    | BufI_5   | bram | 1       | 32, 6144, 1      |
+|   BufI_6_U            | ram_s2p array |           | 14   |      | yes    | BufI_6   | bram | 1       | 32, 6144, 1      |
+|   BufI_7_U            | ram_s2p array |           | 14   |      | yes    | BufI_7   | bram | 1       | 32, 6144, 1      |
+|   BufI_8_U            | ram_s2p array |           | 14   |      | yes    | BufI_8   | bram | 1       | 32, 6144, 1      |
+|   BufI_9_U            | ram_s2p array |           | 14   |      | yes    | BufI_9   | bram | 1       | 32, 6144, 1      |
+|   BufI_10_U           | ram_s2p array |           | 14   |      | yes    | BufI_10  | bram | 1       | 32, 6144, 1      |
+|   BufI_11_U           | ram_s2p array |           | 14   |      | yes    | BufI_11  | bram | 1       | 32, 6144, 1      |
+|   BufI_12_U           | ram_s2p array |           | 14   |      | yes    | BufI_12  | bram | 1       | 32, 6144, 1      |
+|   BufI_13_U           | ram_s2p array |           | 14   |      | yes    | BufI_13  | bram | 1       | 32, 6144, 1      |
+|   BufI_14_U           | ram_s2p array |           | 14   |      | yes    | BufI_14  | bram | 1       | 32, 6144, 1      |
+|   BufI_15_U           | ram_s2p array |           | 14   |      | yes    | BufI_15  | bram | 1       | 32, 6144, 1      |
+|   BufO_U              | ram_1p array  |           | 2    |      |        | BufO     | auto | 1       | 32, 169, 1       |
+|   BufO_1_U            | ram_1p array  |           | 2    |      |        | BufO_1   | auto | 1       | 32, 169, 1       |
+|   BufO_2_U            | ram_1p array  |           | 2    |      |        | BufO_2   | auto | 1       | 32, 169, 1       |
+|   BufO_3_U            | ram_1p array  |           | 2    |      |        | BufO_3   | auto | 1       | 32, 169, 1       |
+|   BufO_4_U            | ram_1p array  |           | 2    |      |        | BufO_4   | auto | 1       | 32, 169, 1       |
+|   BufO_5_U            | ram_1p array  |           | 2    |      |        | BufO_5   | auto | 1       | 32, 169, 1       |
+|   BufO_6_U            | ram_1p array  |           | 2    |      |        | BufO_6   | auto | 1       | 32, 169, 1       |
+|   BufO_7_U            | ram_1p array  |           | 2    |      |        | BufO_7   | auto | 1       | 32, 169, 1       |
+|   BufO_8_U            | ram_1p array  |           | 2    |      |        | BufO_8   | auto | 1       | 32, 169, 1       |
+|   BufO_9_U            | ram_1p array  |           | 2    |      |        | BufO_9   | auto | 1       | 32, 169, 1       |
+|   BufO_10_U           | ram_1p array  |           | 2    |      |        | BufO_10  | auto | 1       | 32, 169, 1       |
+|   BufO_11_U           | ram_1p array  |           | 2    |      |        | BufO_11  | auto | 1       | 32, 169, 1       |
+|   BufW_U              | ram_1p array  |           | 16   |      |        | BufW     | auto | 1       | 288, 192, 1      |
+|   BufW_1_U            | ram_1p array  |           | 16   |      |        | BufW_1   | auto | 1       | 288, 192, 1      |
+|   BufW_2_U            | ram_1p array  |           | 16   |      |        | BufW_2   | auto | 1       | 288, 192, 1      |
+|   BufW_3_U            | ram_1p array  |           | 16   |      |        | BufW_3   | auto | 1       | 288, 192, 1      |
+|   BufW_4_U            | ram_1p array  |           | 16   |      |        | BufW_4   | auto | 1       | 288, 192, 1      |
+|   BufW_5_U            | ram_1p array  |           | 16   |      |        | BufW_5   | auto | 1       | 288, 192, 1      |
+|   BufW_6_U            | ram_1p array  |           | 16   |      |        | BufW_6   | auto | 1       | 288, 192, 1      |
+|   BufW_7_U            | ram_1p array  |           | 16   |      |        | BufW_7   | auto | 1       | 288, 192, 1      |
+|   BufW_8_U            | ram_1p array  |           | 16   |      |        | BufW_8   | auto | 1       | 288, 192, 1      |
+|   BufW_9_U            | ram_1p array  |           | 16   |      |        | BufW_9   | auto | 1       | 288, 192, 1      |
+|   BufW_10_U           | ram_1p array  |           | 16   |      |        | BufW_10  | auto | 1       | 288, 192, 1      |
+|   BufW_11_U           | ram_1p array  |           | 16   |      |        | BufW_11  | auto | 1       | 288, 192, 1      |
+|  + cnn_blocked_kernel |               |           | 12   | 0    |        |          |      |         |                  |
+|    acc_U              | ram_s2p array |           | 1    |      | yes    | acc      | bram | 1       | 32, 169, 1       |
+|    acc_1_U            | ram_s2p array |           | 1    |      | yes    | acc_1    | bram | 1       | 32, 169, 1       |
+|    acc_2_U            | ram_s2p array |           | 1    |      | yes    | acc_2    | bram | 1       | 32, 169, 1       |
+|    acc_3_U            | ram_s2p array |           | 1    |      | yes    | acc_3    | bram | 1       | 32, 169, 1       |
+|    acc_4_U            | ram_s2p array |           | 1    |      | yes    | acc_4    | bram | 1       | 32, 169, 1       |
+|    acc_5_U            | ram_s2p array |           | 1    |      | yes    | acc_5    | bram | 1       | 32, 169, 1       |
+|    acc_6_U            | ram_s2p array |           | 1    |      | yes    | acc_6    | bram | 1       | 32, 169, 1       |
+|    acc_7_U            | ram_s2p array |           | 1    |      | yes    | acc_7    | bram | 1       | 32, 169, 1       |
+|    acc_8_U            | ram_s2p array |           | 1    |      | yes    | acc_8    | bram | 1       | 32, 169, 1       |
+|    acc_9_U            | ram_s2p array |           | 1    |      | yes    | acc_9    | bram | 1       | 32, 169, 1       |
+|    acc_10_U           | ram_s2p array |           | 1    |      | yes    | acc_10   | bram | 1       | 32, 169, 1       |
+|    acc_11_U           | ram_s2p array |           | 1    |      | yes    | acc_11   | bram | 1       | 32, 169, 1       |
+|    row_U              | rom_1p        |           |      |      |        | row      | auto | 1       | 4, 169, 1        |
+|    col_U              | rom_1p        |           |      |      |        | col      | auto | 1       | 4, 169, 1        |
++-----------------------+---------------+-----------+------+------+--------+----------+------+---------+------------------+
+
+
+================================================================
+== Pragma Report
+================================================================
+* Valid Pragma Syntax
++-----------------+------------------------------------------------+------------------------------------------------------------------+
+| Type            | Options                                        | Location                                                         |
++-----------------+------------------------------------------------+------------------------------------------------------------------+
+| array_partition | variable=BufI cyclic factor=4 dim=2            | ../18643_cnn_src/krnl_cnn.cpp:69 in krnl_cnn, BufI               |
+| array_partition | variable=BufI cyclic factor=4 dim=3            | ../18643_cnn_src/krnl_cnn.cpp:70 in krnl_cnn, BufI               |
+| bind_storage    | variable=BufI type=ram_s2p impl=bram latency=2 | ../18643_cnn_src/krnl_cnn.cpp:71 in krnl_cnn, BufI               |
+| array_partition | variable=BufO complete dim=1                   | ../18643_cnn_src/krnl_cnn.cpp:73 in krnl_cnn, BufO               |
+| array_partition | variable=BufW complete dim=1                   | ../18643_cnn_src/krnl_cnn.cpp:75 in krnl_cnn, BufW               |
+| array_reshape   | variable=BufW complete dim=3                   | ../18643_cnn_src/krnl_cnn.cpp:76 in krnl_cnn, BufW               |
+| array_reshape   | variable=BufW complete dim=4                   | ../18643_cnn_src/krnl_cnn.cpp:77 in krnl_cnn, BufW               |
+| pipeline        | II=1                                           | ../18643_cnn_src/krnl_cnn.cpp:86 in krnl_cnn                     |
+| pipeline        | II=1                                           | ../18643_cnn_src/krnl_cnn.cpp:97 in krnl_cnn                     |
+| pipeline        | II=1                                           | ../18643_cnn_src/krnl_cnn.cpp:106 in krnl_cnn                    |
+| pipeline        | II=1                                           | ../18643_cnn_src/krnl_cnn.cpp:114 in krnl_cnn                    |
+| inline          | off                                            | ../18643_cnn_src/krnl_cnn.cpp:128 in cnn_blocked_kernel          |
+| interface       | mode=ap_memory port=BufO storage_type=ram_1p   | ../18643_cnn_src/krnl_cnn.cpp:129 in cnn_blocked_kernel, BufO    |
+| interface       | mode=ap_memory port=BufW storage_type=ram_1p   | ../18643_cnn_src/krnl_cnn.cpp:130 in cnn_blocked_kernel, BufW    |
+| array_partition | variable=BufI cyclic factor=4 dim=2            | ../18643_cnn_src/krnl_cnn.cpp:138 in cnn_blocked_kernel, BufI    |
+| array_partition | variable=BufI cyclic factor=4 dim=3            | ../18643_cnn_src/krnl_cnn.cpp:139 in cnn_blocked_kernel, BufI    |
+| array_partition | variable=BufW complete dim=1                   | ../18643_cnn_src/krnl_cnn.cpp:142 in cnn_blocked_kernel, BufW    |
+| array_reshape   | variable=BufW complete dim=3                   | ../18643_cnn_src/krnl_cnn.cpp:143 in cnn_blocked_kernel, BufW    |
+| array_reshape   | variable=BufW complete dim=4                   | ../18643_cnn_src/krnl_cnn.cpp:144 in cnn_blocked_kernel, BufW    |
+| array_partition | variable=BufO complete dim=1                   | ../18643_cnn_src/krnl_cnn.cpp:147 in cnn_blocked_kernel, BufO    |
+| array_partition | variable=acc complete dim=1                    | ../18643_cnn_src/krnl_cnn.cpp:158 in cnn_blocked_kernel, acc     |
+| bind_storage    | variable=acc type=ram_s2p impl=bram            | ../18643_cnn_src/krnl_cnn.cpp:159 in cnn_blocked_kernel, acc     |
+| pipeline        | II=1                                           | ../18643_cnn_src/krnl_cnn.cpp:163 in cnn_blocked_kernel          |
+| unroll          |                                                | ../18643_cnn_src/krnl_cnn.cpp:165 in cnn_blocked_kernel          |
+| loop_flatten    | off                                            | ../18643_cnn_src/krnl_cnn.cpp:175 in cnn_blocked_kernel          |
+| pipeline        | II=1                                           | ../18643_cnn_src/krnl_cnn.cpp:177 in cnn_blocked_kernel          |
+| array_partition | variable=win complete dim=0                    | ../18643_cnn_src/krnl_cnn.cpp:183 in cnn_blocked_kernel, win     |
+| unroll          |                                                | ../18643_cnn_src/krnl_cnn.cpp:185 in cnn_blocked_kernel          |
+| unroll          |                                                | ../18643_cnn_src/krnl_cnn.cpp:187 in cnn_blocked_kernel          |
+| unroll          |                                                | ../18643_cnn_src/krnl_cnn.cpp:194 in cnn_blocked_kernel          |
+| unroll          |                                                | ../18643_cnn_src/krnl_cnn.cpp:197 in cnn_blocked_kernel          |
+| unroll          |                                                | ../18643_cnn_src/krnl_cnn.cpp:199 in cnn_blocked_kernel          |
+| bind_op         | variable=product op=mul impl=dsp latency=3     | ../18643_cnn_src/krnl_cnn.cpp:201 in cnn_blocked_kernel, product |
+| pipeline        | II=1                                           | ../18643_cnn_src/krnl_cnn.cpp:213 in cnn_blocked_kernel          |
+| unroll          |                                                | ../18643_cnn_src/krnl_cnn.cpp:215 in cnn_blocked_kernel          |
++-----------------+------------------------------------------------+------------------------------------------------------------------+
+
+

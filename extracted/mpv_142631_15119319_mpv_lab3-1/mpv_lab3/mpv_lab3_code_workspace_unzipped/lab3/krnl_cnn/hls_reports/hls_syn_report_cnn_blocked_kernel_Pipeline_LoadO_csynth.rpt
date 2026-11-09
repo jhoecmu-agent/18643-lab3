@@ -1,0 +1,180 @@
+
+
+================================================================
+== Vitis HLS Report for 'cnn_blocked_kernel_Pipeline_LoadO'
+================================================================
+* Date:           Mon Nov  2 00:22:14 2026
+
+* Version:        2023.2 (Build 4023990 on Oct 11 2023)
+* Project:        krnl_cnn
+* Solution:       hls (Vitis Kernel Flow Target)
+* Product family: zynquplus
+* Target device:  xczu3eg-sbva484-1-i
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing: 
+    * Summary: 
+    +--------+---------+----------+------------+
+    |  Clock |  Target | Estimated| Uncertainty|
+    +--------+---------+----------+------------+
+    |ap_clk  |  5.00 ns|  2.748 ns|     1.35 ns|
+    +--------+---------+----------+------------+
+
++ Latency: 
+    * Summary: 
+    +---------+---------+----------+----------+-----+-----+---------+
+    |  Latency (cycles) |  Latency (absolute) |  Interval | Pipeline|
+    |   min   |   max   |    min   |    max   | min | max |   Type  |
+    +---------+---------+----------+----------+-----+-----+---------+
+    |      171|      171|  0.855 us|  0.855 us|  171|  171|       no|
+    +---------+---------+----------+----------+-----+-----+---------+
+
+    + Detail: 
+        * Instance: 
+        N/A
+
+        * Loop: 
+        +----------+---------+---------+----------+-----------+-----------+------+----------+
+        |          |  Latency (cycles) | Iteration|  Initiation Interval  | Trip |          |
+        | Loop Name|   min   |   max   |  Latency |  achieved |   target  | Count| Pipelined|
+        +----------+---------+---------+----------+-----------+-----------+------+----------+
+        |- LoadO   |      169|      169|         1|          1|          1|   169|       yes|
+        +----------+---------+---------+----------+-----------+-----------+------+----------+
+
+
+
+================================================================
+== Utilization Estimates
+================================================================
+* Summary: 
++-----------------+---------+-----+--------+-------+-----+
+|       Name      | BRAM_18K| DSP |   FF   |  LUT  | URAM|
++-----------------+---------+-----+--------+-------+-----+
+|DSP              |        -|    -|       -|      -|    -|
+|Expression       |        -|    -|       0|     30|    -|
+|FIFO             |        -|    -|       -|      -|    -|
+|Instance         |        -|    -|       -|      -|    -|
+|Memory           |        -|    -|       -|      -|    -|
+|Multiplexer      |        -|    -|       -|     27|    -|
+|Register         |        -|    -|      10|      -|    -|
++-----------------+---------+-----+--------+-------+-----+
+|Total            |        0|    0|      10|     57|    0|
++-----------------+---------+-----+--------+-------+-----+
+|Available        |      432|  360|  141120|  70560|    0|
++-----------------+---------+-----+--------+-------+-----+
+|Utilization (%)  |        0|    0|      ~0|     ~0|    0|
++-----------------+---------+-----+--------+-------+-----+
+
++ Detail: 
+    * Instance: 
+    N/A
+
+    * DSP: 
+    N/A
+
+    * Memory: 
+    N/A
+
+    * FIFO: 
+    N/A
+
+    * Expression: 
+    +----------------------+----------+----+---+----+------------+------------+
+    |     Variable Name    | Operation| DSP| FF| LUT| Bitwidth P0| Bitwidth P1|
+    +----------------------+----------+----+---+----+------------+------------+
+    |add_ln162_fu_290_p2   |         +|   0|  0|  15|           8|           1|
+    |icmp_ln162_fu_284_p2  |      icmp|   0|  0|  15|           8|           8|
+    +----------------------+----------+----+---+----+------------+------------+
+    |Total                 |          |   0|  0|  30|          16|           9|
+    +----------------------+----------+----+---+----+------------+------------+
+
+    * Multiplexer: 
+    +----------------------+----+-----------+-----+-----------+
+    |         Name         | LUT| Input Size| Bits| Total Bits|
+    +----------------------+----+-----------+-----+-----------+
+    |ap_done_int           |   9|          2|    1|          2|
+    |ap_sig_allocacmp_q_2  |   9|          2|    8|         16|
+    |q_fu_56               |   9|          2|    8|         16|
+    +----------------------+----+-----------+-----+-----------+
+    |Total                 |  27|          6|   17|         34|
+    +----------------------+----+-----------+-----+-----------+
+
+    * Register: 
+    +-------------+---+----+-----+-----------+
+    |     Name    | FF| LUT| Bits| Const Bits|
+    +-------------+---+----+-----+-----------+
+    |ap_CS_fsm    |  1|   0|    1|          0|
+    |ap_done_reg  |  1|   0|    1|          0|
+    |q_fu_56      |  8|   0|    8|          0|
+    +-------------+---+----+-----+-----------+
+    |Total        | 10|   0|   10|          0|
+    +-------------+---+----+-----+-----------+
+
+
+
+================================================================
+== Interface
+================================================================
+* Summary: 
++-----------------+-----+-----+------------+-----------------------------------+--------------+
+|    RTL Ports    | Dir | Bits|  Protocol  |           Source Object           |    C Type    |
++-----------------+-----+-----+------------+-----------------------------------+--------------+
+|ap_clk           |   in|    1|  ap_ctrl_hs|  cnn_blocked_kernel_Pipeline_LoadO|  return value|
+|ap_rst           |   in|    1|  ap_ctrl_hs|  cnn_blocked_kernel_Pipeline_LoadO|  return value|
+|ap_start         |   in|    1|  ap_ctrl_hs|  cnn_blocked_kernel_Pipeline_LoadO|  return value|
+|ap_done          |  out|    1|  ap_ctrl_hs|  cnn_blocked_kernel_Pipeline_LoadO|  return value|
+|ap_idle          |  out|    1|  ap_ctrl_hs|  cnn_blocked_kernel_Pipeline_LoadO|  return value|
+|ap_ready         |  out|    1|  ap_ctrl_hs|  cnn_blocked_kernel_Pipeline_LoadO|  return value|
+|acc_11_address1  |  out|    8|   ap_memory|                             acc_11|         array|
+|acc_11_ce1       |  out|    1|   ap_memory|                             acc_11|         array|
+|acc_11_we1       |  out|    1|   ap_memory|                             acc_11|         array|
+|acc_11_d1        |  out|   32|   ap_memory|                             acc_11|         array|
+|acc_10_address1  |  out|    8|   ap_memory|                             acc_10|         array|
+|acc_10_ce1       |  out|    1|   ap_memory|                             acc_10|         array|
+|acc_10_we1       |  out|    1|   ap_memory|                             acc_10|         array|
+|acc_10_d1        |  out|   32|   ap_memory|                             acc_10|         array|
+|acc_9_address1   |  out|    8|   ap_memory|                              acc_9|         array|
+|acc_9_ce1        |  out|    1|   ap_memory|                              acc_9|         array|
+|acc_9_we1        |  out|    1|   ap_memory|                              acc_9|         array|
+|acc_9_d1         |  out|   32|   ap_memory|                              acc_9|         array|
+|acc_8_address1   |  out|    8|   ap_memory|                              acc_8|         array|
+|acc_8_ce1        |  out|    1|   ap_memory|                              acc_8|         array|
+|acc_8_we1        |  out|    1|   ap_memory|                              acc_8|         array|
+|acc_8_d1         |  out|   32|   ap_memory|                              acc_8|         array|
+|acc_7_address1   |  out|    8|   ap_memory|                              acc_7|         array|
+|acc_7_ce1        |  out|    1|   ap_memory|                              acc_7|         array|
+|acc_7_we1        |  out|    1|   ap_memory|                              acc_7|         array|
+|acc_7_d1         |  out|   32|   ap_memory|                              acc_7|         array|
+|acc_6_address1   |  out|    8|   ap_memory|                              acc_6|         array|
+|acc_6_ce1        |  out|    1|   ap_memory|                              acc_6|         array|
+|acc_6_we1        |  out|    1|   ap_memory|                              acc_6|         array|
+|acc_6_d1         |  out|   32|   ap_memory|                              acc_6|         array|
+|acc_5_address1   |  out|    8|   ap_memory|                              acc_5|         array|
+|acc_5_ce1        |  out|    1|   ap_memory|                              acc_5|         array|
+|acc_5_we1        |  out|    1|   ap_memory|                              acc_5|         array|
+|acc_5_d1         |  out|   32|   ap_memory|                              acc_5|         array|
+|acc_4_address1   |  out|    8|   ap_memory|                              acc_4|         array|
+|acc_4_ce1        |  out|    1|   ap_memory|                              acc_4|         array|
+|acc_4_we1        |  out|    1|   ap_memory|                              acc_4|         array|
+|acc_4_d1         |  out|   32|   ap_memory|                              acc_4|         array|
+|acc_3_address1   |  out|    8|   ap_memory|                              acc_3|         array|
+|acc_3_ce1        |  out|    1|   ap_memory|                              acc_3|         array|
+|acc_3_we1        |  out|    1|   ap_memory|                              acc_3|         array|
+|acc_3_d1         |  out|   32|   ap_memory|                              acc_3|         array|
+|acc_2_address1   |  out|    8|   ap_memory|                              acc_2|         array|
+|acc_2_ce1        |  out|    1|   ap_memory|                              acc_2|         array|
+|acc_2_we1        |  out|    1|   ap_memory|                              acc_2|         array|
+|acc_2_d1         |  out|   32|   ap_memory|                              acc_2|         array|
+|acc_1_address1   |  out|    8|   ap_memory|                              acc_1|         array|
+|acc_1_ce1        |  out|    1|   ap_memory|                              acc_1|         array|
+|acc_1_we1        |  out|    1|   ap_memory|                              acc_1|         array|
+|acc_1_d1         |  out|   32|   ap_memory|                              acc_1|         array|
+|acc_address1     |  out|    8|   ap_memory|                                acc|         array|
+|acc_ce1          |  out|    1|   ap_memory|                                acc|         array|
+|acc_we1          |  out|    1|   ap_memory|                                acc|         array|
+|acc_d1           |  out|   32|   ap_memory|                                acc|         array|
++-----------------+-----+-----+------------+-----------------------------------+--------------+
+

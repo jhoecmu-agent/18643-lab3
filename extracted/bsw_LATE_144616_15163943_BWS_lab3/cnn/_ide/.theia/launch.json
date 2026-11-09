@@ -1,0 +1,26 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "cnn_sw_emu_new",
+			"debugType": "sw_emu",
+			"type": "gdb",
+			"request": "launch",
+			"target": "${workspaceFolder}/cnn_host/build/x86sim/cnn_host",
+			"applicationProjectDir": "${workspaceFolder}/cnn",
+			"arguments": "${workspaceFolder}/cnn/build/sw_emu/package/cnn.xclbin",
+			"cwd": "${workspaceFolder}/cnn/build/sw_emu/cnn_sw_emu_new",
+			"gdbpath": "${env:XILINX_VITIS}/bin/xgdb",
+			"valuesFormatting": "prettyPrinters",
+			"env": {
+				"XILINX_VITIS": "${env:XILINX_VITIS}",
+				"XILINX_HLS": "${env:XILINX_VITIS}",
+				"XCL_EMULATION_MODE": "sw_emu",
+				"ENABLE_KERNEL_DEBUG": "true",
+				"XCL_BIN_PATH": "${workspaceFolder}/cnn/build/sw_emu/package",
+				"LD_LIBRARY_PATH": "${env:XILINX_XRT}/lib",
+				"XRT_INI_PATH": "/afs/ece.cmu.edu/usr/upasanas/lab3/18643_cnn_src/sw_emu_xrt.ini"
+			}
+		}
+	]
+}

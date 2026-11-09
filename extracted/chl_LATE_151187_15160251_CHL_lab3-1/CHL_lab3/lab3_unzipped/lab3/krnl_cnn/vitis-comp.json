@@ -1,0 +1,15 @@
+{
+  "name": "krnl_cnn",
+  "type": "HLS",
+  "configuration": {
+    "componentType": "HLS",
+    "configFiles": [
+      "hls_config.cfg"
+    ],
+    "work_dir": "krnl_cnn"
+  },
+  "previousBuildStatusMap": {
+    "hw": "SUCCESS",
+    "sw_emu": "SUCCESS"
+  }
+}

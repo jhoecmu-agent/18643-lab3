@@ -1,0 +1,436 @@
+paths:
+  /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw: {}
+os:
+  freertos10_xilinx:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/ThirdParty/bsp/freertos10_xilinx_v1_14
+  standalone:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/bsp/standalone_v9_0
+driver:
+  devcfg:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/devcfg_v3_8
+  qspips:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/qspips_v3_11
+  resetps:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/resetps_v1_6
+  scugic:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/scugic_v5_2
+  sysmonpsv:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/sysmonpsv_v4_1
+  uartps:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/uartps_v3_13
+  uartlite:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/uartlite_v3_9
+  wdttb:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/wdttb_v5_7
+  wdtps:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/wdtps_v3_6
+  cfupmc:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/cfupmc_v1_6
+  csudma:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/csudma_v1_14
+  dfeccf:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/dfeccf_v1_6
+  dfxasm:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/dfxasm_v1_2
+  ipipsu:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/ipipsu_v2_14
+  pciepsu:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/pciepsu_v1_6
+  rtcpsu:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/rtcpsu_v1_13
+  uartpsv:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/uartpsv_v1_9
+  common:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/common_v1_3
+  dfemix:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/dfemix_v1_6
+  dfeprach:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/dfeprach_v1_6
+  qspipsu:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/qspipsu_v1_18
+  trngpsv:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/trngpsv_v1_4
+  trngpsx:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/trngpsx_v1_1
+  ttcps:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/ttcps_v3_18
+  ddrcpsu:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/ddrcpsu_v1_5
+  dfeequ:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/dfeequ_v1_5
+  sdps:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/sdps_v4_2
+  emacps:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/emacps_v3_19
+  sd_fec:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/sd_fec_v1_3
+  cframe:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/cframe_v1_5
+  clockps:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/clockps_v1_5
+  coresightps_dcc:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/coresightps_dcc_v1_9
+  dfeofdm:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/dfeofdm_v1_1
+  zdma:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/zdma_v1_17
+  iomodule:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/iomodule_v2_15
+  xdmapcie:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/xdmapcie_v1_7
+  ospipsv:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/ospipsv_v1_9
+  aienginev2:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/aienginev2_v3_4
+  axiethernet:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/axiethernet_v5_16
+  axivdma:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/axivdma_v6_14
+  canfd:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/canfd_v2_8
+  can:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/can_v3_7
+  canps:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/canps_v3_7
+  dpdma:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/dpdma_v1_5
+  emaclite:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/emaclite_v4_8
+  gpio:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/gpio_v4_10
+  gpiops:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/gpiops_v3_12
+  iic:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/iic_v3_10
+  iicps:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/iicps_v3_18
+  intc:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/intc_v3_17
+  llfifo:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/llfifo_v5_5
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/llfifo_v5_6
+  mbox:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/mbox_v4_6
+  nandps:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/nandps_v2_8
+  mutex:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/mutex_v4_7
+  nandpsu:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/nandpsu_v1_12
+  prc:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/prc_v2_2
+  rfdc:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/rfdc_v12_1
+  tft:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/tft_v6_4
+  tmr_manager:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/tmr_manager_v1_5
+  uartns550:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/uartns550_v3_9
+  usbps:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/usbps_v2_8
+  usb:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/usb_v5_6
+  v_frmbuf_wr:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/v_frmbuf_wr_v4_7
+  video_common:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/video_common_v4_14
+  vtc:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/vtc_v8_5
+  xxvethernet:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/xxvethernet_v1_8
+  axicdma:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/axicdma_v4_12
+  axis_switch:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/axis_switch_v1_6
+  dppsu:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/dppsu_v1_7
+  emc:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/emc_v4_2
+  mcdma:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/mcdma_v1_9
+  scuwdt:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/scuwdt_v2_5
+  spi:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/spi_v4_11
+  tmrctr:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/tmrctr_v4_11
+  tmr_inject:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/tmr_inject_v1_6
+  usbpsu:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/usbpsu_v1_14
+  bram:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/bram_v4_9
+  clk_wiz:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/clk_wiz_v1_6
+  dmaps:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/dmaps_v2_9
+  spips:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/spips_v3_9
+  sysmonpsu:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/sysmonpsu_v2_9
+  trafgen:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/trafgen_v4_5
+  v_frmbuf_rd:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/v_frmbuf_rd_v4_7
+  axipmon:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/axipmon_v6_10
+  prd:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/prd_v2_2
+  v_tpg:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/v_tpg_v8_5
+  hwicap:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/hwicap_v11_6
+  scutimer:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/scutimer_v2_5
+  sysmon:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/sysmon_v7_8
+  avbuf:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/avbuf_v2_6
+  xadcps:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/xadcps_v2_7
+  axidma:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/XilinxProcessorIPLib/drivers/axidma_v9_17
+library:
+  lwip213:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/ThirdParty/sw_services/lwip213_v1_1
+  libmetal:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/ThirdParty/sw_services/libmetal_v2_6
+  openamp:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/ThirdParty/sw_services/openamp_v1_9
+  xilflash:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_services/xilflash_v4_10
+  xilpdi:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_services/xilpdi_v1_8
+  xilpm:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_services/xilpm_v5_1
+  xilskey:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_services/xilskey_v7_5
+  xilfpga:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_services/xilfpga_v6_5
+  xilnvm:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_services/xilnvm_v3_2
+  xilsecure:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_services/xilsecure_v5_2
+  xilsem:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_services/xilsem_v1_8
+  xilpuf:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_services/xilpuf_v2_2
+  xilrsa:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_services/xilrsa_v1_7
+  xilmailbox:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_services/xilmailbox_v1_8
+  xilloader:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_services/xilloader_v1_9
+  xiltimer:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_services/xiltimer_v1_3
+  xilffs:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_services/xilffs_v5_1
+  xilplmi:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_services/xilplmi_v1_9
+apps:
+  zynqmp_pmufw:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_apps/zynqmp_pmufw
+  versal_psmfw:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_apps/versal_psmfw
+  zynq_fsbl:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_apps/zynq_fsbl
+  zynqmp_fsbl:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_apps/zynqmp_fsbl
+  zynqmp_dram_test:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_apps/zynqmp_dram_test
+  versal_plm:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_apps/versal_plm
+  peripheral_tests:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_apps/peripheral_tests
+  hello_world:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_apps/hello_world
+  zynq_dram_test:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_apps/zynq_dram_test
+  empty_application:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_apps/empty_application
+  libmetal_echo_demo:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_apps/libmetal_echo_demo
+  srec_bootloader:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_apps/srec_bootloader
+  freertos_lwip_tcp_perf_client:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_apps/freertos_lwip_tcp_perf_client
+  memory_tests:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_apps/memory_tests
+  lwip_echo_server:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_apps/lwip_echo_server
+  openamp_rpc_demo:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_apps/openamp_rpc_demo
+  srec_spi_bootloader:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_apps/srec_spi_bootloader
+  openamp_echo_test:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_apps/openamp_echo_test
+  rsa_auth_app:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_apps/rsa_auth_app
+  openamp_matrix_multiply:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_apps/openamp_matrix_multiply
+  lwip_tcp_perf_server:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_apps/lwip_tcp_perf_server
+  lwip_udp_perf_server:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_apps/lwip_udp_perf_server
+  freertos_lwip_tcp_perf_server:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_apps/freertos_lwip_tcp_perf_server
+  freertos_lwip_udp_perf_server:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_apps/freertos_lwip_udp_perf_server
+  freertos_lwip_udp_perf_client:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_apps/freertos_lwip_udp_perf_client
+  ddr_self_refresh:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_apps/ddr_self_refresh
+  freertos_lwip_echo_server:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_apps/freertos_lwip_echo_server
+  lwip_tcp_perf_client:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_apps/lwip_tcp_perf_client
+  dhrystone:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_apps/dhrystone
+  lwip_udp_perf_client:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_apps/lwip_udp_perf_client
+  freertos_hello_world:
+    path:
+    - /afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis/2023.2/data/embeddedsw/lib/sw_apps/freertos_hello_world

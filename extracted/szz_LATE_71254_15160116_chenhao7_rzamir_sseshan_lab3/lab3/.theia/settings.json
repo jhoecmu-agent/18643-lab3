@@ -1,0 +1,12 @@
+{
+    "clangd.fallbackFlags": [
+        "-I/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis_HLS/2023.2/include",
+        "-I/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis_HLS/2023.2/include/etc",
+        "-I/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis_HLS/2023.2/include/ap_sysc",
+        "-I/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis_HLS/2023.2/lnx64/tools/auto_cc/include",
+        "-I/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/Vitis_HLS/2023.2/lnx64/tools/systemc/include"
+    ],
+    "VitisApplication.ZynqMP.Sysroot": "/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/platforms/2023.2/u96v2_sbc_base_2023_2/sw/sysroots/",
+    "VitisApplication.ZynqMP.KernelImage": "/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/platforms/2023.2/u96v2_sbc_base_2023_2/sw/Image",
+    "VitisApplication.ZynqMP.RootFS": "/afs/ece.cmu.edu/class/ece643/software/xilinxVitis/platforms/2023.2/u96v2_sbc_base_2023_2/sw/rootfs.ext4"
+}

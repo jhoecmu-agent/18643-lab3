@@ -1,0 +1,661 @@
+
+
+================================================================
+== Synthesis Summary Report of 'krnl_cnn'
+================================================================
++ General Information: 
+    * Date:           Sun Nov  8 12:26:50 2026
+    * Version:        2023.2 (Build 4023990 on Oct 11 2023)
+    * Project:        krnl_cnn
+    * Solution:       hls (Vitis Kernel Flow Target)
+    * Product family: zynquplus
+    * Target device:  xczu3eg-sbva484-1-i
+    
+
++ Performance & Resource Estimates: 
+    
+    PS: '+' for module; 'o' for loop; '*' for dataflow
+    +---------------------------------------------------------------------------------------+------+------+---------+-----------+----------+---------+------+----------+-----------+-----------+-------------+-------------+-----+
+    |                                        Modules                                        | Issue|      | Latency |  Latency  | Iteration|         | Trip |          |           |           |             |             |     |
+    |                                        & Loops                                        | Type | Slack| (cycles)|    (ns)   |  Latency | Interval| Count| Pipelined|   BRAM    |    DSP    |      FF     |     LUT     | URAM|
+    +---------------------------------------------------------------------------------------+------+------+---------+-----------+----------+---------+------+----------+-----------+-----------+-------------+-------------+-----+
+    |+ krnl_cnn*                                                                            |     -|  0.00|        -|          -|         -|        -|     -|  dataflow|  258 (59%)|  264 (73%)|  53912 (38%)|  47730 (67%)|    -|
+    | + entry_proc                                                                          |     -|  1.82|        0|      0.000|         -|        0|     -|        no|          -|          -|      3 (~0%)|     29 (~0%)|    -|
+    | + p_anonymous_namespace_load_inputs                                                   |     -|  0.00|        -|          -|         -|        -|     -|        no|          -|     6 (1%)|   1010 (~0%)|    1220 (1%)|    -|
+    |  + p_anonymous_namespace_load_inputs_Pipeline_VITIS_LOOP_74_1_VITIS_LOOP_75_2_InputB  |     -|  0.00|        -|          -|         -|        -|     -|        no|          -|          -|    118 (~0%)|    232 (~0%)|    -|
+    |   o VITIS_LOOP_74_1_VITIS_LOOP_75_2_InputBurst                                        |     -|  3.65|        -|          -|         3|        1|     -|       yes|          -|          -|            -|            -|    -|
+    | + p_anonymous_namespace_load_weights                                                  |     -|  0.00|        -|          -|         -|        -|     -|        no|          -|          -|   1352 (~0%)|     888 (1%)|    -|
+    |  o VITIS_LOOP_89_1                                                                    |     -|  3.65|        -|          -|    221377|        -|     -|        no|          -|          -|            -|            -|    -|
+    |   o VITIS_LOOP_90_2                                                                   |     -|  3.65|   221304|  1.107e+06|      9221|        -|    24|        no|          -|          -|            -|            -|    -|
+    |    + p_anonymous_namespace_load_weights_Pipeline_WeightBurst                          |     -|  0.00|     9219|  4.610e+04|         -|     9219|     -|        no|          -|          -|   1015 (~0%)|    139 (~0%)|    -|
+    |     o WeightBurst                                                                     |     -|  3.65|     9217|  4.608e+04|         3|        1|  9216|       yes|          -|          -|            -|            -|    -|
+    | + p_anonymous_namespace_compute_tiles                                                 |     -|  0.00|        -|          -|         -|        -|     -|        no|  186 (43%)|  252 (70%)|  45988 (32%)|  40300 (57%)|    -|
+    |  o VITIS_LOOP_124_1_Phase                                                             |     -|  3.65|        -|          -|         -|        -|     -|        no|          -|          -|            -|            -|    -|
+    |   + p_anonymous_namespace_compute_tiles_Pipeline_Step                                 |     -|  0.03|        -|          -|         -|        -|     -|        no|          -|  248 (68%)|  40717 (28%)|  37827 (53%)|    -|
+    |    o Step                                                                             |     -|  3.65|        -|          -|        42|        1|     -|       yes|          -|          -|            -|            -|    -|
+    | + p_anonymous_namespace_write_outputs                                                 |     -|  0.00|        -|          -|         -|        -|     -|        no|          -|     6 (1%)|   1070 (~0%)|    1239 (1%)|    -|
+    |  + p_anonymous_namespace_write_outputs_Pipeline_VITIS_LOOP_210_1_OutputBurst          |     -|  0.00|        -|          -|         -|        -|     -|        no|          -|          -|    117 (~0%)|    232 (~0%)|    -|
+    |   o VITIS_LOOP_210_1_OutputBurst                                                      |     -|  3.65|        -|          -|         3|        1|     -|       yes|          -|          -|            -|            -|    -|
+    +---------------------------------------------------------------------------------------+------+------+---------+-----------+----------+---------+------+----------+-----------+-----------+-------------+-------------+-----+
+
+
+================================================================
+== HW Interfaces
+================================================================
+* M_AXI
++--------------------+------------+---------------+---------+--------+----------+-----------+--------------+--------------+-------------+-------------+-------------------+
+| Interface          | Data Width | Address Width | Latency | Offset | Register | Max Widen | Max Read     | Max Write    | Num Read    | Num Write   | Resource Estimate |
+|                    | (SW->HW)   |               |         |        |          | Bitwidth  | Burst Length | Burst Length | Outstanding | Outstanding |                   |
++--------------------+------------+---------------+---------+--------+----------+-----------+--------------+--------------+-------------+-------------+-------------------+
+| m_axi_gmem_input   | 32 -> 32   | 64            | 64      | slave  | 0        | 512       | 64           | 16           | 4           | 16          | BRAM=4            |
+| m_axi_gmem_output  | 32 -> 32   | 64            | 64      | slave  | 0        | 512       | 16           | 64           | 16          | 4           | BRAM=4            |
+| m_axi_gmem_weights | 32 -> 512  | 64            | 64      | slave  | 0        | 512       | 64           | 16           | 4           | 16          | BRAM=58           |
++--------------------+------------+---------------+---------+--------+----------+-----------+--------------+--------------+-------------+-------------+-------------------+
+
+* S_AXILITE Interfaces
++---------------+------------+---------------+--------+----------+
+| Interface     | Data Width | Address Width | Offset | Register |
++---------------+------------+---------------+--------+----------+
+| s_axi_control | 32         | 6             | 16     | 0        |
++---------------+------------+---------------+--------+----------+
+
+* S_AXILITE Registers
++---------------+--------------+--------+-------+--------+----------------------------------+------------------------------------------------------------------------------------+
+| Interface     | Register     | Offset | Width | Access | Description                      | Bit Fields                                                                         |
++---------------+--------------+--------+-------+--------+----------------------------------+------------------------------------------------------------------------------------+
+| s_axi_control | CTRL         | 0x00   | 32    | RW     | Control signals                  | 0=AP_START 1=AP_DONE 2=AP_IDLE 3=AP_READY 4=AP_CONTINUE 7=AUTO_RESTART 9=INTERRUPT |
+| s_axi_control | GIER         | 0x04   | 32    | RW     | Global Interrupt Enable Register | 0=Enable                                                                           |
+| s_axi_control | IP_IER       | 0x08   | 32    | RW     | IP Interrupt Enable Register     | 0=CHAN0_INT_EN 1=CHAN1_INT_EN                                                      |
+| s_axi_control | IP_ISR       | 0x0c   | 32    | RW     | IP Interrupt Status Register     | 0=CHAN0_INT_ST 1=CHAN1_INT_ST                                                      |
+| s_axi_control | input_r_1    | 0x10   | 32    | W      | Data signal of input_r           |                                                                                    |
+| s_axi_control | input_r_2    | 0x14   | 32    | W      | Data signal of input_r           |                                                                                    |
+| s_axi_control | weights_1    | 0x1c   | 32    | W      | Data signal of weights           |                                                                                    |
+| s_axi_control | weights_2    | 0x20   | 32    | W      | Data signal of weights           |                                                                                    |
+| s_axi_control | output_r_1   | 0x28   | 32    | W      | Data signal of output_r          |                                                                                    |
+| s_axi_control | output_r_2   | 0x2c   | 32    | W      | Data signal of output_r          |                                                                                    |
+| s_axi_control | batch_size_1 | 0x34   | 32    | W      | Data signal of batch_size        |                                                                                    |
+| s_axi_control | batch_size_2 | 0x38   | 32    | W      | Data signal of batch_size        |                                                                                    |
++---------------+--------------+--------+-------+--------+----------------------------------+------------------------------------------------------------------------------------+
+
+* TOP LEVEL CONTROL
++-----------+---------------+-----------+
+| Interface | Type          | Ports     |
++-----------+---------------+-----------+
+| ap_clk    | clock         | ap_clk    |
+| ap_rst_n  | reset         | ap_rst_n  |
+| interrupt | interrupt     | interrupt |
+| ap_ctrl   | ap_ctrl_chain |           |
++-----------+---------------+-----------+
+
+
+================================================================
+== SW I/O Information
+================================================================
+* Top Function Arguments
++------------+-----------+-------------------+
+| Argument   | Direction | Datatype          |
++------------+-----------+-------------------+
+| input      | in        | int const *       |
+| weights    | in        | int const *       |
+| output     | out       | int*              |
+| batch_size | in        | long unsigned int |
++------------+-----------+-------------------+
+
+* SW-to-HW Mapping
++------------+--------------------+-----------+----------+----------------------------------------+
+| Argument   | HW Interface       | HW Type   | HW Usage | HW Info                                |
++------------+--------------------+-----------+----------+----------------------------------------+
+| input      | m_axi_gmem_input   | interface |          |                                        |
+| input      | s_axi_control      | interface | offset   |                                        |
+| weights    | m_axi_gmem_weights | interface |          |                                        |
+| weights    | s_axi_control      | register  | offset   | name=weights_1 offset=0x1c range=32    |
+| weights    | s_axi_control      | register  | offset   | name=weights_2 offset=0x20 range=32    |
+| output     | m_axi_gmem_output  | interface |          |                                        |
+| output     | s_axi_control      | interface | offset   |                                        |
+| batch_size | s_axi_control      | register  |          | name=batch_size_1 offset=0x34 range=32 |
+| batch_size | s_axi_control      | register  |          | name=batch_size_2 offset=0x38 range=32 |
++------------+--------------------+-----------+----------+----------------------------------------+
+
+
+================================================================
+== M_AXI Burst Information
+================================================================
+ Note: All burst requests might be further partitioned into multiple requests during RTL generation based on max_read_burst_length or max_write_burst_length settings.
+
+* Inferred Burst Summary
++--------------------+-----------+----------+-------+
+| HW Interface       | Direction | Length   | Width |
++--------------------+-----------+----------+-------+
+| m_axi_gmem_input   | read      | variable | 32    |
+| m_axi_gmem_output  | write     | variable | 32    |
+| m_axi_gmem_weights | read      | 13824    | 512   |
++--------------------+-----------+----------+-------+
+
+* All M_AXI Variable Accesses
++--------------------+----------+-----------------------------------------------------+-----------+--------------+----------+------------------+-----------------------------------------------------+------------+----------------------------------------+
+| HW Interface       | Variable | Access Location                                     | Direction | Burst Status | Length   | Loop             | Loop Location                                       | Resolution | Problem                                |
++--------------------+----------+-----------------------------------------------------+-----------+--------------+----------+------------------+-----------------------------------------------------+------------+----------------------------------------+
+| m_axi_gmem_input   | input    | /scratch/643_vitis_zrmoore/lab3/krnl_cnn.cpp:80:7   | read      | Widen Fail   |          | InputBurst       | /scratch/643_vitis_zrmoore/lab3/krnl_cnn.cpp:78:25  | 214-235    | Start index of the access is unaligned |
+| m_axi_gmem_input   | input    | /scratch/643_vitis_zrmoore/lab3/krnl_cnn.cpp:80:7   | read      | Inferred     | variable | VITIS_LOOP_74_1  | /scratch/643_vitis_zrmoore/lab3/krnl_cnn.cpp:74:19  |            |                                        |
+| m_axi_gmem_output  | output   | /scratch/643_vitis_zrmoore/lab3/krnl_cnn.cpp:214:19 | write     | Widen Fail   |          | OutputBurst      | /scratch/643_vitis_zrmoore/lab3/krnl_cnn.cpp:212:22 | 214-235    | Start index of the access is unaligned |
+| m_axi_gmem_output  | output   | /scratch/643_vitis_zrmoore/lab3/krnl_cnn.cpp:214:19 | write     | Inferred     | variable | VITIS_LOOP_210_1 | /scratch/643_vitis_zrmoore/lab3/krnl_cnn.cpp:210:20 |            |                                        |
+| m_axi_gmem_weights | weights  | /scratch/643_vitis_zrmoore/lab3/krnl_cnn.cpp:95:7   | read      | Widened      | 13824    | WeightBurst      | /scratch/643_vitis_zrmoore/lab3/krnl_cnn.cpp:92:26  |            |                                        |
+| m_axi_gmem_weights | weights  | /scratch/643_vitis_zrmoore/lab3/krnl_cnn.cpp:95:7   | read      | Fail         |          | VITIS_LOOP_89_1  | /scratch/643_vitis_zrmoore/lab3/krnl_cnn.cpp:89:19  | 214-229    | Could not analyze pattern              |
+| m_axi_gmem_weights | weights  | /scratch/643_vitis_zrmoore/lab3/krnl_cnn.cpp:95:7   | read      | Inferred     | 221184   | VITIS_LOOP_90_2  | /scratch/643_vitis_zrmoore/lab3/krnl_cnn.cpp:90:26  |            |                                        |
++--------------------+----------+-----------------------------------------------------+-----------+--------------+----------+------------------+-----------------------------------------------------+------------+----------------------------------------+
+
+    * Resolution URL: docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1448-hls-guidance&resourceid=XXX-YYY.html (replace XXX-YYY with column value)
+
+================================================================
+== Bind Op Report
+================================================================
++---------------------------------------------------------------------------------------+-----+--------+------------------+-----+--------+---------+
+| Name                                                                                  | DSP | Pragma | Variable         | Op  | Impl   | Latency |
++---------------------------------------------------------------------------------------+-----+--------+------------------+-----+--------+---------+
+| + krnl_cnn                                                                            | 264 |        |                  |     |        |         |
+|  + p_anonymous_namespace_load_inputs                                                  | 6   |        |                  |     |        |         |
+|    mul_32s_17ns_32_2_1_U7                                                             | 2   |        | mul_ln74         | mul | auto   | 1       |
+|    mul_64ns_17ns_80_5_1_U8                                                            | 4   |        | bound4           | mul | auto   | 4       |
+|   + p_anonymous_namespace_load_inputs_Pipeline_VITIS_LOOP_74_1_VITIS_LOOP_75_2_InputB | 0   |        |                  |     |        |         |
+|     add_ln74_fu_105_p2                                                                |     |        | add_ln74         | add | fabric | 0       |
+|  + p_anonymous_namespace_load_weights                                                 | 0   |        |                  |     |        |         |
+|    b_2_fu_152_p2                                                                      |     |        | b_2              | add | fabric | 0       |
+|    add_ln90_fu_164_p2                                                                 |     |        | add_ln90         | add | fabric | 0       |
+|   + p_anonymous_namespace_load_weights_Pipeline_WeightBurst                           | 0   |        |                  |     |        |         |
+|     add_ln92_fu_130_p2                                                                |     |        | add_ln92         | add | fabric | 0       |
+|  + p_anonymous_namespace_compute_tiles                                                | 252 |        |                  |     |        |         |
+|    mul_64ns_6ns_69_5_1_U698                                                           | 4   |        | bound            | mul | auto   | 4       |
+|    add_ln124_fu_1585_p2                                                               |     |        | add_ln124        | add | fabric | 0       |
+|    phase_1_fu_1641_p2                                                                 |     |        | phase_1          | add | fabric | 0       |
+|   + p_anonymous_namespace_compute_tiles_Pipeline_Step                                 | 248 |        |                  |     |        |         |
+|     add_ln136_fu_19366_p2                                                             |     |        | add_ln136        | add | fabric | 0       |
+|     add_ln136_1_fu_19372_p2                                                           |     |        | add_ln136_1      | add | fabric | 0       |
+|     mul_32ns_34ns_65_2_1_U23                                                          | 4   |        | mul_ln136        | mul | auto   | 1       |
+|     sub_ln136_fu_20699_p2                                                             |     |        | sub_ln136        | sub | fabric | 0       |
+|     mul_32ns_34ns_65_2_1_U24                                                          | 4   |        | mul_ln136_1      | mul | auto   | 1       |
+|     sub_ln136_1_fu_20716_p2                                                           |     |        | sub_ln136_1      | sub | fabric | 0       |
+|     cc_1_fu_19444_p2                                                                  |     |        | cc_1             | add | fabric | 0       |
+|     mul_32ns_34ns_65_2_1_U25                                                          | 4   |        | mul_ln136_2      | mul | auto   | 1       |
+|     sub_ln136_2_fu_20733_p2                                                           |     |        | sub_ln136_2      | sub | fabric | 0       |
+|     add_ln136_3_fu_19483_p2                                                           |     |        | add_ln136_3      | add | fabric | 0       |
+|     mul_32ns_34ns_65_2_1_U26                                                          | 4   |        | mul_ln136_3      | mul | auto   | 1       |
+|     add_ln182_fu_20246_p2                                                             |     |        | add_ln182        | add | fabric | 0       |
+|     add_ln182_1_fu_20910_p2                                                           |     |        | add_ln182_1      | add | fabric | 0       |
+|     sub_ln136_3_fu_20750_p2                                                           |     |        | sub_ln136_3      | sub | fabric | 0       |
+|     inputs_loaded_2_fu_19541_p2                                                       |     |        | inputs_loaded_2  | add | fabric | 0       |
+|     ci_3_fu_19547_p2                                                                  |     |        | ci_3             | add | fabric | 0       |
+|     ri_4_fu_19569_p2                                                                  |     |        | ri_4             | add | fabric | 0       |
+|     add_ln158_fu_19581_p2                                                             |     |        | add_ln158        | add | fabric | 0       |
+|     weights_loaded_2_fu_19643_p2                                                      |     |        | weights_loaded_2 | add | fabric | 0       |
+|     jw_3_fu_19649_p2                                                                  |     |        | jw_3             | add | fabric | 0       |
+|     iw_3_fu_19671_p2                                                                  |     |        | iw_3             | add | fabric | 0       |
+|     nw_4_fu_19698_p2                                                                  |     |        | nw_4             | add | fabric | 0       |
+|     add_ln169_fu_20034_p2                                                             |     |        | add_ln169        | add | fabric | 0       |
+|     mul_32ns_34ns_65_2_1_U27                                                          | 4   |        | mul_ln182        | mul | auto   | 1       |
+|     add_ln182_2_fu_21062_p2                                                           |     |        | add_ln182_2      | add | fabric | 0       |
+|     mul_32ns_34ns_65_2_1_U28                                                          | 4   |        | mul_ln182_1      | mul | auto   | 1       |
+|     add_ln182_3_fu_21214_p2                                                           |     |        | add_ln182_3      | add | fabric | 0       |
+|     mul_32ns_34ns_65_2_1_U29                                                          | 4   |        | mul17            | mul | auto   | 1       |
+|     add_ln182_4_fu_20333_p2                                                           |     |        | add_ln182_4      | add | fabric | 0       |
+|     add_ln182_5_fu_21366_p2                                                           |     |        | add_ln182_5      | add | fabric | 0       |
+|     add_ln182_6_fu_21518_p2                                                           |     |        | add_ln182_6      | add | fabric | 0       |
+|     add_ln182_7_fu_21670_p2                                                           |     |        | add_ln182_7      | add | fabric | 0       |
+|     mul_32ns_34ns_65_2_1_U30                                                          | 4   |        | mul14            | mul | auto   | 1       |
+|     add_ln182_8_fu_20360_p2                                                           |     |        | add_ln182_8      | add | fabric | 0       |
+|     add_ln182_9_fu_21822_p2                                                           |     |        | add_ln182_9      | add | fabric | 0       |
+|     add_ln182_10_fu_21974_p2                                                          |     |        | add_ln182_10     | add | fabric | 0       |
+|     add_ln182_11_fu_22126_p2                                                          |     |        | add_ln182_11     | add | fabric | 0       |
+|     mul_32s_32s_32_2_1_U31                                                            | 3   |        | mul_ln181        | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U32                                                            | 3   |        | mul_ln181_1      | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U33                                                            | 3   |        | mul_ln181_2      | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U34                                                            | 3   |        | mul_ln181_3      | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U35                                                            | 3   |        | mul_ln181_4      | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U36                                                            | 3   |        | mul_ln181_5      | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U37                                                            | 3   |        | mul_ln181_6      | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U38                                                            | 3   |        | mul_ln181_7      | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U39                                                            | 3   |        | mul_ln181_8      | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U40                                                            | 3   |        | mul_ln181_9      | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U41                                                            | 3   |        | mul_ln181_10     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U42                                                            | 3   |        | mul_ln181_11     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U43                                                            | 3   |        | mul_ln181_12     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U44                                                            | 3   |        | mul_ln181_13     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U45                                                            | 3   |        | mul_ln181_14     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U46                                                            | 3   |        | mul_ln181_15     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U47                                                            | 3   |        | mul_ln181_16     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U48                                                            | 3   |        | mul_ln181_17     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U49                                                            | 3   |        | mul_ln181_18     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U50                                                            | 3   |        | mul_ln181_19     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U51                                                            | 3   |        | mul_ln181_20     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U52                                                            | 3   |        | mul_ln181_21     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U53                                                            | 3   |        | mul_ln181_22     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U54                                                            | 3   |        | mul_ln181_23     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U55                                                            | 3   |        | mul_ln181_24     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U56                                                            | 3   |        | mul_ln181_25     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U57                                                            | 3   |        | mul_ln181_26     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U58                                                            | 3   |        | mul_ln181_27     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U59                                                            | 3   |        | mul_ln181_28     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U60                                                            | 3   |        | mul_ln181_29     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U61                                                            | 3   |        | mul_ln181_30     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U62                                                            | 3   |        | mul_ln181_31     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U63                                                            | 3   |        | mul_ln181_32     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U64                                                            | 3   |        | mul_ln181_33     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U65                                                            | 3   |        | mul_ln181_34     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U66                                                            | 3   |        | mul_ln181_35     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U67                                                            | 3   |        | mul_ln181_36     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U68                                                            | 3   |        | mul_ln181_37     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U69                                                            | 3   |        | mul_ln181_38     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U70                                                            | 3   |        | mul_ln181_39     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U71                                                            | 3   |        | mul_ln181_40     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U72                                                            | 3   |        | mul_ln181_41     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U73                                                            | 3   |        | mul_ln181_42     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U74                                                            | 3   |        | mul_ln181_43     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U75                                                            | 3   |        | mul_ln181_44     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U76                                                            | 3   |        | mul_ln181_45     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U77                                                            | 3   |        | mul_ln181_46     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U78                                                            | 3   |        | mul_ln181_47     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U79                                                            | 3   |        | mul_ln181_48     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U80                                                            | 3   |        | mul_ln181_49     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U81                                                            | 3   |        | mul_ln181_50     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U82                                                            | 3   |        | mul_ln181_51     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U83                                                            | 3   |        | mul_ln181_52     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U84                                                            | 3   |        | mul_ln181_53     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U85                                                            | 3   |        | mul_ln181_54     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U86                                                            | 3   |        | mul_ln181_55     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U87                                                            | 3   |        | mul_ln181_56     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U88                                                            | 3   |        | mul_ln181_57     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U89                                                            | 3   |        | mul_ln181_58     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U90                                                            | 3   |        | mul_ln181_59     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U91                                                            | 3   |        | mul_ln181_60     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U92                                                            | 3   |        | mul_ln181_61     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U93                                                            | 3   |        | mul_ln181_62     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U94                                                            | 3   |        | mul_ln181_63     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U95                                                            | 3   |        | mul_ln181_64     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U96                                                            | 3   |        | mul_ln181_65     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U97                                                            | 3   |        | mul_ln181_66     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U98                                                            | 3   |        | mul_ln181_67     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U99                                                            | 3   |        | mul_ln181_68     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U100                                                           | 3   |        | mul_ln181_69     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U101                                                           | 3   |        | mul_ln181_70     | mul | auto   | 1       |
+|     mul_32s_32s_32_2_1_U102                                                           | 3   |        | mul_ln181_71     | mul | auto   | 1       |
+|     add_ln187_1_fu_25522_p2                                                           |     |        | add_ln187_1      | add | fabric | 0       |
+|     add_ln187_8_fu_25557_p2                                                           |     |        | add_ln187_8      | add | fabric | 0       |
+|     add_ln187_9_fu_25561_p2                                                           |     |        | add_ln187_9      | add | fabric | 0       |
+|     add_ln187_18_fu_25606_p2                                                          |     |        | add_ln187_18     | add | fabric | 0       |
+|     add_ln187_25_fu_25641_p2                                                          |     |        | add_ln187_25     | add | fabric | 0       |
+|     add_ln187_26_fu_25645_p2                                                          |     |        | add_ln187_26     | add | fabric | 0       |
+|     add_ln187_35_fu_25686_p2                                                          |     |        | add_ln187_35     | add | fabric | 0       |
+|     add_ln187_36_fu_25690_p2                                                          |     |        | add_ln187_36     | add | fabric | 0       |
+|     add_ln187_43_fu_25725_p2                                                          |     |        | add_ln187_43     | add | fabric | 0       |
+|     add_ln187_44_fu_25729_p2                                                          |     |        | add_ln187_44     | add | fabric | 0       |
+|     add_ln187_53_fu_25768_p2                                                          |     |        | add_ln187_53     | add | fabric | 0       |
+|     add_ln187_60_fu_25803_p2                                                          |     |        | add_ln187_60     | add | fabric | 0       |
+|     outputs_done_2_fu_19752_p2                                                        |     |        | outputs_done_2   | add | fabric | 0       |
+|     mc_1_fu_19758_p2                                                                  |     |        | mc_1             | add | fabric | 0       |
+|  + p_anonymous_namespace_write_outputs                                                | 6   |        |                  |     |        |         |
+|    mul_32s_16ns_32_2_1_U712                                                           | 2   |        | mul_ln210        | mul | auto   | 1       |
+|    mul_64ns_16ns_79_5_1_U713                                                          | 4   |        | bound            | mul | auto   | 4       |
+|   + p_anonymous_namespace_write_outputs_Pipeline_VITIS_LOOP_210_1_OutputBurst         | 0   |        |                  |     |        |         |
+|     add_ln210_fu_109_p2                                                               |     |        | add_ln210        | add | fabric | 0       |
++---------------------------------------------------------------------------------------+-----+--------+------------------+-----+--------+---------+
+
+
+================================================================
+== Storage Report
+================================================================
++----------------------------------------+---------------+-------------+------+------+--------+----------------+--------+---------+------------------+
+| Name                                   | Usage         | Type        | BRAM | URAM | Pragma | Variable       | Impl   | Latency | Bitwidth, Depth, |
+|                                        |               |             |      |      |        |                |        |         | Banks            |
++----------------------------------------+---------------+-------------+------+------+--------+----------------+--------+---------+------------------+
+| + krnl_cnn                             |               |             | 258  | 0    |        |                |        |         |                  |
+|   control_s_axi_U                      | interface     | s_axilite   |      |      |        |                |        |         |                  |
+|   gmem_input_m_axi_U                   | interface     | m_axi       | 4    |      |        |                |        |         |                  |
+|   gmem_output_m_axi_U                  | interface     | m_axi       | 4    |      |        |                |        |         |                  |
+|   gmem_weights_m_axi_U                 | interface     | m_axi       | 58   |      |        |                |        |         |                  |
+|   output_r_c_U                         | fifo channel  | scalar prop |      |      |        | output_r_c     | srl    | 0       | 64, 4, 1         |
+|   input_fifo_U                         | fifo channel  | stream      | 2    |      |        | input_fifo     | bram   | 0       | 32, 256, 1       |
+|   batch_size_c11_U                     | fifo channel  | scalar prop |      |      |        | batch_size_c11 | srl    | 0       | 64, 2, 1         |
+|   weight_fifo_U                        | fifo channel  | stream      | 2    |      |        | weight_fifo    | bram   | 0       | 32, 256, 1       |
+|   output_fifo_U                        | fifo channel  | stream      | 2    |      |        | output_fifo    | bram   | 0       | 32, 256, 1       |
+|   batch_size_c_U                       | fifo channel  | scalar prop |      |      |        | batch_size_c   | srl    | 0       | 64, 2, 1         |
+|  + p_anonymous_namespace_compute_tiles |               |             | 186  | 0    |        |                |        |         |                  |
+|    BufI_U                              | ram_1p array  |             |      |      | yes    | BufI           | lutram | 1       | 32, 25, 1        |
+|    BufI_1_U                            | ram_1p array  |             |      |      | yes    | BufI_1         | lutram | 1       | 32, 25, 1        |
+|    BufI_2_U                            | ram_1p array  |             |      |      | yes    | BufI_2         | lutram | 1       | 32, 25, 1        |
+|    BufI_3_U                            | ram_1p array  |             |      |      | yes    | BufI_3         | lutram | 1       | 32, 25, 1        |
+|    BufI_4_U                            | ram_1p array  |             |      |      | yes    | BufI_4         | lutram | 1       | 32, 25, 1        |
+|    BufI_5_U                            | ram_1p array  |             |      |      | yes    | BufI_5         | lutram | 1       | 32, 25, 1        |
+|    BufI_6_U                            | ram_1p array  |             |      |      | yes    | BufI_6         | lutram | 1       | 32, 25, 1        |
+|    BufI_7_U                            | ram_1p array  |             |      |      | yes    | BufI_7         | lutram | 1       | 32, 25, 1        |
+|    BufI_8_U                            | ram_1p array  |             |      |      | yes    | BufI_8         | lutram | 1       | 32, 25, 1        |
+|    BufI_9_U                            | ram_1p array  |             |      |      | yes    | BufI_9         | lutram | 1       | 32, 25, 1        |
+|    BufI_10_U                           | ram_1p array  |             |      |      | yes    | BufI_10        | lutram | 1       | 32, 25, 1        |
+|    BufI_11_U                           | ram_1p array  |             |      |      | yes    | BufI_11        | lutram | 1       | 32, 25, 1        |
+|    BufI_12_U                           | ram_1p array  |             |      |      | yes    | BufI_12        | lutram | 1       | 32, 25, 1        |
+|    BufI_13_U                           | ram_1p array  |             |      |      | yes    | BufI_13        | lutram | 1       | 32, 25, 1        |
+|    BufI_14_U                           | ram_1p array  |             |      |      | yes    | BufI_14        | lutram | 1       | 32, 25, 1        |
+|    BufI_15_U                           | ram_1p array  |             |      |      | yes    | BufI_15        | lutram | 1       | 32, 25, 1        |
+|    BufI_16_U                           | ram_1p array  |             |      |      | yes    | BufI_16        | lutram | 1       | 32, 25, 1        |
+|    BufI_17_U                           | ram_1p array  |             |      |      | yes    | BufI_17        | lutram | 1       | 32, 25, 1        |
+|    BufI_18_U                           | ram_1p array  |             |      |      | yes    | BufI_18        | lutram | 1       | 32, 25, 1        |
+|    BufI_19_U                           | ram_1p array  |             |      |      | yes    | BufI_19        | lutram | 1       | 32, 25, 1        |
+|    BufI_20_U                           | ram_1p array  |             |      |      | yes    | BufI_20        | lutram | 1       | 32, 25, 1        |
+|    BufI_21_U                           | ram_1p array  |             |      |      | yes    | BufI_21        | lutram | 1       | 32, 25, 1        |
+|    BufI_22_U                           | ram_1p array  |             |      |      | yes    | BufI_22        | lutram | 1       | 32, 25, 1        |
+|    BufI_23_U                           | ram_1p array  |             |      |      | yes    | BufI_23        | lutram | 1       | 32, 25, 1        |
+|    BufI_24_U                           | ram_1p array  |             |      |      | yes    | BufI_24        | lutram | 1       | 32, 25, 1        |
+|    BufI_25_U                           | ram_1p array  |             |      |      | yes    | BufI_25        | lutram | 1       | 32, 25, 1        |
+|    BufI_26_U                           | ram_1p array  |             |      |      | yes    | BufI_26        | lutram | 1       | 32, 25, 1        |
+|    BufI_27_U                           | ram_1p array  |             |      |      | yes    | BufI_27        | lutram | 1       | 32, 25, 1        |
+|    BufI_28_U                           | ram_1p array  |             |      |      | yes    | BufI_28        | lutram | 1       | 32, 25, 1        |
+|    BufI_29_U                           | ram_1p array  |             |      |      | yes    | BufI_29        | lutram | 1       | 32, 25, 1        |
+|    BufI_30_U                           | ram_1p array  |             |      |      | yes    | BufI_30        | lutram | 1       | 32, 25, 1        |
+|    BufI_31_U                           | ram_1p array  |             |      |      | yes    | BufI_31        | lutram | 1       | 32, 25, 1        |
+|    BufI_32_U                           | ram_1p array  |             |      |      | yes    | BufI_32        | lutram | 1       | 32, 25, 1        |
+|    BufI_33_U                           | ram_1p array  |             |      |      | yes    | BufI_33        | lutram | 1       | 32, 25, 1        |
+|    BufI_34_U                           | ram_1p array  |             |      |      | yes    | BufI_34        | lutram | 1       | 32, 25, 1        |
+|    BufI_35_U                           | ram_1p array  |             |      |      | yes    | BufI_35        | lutram | 1       | 32, 25, 1        |
+|    BufI_36_U                           | ram_1p array  |             |      |      | yes    | BufI_36        | lutram | 1       | 32, 25, 1        |
+|    BufI_37_U                           | ram_1p array  |             |      |      | yes    | BufI_37        | lutram | 1       | 32, 25, 1        |
+|    BufI_38_U                           | ram_1p array  |             |      |      | yes    | BufI_38        | lutram | 1       | 32, 25, 1        |
+|    BufI_39_U                           | ram_1p array  |             |      |      | yes    | BufI_39        | lutram | 1       | 32, 25, 1        |
+|    BufI_40_U                           | ram_1p array  |             |      |      | yes    | BufI_40        | lutram | 1       | 32, 25, 1        |
+|    BufI_41_U                           | ram_1p array  |             |      |      | yes    | BufI_41        | lutram | 1       | 32, 25, 1        |
+|    BufI_42_U                           | ram_1p array  |             |      |      | yes    | BufI_42        | lutram | 1       | 32, 25, 1        |
+|    BufI_43_U                           | ram_1p array  |             |      |      | yes    | BufI_43        | lutram | 1       | 32, 25, 1        |
+|    BufI_44_U                           | ram_1p array  |             |      |      | yes    | BufI_44        | lutram | 1       | 32, 25, 1        |
+|    BufI_45_U                           | ram_1p array  |             |      |      | yes    | BufI_45        | lutram | 1       | 32, 25, 1        |
+|    BufI_46_U                           | ram_1p array  |             |      |      | yes    | BufI_46        | lutram | 1       | 32, 25, 1        |
+|    BufI_47_U                           | ram_1p array  |             |      |      | yes    | BufI_47        | lutram | 1       | 32, 25, 1        |
+|    BufI_48_U                           | ram_1p array  |             |      |      | yes    | BufI_48        | lutram | 1       | 32, 25, 1        |
+|    BufI_49_U                           | ram_1p array  |             |      |      | yes    | BufI_49        | lutram | 1       | 32, 25, 1        |
+|    BufI_50_U                           | ram_1p array  |             |      |      | yes    | BufI_50        | lutram | 1       | 32, 25, 1        |
+|    BufI_51_U                           | ram_1p array  |             |      |      | yes    | BufI_51        | lutram | 1       | 32, 25, 1        |
+|    BufI_52_U                           | ram_1p array  |             |      |      | yes    | BufI_52        | lutram | 1       | 32, 25, 1        |
+|    BufI_53_U                           | ram_1p array  |             |      |      | yes    | BufI_53        | lutram | 1       | 32, 25, 1        |
+|    BufI_54_U                           | ram_1p array  |             |      |      | yes    | BufI_54        | lutram | 1       | 32, 25, 1        |
+|    BufI_55_U                           | ram_1p array  |             |      |      | yes    | BufI_55        | lutram | 1       | 32, 25, 1        |
+|    BufI_56_U                           | ram_1p array  |             |      |      | yes    | BufI_56        | lutram | 1       | 32, 25, 1        |
+|    BufI_57_U                           | ram_1p array  |             |      |      | yes    | BufI_57        | lutram | 1       | 32, 25, 1        |
+|    BufI_58_U                           | ram_1p array  |             |      |      | yes    | BufI_58        | lutram | 1       | 32, 25, 1        |
+|    BufI_59_U                           | ram_1p array  |             |      |      | yes    | BufI_59        | lutram | 1       | 32, 25, 1        |
+|    BufI_60_U                           | ram_1p array  |             |      |      | yes    | BufI_60        | lutram | 1       | 32, 25, 1        |
+|    BufI_61_U                           | ram_1p array  |             |      |      | yes    | BufI_61        | lutram | 1       | 32, 25, 1        |
+|    BufI_62_U                           | ram_1p array  |             |      |      | yes    | BufI_62        | lutram | 1       | 32, 25, 1        |
+|    BufI_63_U                           | ram_1p array  |             |      |      | yes    | BufI_63        | lutram | 1       | 32, 25, 1        |
+|    BufI_64_U                           | ram_1p array  |             |      |      | yes    | BufI_64        | lutram | 1       | 32, 25, 1        |
+|    BufI_65_U                           | ram_1p array  |             |      |      | yes    | BufI_65        | lutram | 1       | 32, 25, 1        |
+|    BufI_66_U                           | ram_1p array  |             |      |      | yes    | BufI_66        | lutram | 1       | 32, 25, 1        |
+|    BufI_67_U                           | ram_1p array  |             |      |      | yes    | BufI_67        | lutram | 1       | 32, 25, 1        |
+|    BufI_68_U                           | ram_1p array  |             |      |      | yes    | BufI_68        | lutram | 1       | 32, 25, 1        |
+|    BufI_69_U                           | ram_1p array  |             |      |      | yes    | BufI_69        | lutram | 1       | 32, 25, 1        |
+|    BufI_70_U                           | ram_1p array  |             |      |      | yes    | BufI_70        | lutram | 1       | 32, 25, 1        |
+|    BufI_71_U                           | ram_1p array  |             |      |      | yes    | BufI_71        | lutram | 1       | 32, 25, 1        |
+|    BufI_72_U                           | ram_1p array  |             |      |      | yes    | BufI_72        | lutram | 1       | 32, 25, 1        |
+|    BufI_73_U                           | ram_1p array  |             |      |      | yes    | BufI_73        | lutram | 1       | 32, 25, 1        |
+|    BufI_74_U                           | ram_1p array  |             |      |      | yes    | BufI_74        | lutram | 1       | 32, 25, 1        |
+|    BufI_75_U                           | ram_1p array  |             |      |      | yes    | BufI_75        | lutram | 1       | 32, 25, 1        |
+|    BufI_76_U                           | ram_1p array  |             |      |      | yes    | BufI_76        | lutram | 1       | 32, 25, 1        |
+|    BufI_77_U                           | ram_1p array  |             |      |      | yes    | BufI_77        | lutram | 1       | 32, 25, 1        |
+|    BufI_78_U                           | ram_1p array  |             |      |      | yes    | BufI_78        | lutram | 1       | 32, 25, 1        |
+|    BufI_79_U                           | ram_1p array  |             |      |      | yes    | BufI_79        | lutram | 1       | 32, 25, 1        |
+|    BufI_80_U                           | ram_1p array  |             |      |      | yes    | BufI_80        | lutram | 1       | 32, 25, 1        |
+|    BufI_81_U                           | ram_1p array  |             |      |      | yes    | BufI_81        | lutram | 1       | 32, 25, 1        |
+|    BufI_82_U                           | ram_1p array  |             |      |      | yes    | BufI_82        | lutram | 1       | 32, 25, 1        |
+|    BufI_83_U                           | ram_1p array  |             |      |      | yes    | BufI_83        | lutram | 1       | 32, 25, 1        |
+|    BufI_84_U                           | ram_1p array  |             |      |      | yes    | BufI_84        | lutram | 1       | 32, 25, 1        |
+|    BufI_85_U                           | ram_1p array  |             |      |      | yes    | BufI_85        | lutram | 1       | 32, 25, 1        |
+|    BufI_86_U                           | ram_1p array  |             |      |      | yes    | BufI_86        | lutram | 1       | 32, 25, 1        |
+|    BufI_87_U                           | ram_1p array  |             |      |      | yes    | BufI_87        | lutram | 1       | 32, 25, 1        |
+|    BufI_88_U                           | ram_1p array  |             |      |      | yes    | BufI_88        | lutram | 1       | 32, 25, 1        |
+|    BufI_89_U                           | ram_1p array  |             |      |      | yes    | BufI_89        | lutram | 1       | 32, 25, 1        |
+|    BufI_90_U                           | ram_1p array  |             |      |      | yes    | BufI_90        | lutram | 1       | 32, 25, 1        |
+|    BufI_91_U                           | ram_1p array  |             |      |      | yes    | BufI_91        | lutram | 1       | 32, 25, 1        |
+|    BufI_92_U                           | ram_1p array  |             |      |      | yes    | BufI_92        | lutram | 1       | 32, 25, 1        |
+|    BufI_93_U                           | ram_1p array  |             |      |      | yes    | BufI_93        | lutram | 1       | 32, 25, 1        |
+|    BufI_94_U                           | ram_1p array  |             |      |      | yes    | BufI_94        | lutram | 1       | 32, 25, 1        |
+|    BufI_95_U                           | ram_1p array  |             |      |      | yes    | BufI_95        | lutram | 1       | 32, 25, 1        |
+|    BufI_96_U                           | ram_1p array  |             |      |      | yes    | BufI_96        | lutram | 1       | 32, 25, 1        |
+|    BufI_97_U                           | ram_1p array  |             |      |      | yes    | BufI_97        | lutram | 1       | 32, 25, 1        |
+|    BufI_98_U                           | ram_1p array  |             |      |      | yes    | BufI_98        | lutram | 1       | 32, 25, 1        |
+|    BufI_99_U                           | ram_1p array  |             |      |      | yes    | BufI_99        | lutram | 1       | 32, 25, 1        |
+|    BufI_100_U                          | ram_1p array  |             |      |      | yes    | BufI_100       | lutram | 1       | 32, 25, 1        |
+|    BufI_101_U                          | ram_1p array  |             |      |      | yes    | BufI_101       | lutram | 1       | 32, 25, 1        |
+|    BufI_102_U                          | ram_1p array  |             |      |      | yes    | BufI_102       | lutram | 1       | 32, 25, 1        |
+|    BufI_103_U                          | ram_1p array  |             |      |      | yes    | BufI_103       | lutram | 1       | 32, 25, 1        |
+|    BufI_104_U                          | ram_1p array  |             |      |      | yes    | BufI_104       | lutram | 1       | 32, 25, 1        |
+|    BufI_105_U                          | ram_1p array  |             |      |      | yes    | BufI_105       | lutram | 1       | 32, 25, 1        |
+|    BufI_106_U                          | ram_1p array  |             |      |      | yes    | BufI_106       | lutram | 1       | 32, 25, 1        |
+|    BufI_107_U                          | ram_1p array  |             |      |      | yes    | BufI_107       | lutram | 1       | 32, 25, 1        |
+|    BufI_108_U                          | ram_1p array  |             |      |      | yes    | BufI_108       | lutram | 1       | 32, 25, 1        |
+|    BufI_109_U                          | ram_1p array  |             |      |      | yes    | BufI_109       | lutram | 1       | 32, 25, 1        |
+|    BufI_110_U                          | ram_1p array  |             |      |      | yes    | BufI_110       | lutram | 1       | 32, 25, 1        |
+|    BufI_111_U                          | ram_1p array  |             |      |      | yes    | BufI_111       | lutram | 1       | 32, 25, 1        |
+|    BufI_112_U                          | ram_1p array  |             |      |      | yes    | BufI_112       | lutram | 1       | 32, 25, 1        |
+|    BufI_113_U                          | ram_1p array  |             |      |      | yes    | BufI_113       | lutram | 1       | 32, 25, 1        |
+|    BufI_114_U                          | ram_1p array  |             |      |      | yes    | BufI_114       | lutram | 1       | 32, 25, 1        |
+|    BufI_115_U                          | ram_1p array  |             |      |      | yes    | BufI_115       | lutram | 1       | 32, 25, 1        |
+|    BufI_116_U                          | ram_1p array  |             |      |      | yes    | BufI_116       | lutram | 1       | 32, 25, 1        |
+|    BufI_117_U                          | ram_1p array  |             |      |      | yes    | BufI_117       | lutram | 1       | 32, 25, 1        |
+|    BufI_118_U                          | ram_1p array  |             |      |      | yes    | BufI_118       | lutram | 1       | 32, 25, 1        |
+|    BufI_119_U                          | ram_1p array  |             |      |      | yes    | BufI_119       | lutram | 1       | 32, 25, 1        |
+|    BufI_120_U                          | ram_1p array  |             |      |      | yes    | BufI_120       | lutram | 1       | 32, 25, 1        |
+|    BufI_121_U                          | ram_1p array  |             |      |      | yes    | BufI_121       | lutram | 1       | 32, 25, 1        |
+|    BufI_122_U                          | ram_1p array  |             |      |      | yes    | BufI_122       | lutram | 1       | 32, 25, 1        |
+|    BufI_123_U                          | ram_1p array  |             |      |      | yes    | BufI_123       | lutram | 1       | 32, 25, 1        |
+|    BufI_124_U                          | ram_1p array  |             |      |      | yes    | BufI_124       | lutram | 1       | 32, 25, 1        |
+|    BufI_125_U                          | ram_1p array  |             |      |      | yes    | BufI_125       | lutram | 1       | 32, 25, 1        |
+|    BufI_126_U                          | ram_1p array  |             |      |      | yes    | BufI_126       | lutram | 1       | 32, 25, 1        |
+|    BufI_127_U                          | ram_1p array  |             |      |      | yes    | BufI_127       | lutram | 1       | 32, 25, 1        |
+|    BufI_128_U                          | ram_1p array  |             |      |      | yes    | BufI_128       | lutram | 1       | 32, 25, 1        |
+|    BufI_129_U                          | ram_1p array  |             |      |      | yes    | BufI_129       | lutram | 1       | 32, 25, 1        |
+|    BufI_130_U                          | ram_1p array  |             |      |      | yes    | BufI_130       | lutram | 1       | 32, 25, 1        |
+|    BufI_131_U                          | ram_1p array  |             |      |      | yes    | BufI_131       | lutram | 1       | 32, 25, 1        |
+|    BufI_132_U                          | ram_1p array  |             |      |      | yes    | BufI_132       | lutram | 1       | 32, 25, 1        |
+|    BufI_133_U                          | ram_1p array  |             |      |      | yes    | BufI_133       | lutram | 1       | 32, 25, 1        |
+|    BufI_134_U                          | ram_1p array  |             |      |      | yes    | BufI_134       | lutram | 1       | 32, 25, 1        |
+|    BufI_135_U                          | ram_1p array  |             |      |      | yes    | BufI_135       | lutram | 1       | 32, 25, 1        |
+|    BufI_136_U                          | ram_1p array  |             |      |      | yes    | BufI_136       | lutram | 1       | 32, 25, 1        |
+|    BufI_137_U                          | ram_1p array  |             |      |      | yes    | BufI_137       | lutram | 1       | 32, 25, 1        |
+|    BufI_138_U                          | ram_1p array  |             |      |      | yes    | BufI_138       | lutram | 1       | 32, 25, 1        |
+|    BufI_139_U                          | ram_1p array  |             |      |      | yes    | BufI_139       | lutram | 1       | 32, 25, 1        |
+|    BufI_140_U                          | ram_1p array  |             |      |      | yes    | BufI_140       | lutram | 1       | 32, 25, 1        |
+|    BufI_141_U                          | ram_1p array  |             |      |      | yes    | BufI_141       | lutram | 1       | 32, 25, 1        |
+|    BufI_142_U                          | ram_1p array  |             |      |      | yes    | BufI_142       | lutram | 1       | 32, 25, 1        |
+|    BufI_143_U                          | ram_1p array  |             |      |      | yes    | BufI_143       | lutram | 1       | 32, 25, 1        |
+|    BufW_U                              | ram_1p array  |             | 1    |      | yes    | BufW           | bram   | 1       | 32, 128, 1       |
+|    BufW_1_U                            | ram_1p array  |             | 1    |      | yes    | BufW_1         | bram   | 1       | 32, 128, 1       |
+|    BufW_2_U                            | ram_1p array  |             | 1    |      | yes    | BufW_2         | bram   | 1       | 32, 128, 1       |
+|    BufW_3_U                            | ram_1p array  |             | 1    |      | yes    | BufW_3         | bram   | 1       | 32, 128, 1       |
+|    BufW_4_U                            | ram_1p array  |             | 1    |      | yes    | BufW_4         | bram   | 1       | 32, 128, 1       |
+|    BufW_5_U                            | ram_1p array  |             | 1    |      | yes    | BufW_5         | bram   | 1       | 32, 128, 1       |
+|    BufW_6_U                            | ram_1p array  |             | 1    |      | yes    | BufW_6         | bram   | 1       | 32, 128, 1       |
+|    BufW_7_U                            | ram_1p array  |             | 1    |      | yes    | BufW_7         | bram   | 1       | 32, 128, 1       |
+|    BufW_8_U                            | ram_1p array  |             | 1    |      | yes    | BufW_8         | bram   | 1       | 32, 128, 1       |
+|    BufW_9_U                            | ram_1p array  |             | 1    |      | yes    | BufW_9         | bram   | 1       | 32, 128, 1       |
+|    BufW_10_U                           | ram_1p array  |             | 1    |      | yes    | BufW_10        | bram   | 1       | 32, 128, 1       |
+|    BufW_11_U                           | ram_1p array  |             | 1    |      | yes    | BufW_11        | bram   | 1       | 32, 128, 1       |
+|    BufW_12_U                           | ram_1p array  |             | 1    |      | yes    | BufW_12        | bram   | 1       | 32, 128, 1       |
+|    BufW_13_U                           | ram_1p array  |             | 1    |      | yes    | BufW_13        | bram   | 1       | 32, 128, 1       |
+|    BufW_14_U                           | ram_1p array  |             | 1    |      | yes    | BufW_14        | bram   | 1       | 32, 128, 1       |
+|    BufW_15_U                           | ram_1p array  |             | 1    |      | yes    | BufW_15        | bram   | 1       | 32, 128, 1       |
+|    BufW_16_U                           | ram_1p array  |             | 1    |      | yes    | BufW_16        | bram   | 1       | 32, 128, 1       |
+|    BufW_17_U                           | ram_1p array  |             | 1    |      | yes    | BufW_17        | bram   | 1       | 32, 128, 1       |
+|    BufW_18_U                           | ram_1p array  |             | 1    |      | yes    | BufW_18        | bram   | 1       | 32, 128, 1       |
+|    BufW_19_U                           | ram_1p array  |             | 1    |      | yes    | BufW_19        | bram   | 1       | 32, 128, 1       |
+|    BufW_20_U                           | ram_1p array  |             | 1    |      | yes    | BufW_20        | bram   | 1       | 32, 128, 1       |
+|    BufW_21_U                           | ram_1p array  |             | 1    |      | yes    | BufW_21        | bram   | 1       | 32, 128, 1       |
+|    BufW_22_U                           | ram_1p array  |             | 1    |      | yes    | BufW_22        | bram   | 1       | 32, 128, 1       |
+|    BufW_23_U                           | ram_1p array  |             | 1    |      | yes    | BufW_23        | bram   | 1       | 32, 128, 1       |
+|    BufW_24_U                           | ram_1p array  |             | 1    |      | yes    | BufW_24        | bram   | 1       | 32, 128, 1       |
+|    BufW_25_U                           | ram_1p array  |             | 1    |      | yes    | BufW_25        | bram   | 1       | 32, 128, 1       |
+|    BufW_26_U                           | ram_1p array  |             | 1    |      | yes    | BufW_26        | bram   | 1       | 32, 128, 1       |
+|    BufW_27_U                           | ram_1p array  |             | 1    |      | yes    | BufW_27        | bram   | 1       | 32, 128, 1       |
+|    BufW_28_U                           | ram_1p array  |             | 1    |      | yes    | BufW_28        | bram   | 1       | 32, 128, 1       |
+|    BufW_29_U                           | ram_1p array  |             | 1    |      | yes    | BufW_29        | bram   | 1       | 32, 128, 1       |
+|    BufW_30_U                           | ram_1p array  |             | 1    |      | yes    | BufW_30        | bram   | 1       | 32, 128, 1       |
+|    BufW_31_U                           | ram_1p array  |             | 1    |      | yes    | BufW_31        | bram   | 1       | 32, 128, 1       |
+|    BufW_32_U                           | ram_1p array  |             | 1    |      | yes    | BufW_32        | bram   | 1       | 32, 128, 1       |
+|    BufW_33_U                           | ram_1p array  |             | 1    |      | yes    | BufW_33        | bram   | 1       | 32, 128, 1       |
+|    BufW_34_U                           | ram_1p array  |             | 1    |      | yes    | BufW_34        | bram   | 1       | 32, 128, 1       |
+|    BufW_35_U                           | ram_1p array  |             | 1    |      | yes    | BufW_35        | bram   | 1       | 32, 128, 1       |
+|    BufW_36_U                           | ram_1p array  |             | 1    |      | yes    | BufW_36        | bram   | 1       | 32, 128, 1       |
+|    BufW_37_U                           | ram_1p array  |             | 1    |      | yes    | BufW_37        | bram   | 1       | 32, 128, 1       |
+|    BufW_38_U                           | ram_1p array  |             | 1    |      | yes    | BufW_38        | bram   | 1       | 32, 128, 1       |
+|    BufW_39_U                           | ram_1p array  |             | 1    |      | yes    | BufW_39        | bram   | 1       | 32, 128, 1       |
+|    BufW_40_U                           | ram_1p array  |             | 1    |      | yes    | BufW_40        | bram   | 1       | 32, 128, 1       |
+|    BufW_41_U                           | ram_1p array  |             | 1    |      | yes    | BufW_41        | bram   | 1       | 32, 128, 1       |
+|    BufW_42_U                           | ram_1p array  |             | 1    |      | yes    | BufW_42        | bram   | 1       | 32, 128, 1       |
+|    BufW_43_U                           | ram_1p array  |             | 1    |      | yes    | BufW_43        | bram   | 1       | 32, 128, 1       |
+|    BufW_44_U                           | ram_1p array  |             | 1    |      | yes    | BufW_44        | bram   | 1       | 32, 128, 1       |
+|    BufW_45_U                           | ram_1p array  |             | 1    |      | yes    | BufW_45        | bram   | 1       | 32, 128, 1       |
+|    BufW_46_U                           | ram_1p array  |             | 1    |      | yes    | BufW_46        | bram   | 1       | 32, 128, 1       |
+|    BufW_47_U                           | ram_1p array  |             | 1    |      | yes    | BufW_47        | bram   | 1       | 32, 128, 1       |
+|    BufW_48_U                           | ram_1p array  |             | 1    |      | yes    | BufW_48        | bram   | 1       | 32, 128, 1       |
+|    BufW_49_U                           | ram_1p array  |             | 1    |      | yes    | BufW_49        | bram   | 1       | 32, 128, 1       |
+|    BufW_50_U                           | ram_1p array  |             | 1    |      | yes    | BufW_50        | bram   | 1       | 32, 128, 1       |
+|    BufW_51_U                           | ram_1p array  |             | 1    |      | yes    | BufW_51        | bram   | 1       | 32, 128, 1       |
+|    BufW_52_U                           | ram_1p array  |             | 1    |      | yes    | BufW_52        | bram   | 1       | 32, 128, 1       |
+|    BufW_53_U                           | ram_1p array  |             | 1    |      | yes    | BufW_53        | bram   | 1       | 32, 128, 1       |
+|    BufW_54_U                           | ram_1p array  |             | 1    |      | yes    | BufW_54        | bram   | 1       | 32, 128, 1       |
+|    BufW_55_U                           | ram_1p array  |             | 1    |      | yes    | BufW_55        | bram   | 1       | 32, 128, 1       |
+|    BufW_56_U                           | ram_1p array  |             | 1    |      | yes    | BufW_56        | bram   | 1       | 32, 128, 1       |
+|    BufW_57_U                           | ram_1p array  |             | 1    |      | yes    | BufW_57        | bram   | 1       | 32, 128, 1       |
+|    BufW_58_U                           | ram_1p array  |             | 1    |      | yes    | BufW_58        | bram   | 1       | 32, 128, 1       |
+|    BufW_59_U                           | ram_1p array  |             | 1    |      | yes    | BufW_59        | bram   | 1       | 32, 128, 1       |
+|    BufW_60_U                           | ram_1p array  |             | 1    |      | yes    | BufW_60        | bram   | 1       | 32, 128, 1       |
+|    BufW_61_U                           | ram_1p array  |             | 1    |      | yes    | BufW_61        | bram   | 1       | 32, 128, 1       |
+|    BufW_62_U                           | ram_1p array  |             | 1    |      | yes    | BufW_62        | bram   | 1       | 32, 128, 1       |
+|    BufW_63_U                           | ram_1p array  |             | 1    |      | yes    | BufW_63        | bram   | 1       | 32, 128, 1       |
+|    BufW_64_U                           | ram_1p array  |             | 1    |      | yes    | BufW_64        | bram   | 1       | 32, 128, 1       |
+|    BufW_65_U                           | ram_1p array  |             | 1    |      | yes    | BufW_65        | bram   | 1       | 32, 128, 1       |
+|    BufW_66_U                           | ram_1p array  |             | 1    |      | yes    | BufW_66        | bram   | 1       | 32, 128, 1       |
+|    BufW_67_U                           | ram_1p array  |             | 1    |      | yes    | BufW_67        | bram   | 1       | 32, 128, 1       |
+|    BufW_68_U                           | ram_1p array  |             | 1    |      | yes    | BufW_68        | bram   | 1       | 32, 128, 1       |
+|    BufW_69_U                           | ram_1p array  |             | 1    |      | yes    | BufW_69        | bram   | 1       | 32, 128, 1       |
+|    BufW_70_U                           | ram_1p array  |             | 1    |      | yes    | BufW_70        | bram   | 1       | 32, 128, 1       |
+|    BufW_71_U                           | ram_1p array  |             | 1    |      | yes    | BufW_71        | bram   | 1       | 32, 128, 1       |
+|    BufW_72_U                           | ram_1p array  |             | 1    |      | yes    | BufW_72        | bram   | 1       | 32, 128, 1       |
+|    BufW_73_U                           | ram_1p array  |             | 1    |      | yes    | BufW_73        | bram   | 1       | 32, 128, 1       |
+|    BufW_74_U                           | ram_1p array  |             | 1    |      | yes    | BufW_74        | bram   | 1       | 32, 128, 1       |
+|    BufW_75_U                           | ram_1p array  |             | 1    |      | yes    | BufW_75        | bram   | 1       | 32, 128, 1       |
+|    BufW_76_U                           | ram_1p array  |             | 1    |      | yes    | BufW_76        | bram   | 1       | 32, 128, 1       |
+|    BufW_77_U                           | ram_1p array  |             | 1    |      | yes    | BufW_77        | bram   | 1       | 32, 128, 1       |
+|    BufW_78_U                           | ram_1p array  |             | 1    |      | yes    | BufW_78        | bram   | 1       | 32, 128, 1       |
+|    BufW_79_U                           | ram_1p array  |             | 1    |      | yes    | BufW_79        | bram   | 1       | 32, 128, 1       |
+|    BufW_80_U                           | ram_1p array  |             | 1    |      | yes    | BufW_80        | bram   | 1       | 32, 128, 1       |
+|    BufW_81_U                           | ram_1p array  |             | 1    |      | yes    | BufW_81        | bram   | 1       | 32, 128, 1       |
+|    BufW_82_U                           | ram_1p array  |             | 1    |      | yes    | BufW_82        | bram   | 1       | 32, 128, 1       |
+|    BufW_83_U                           | ram_1p array  |             | 1    |      | yes    | BufW_83        | bram   | 1       | 32, 128, 1       |
+|    BufW_84_U                           | ram_1p array  |             | 1    |      | yes    | BufW_84        | bram   | 1       | 32, 128, 1       |
+|    BufW_85_U                           | ram_1p array  |             | 1    |      | yes    | BufW_85        | bram   | 1       | 32, 128, 1       |
+|    BufW_86_U                           | ram_1p array  |             | 1    |      | yes    | BufW_86        | bram   | 1       | 32, 128, 1       |
+|    BufW_87_U                           | ram_1p array  |             | 1    |      | yes    | BufW_87        | bram   | 1       | 32, 128, 1       |
+|    BufW_88_U                           | ram_1p array  |             | 1    |      | yes    | BufW_88        | bram   | 1       | 32, 128, 1       |
+|    BufW_89_U                           | ram_1p array  |             | 1    |      | yes    | BufW_89        | bram   | 1       | 32, 128, 1       |
+|    BufW_90_U                           | ram_1p array  |             | 1    |      | yes    | BufW_90        | bram   | 1       | 32, 128, 1       |
+|    BufW_91_U                           | ram_1p array  |             | 1    |      | yes    | BufW_91        | bram   | 1       | 32, 128, 1       |
+|    BufW_92_U                           | ram_1p array  |             | 1    |      | yes    | BufW_92        | bram   | 1       | 32, 128, 1       |
+|    BufW_93_U                           | ram_1p array  |             | 1    |      | yes    | BufW_93        | bram   | 1       | 32, 128, 1       |
+|    BufW_94_U                           | ram_1p array  |             | 1    |      | yes    | BufW_94        | bram   | 1       | 32, 128, 1       |
+|    BufW_95_U                           | ram_1p array  |             | 1    |      | yes    | BufW_95        | bram   | 1       | 32, 128, 1       |
+|    BufW_96_U                           | ram_1p array  |             | 1    |      | yes    | BufW_96        | bram   | 1       | 32, 128, 1       |
+|    BufW_97_U                           | ram_1p array  |             | 1    |      | yes    | BufW_97        | bram   | 1       | 32, 128, 1       |
+|    BufW_98_U                           | ram_1p array  |             | 1    |      | yes    | BufW_98        | bram   | 1       | 32, 128, 1       |
+|    BufW_99_U                           | ram_1p array  |             | 1    |      | yes    | BufW_99        | bram   | 1       | 32, 128, 1       |
+|    BufW_100_U                          | ram_1p array  |             | 1    |      | yes    | BufW_100       | bram   | 1       | 32, 128, 1       |
+|    BufW_101_U                          | ram_1p array  |             | 1    |      | yes    | BufW_101       | bram   | 1       | 32, 128, 1       |
+|    BufW_102_U                          | ram_1p array  |             | 1    |      | yes    | BufW_102       | bram   | 1       | 32, 128, 1       |
+|    BufW_103_U                          | ram_1p array  |             | 1    |      | yes    | BufW_103       | bram   | 1       | 32, 128, 1       |
+|    BufW_104_U                          | ram_1p array  |             | 1    |      | yes    | BufW_104       | bram   | 1       | 32, 128, 1       |
+|    BufW_105_U                          | ram_1p array  |             | 1    |      | yes    | BufW_105       | bram   | 1       | 32, 128, 1       |
+|    BufW_106_U                          | ram_1p array  |             | 1    |      | yes    | BufW_106       | bram   | 1       | 32, 128, 1       |
+|    BufW_107_U                          | ram_1p array  |             | 1    |      | yes    | BufW_107       | bram   | 1       | 32, 128, 1       |
+|    BufW_108_U                          | ram_1p array  |             | 1    |      | yes    | BufW_108       | bram   | 1       | 32, 128, 1       |
+|    BufW_109_U                          | ram_1p array  |             | 1    |      | yes    | BufW_109       | bram   | 1       | 32, 128, 1       |
+|    BufW_110_U                          | ram_1p array  |             | 1    |      | yes    | BufW_110       | bram   | 1       | 32, 128, 1       |
+|    BufW_111_U                          | ram_1p array  |             | 1    |      | yes    | BufW_111       | bram   | 1       | 32, 128, 1       |
+|    BufW_112_U                          | ram_1p array  |             | 1    |      | yes    | BufW_112       | bram   | 1       | 32, 128, 1       |
+|    BufW_113_U                          | ram_1p array  |             | 1    |      | yes    | BufW_113       | bram   | 1       | 32, 128, 1       |
+|    BufW_114_U                          | ram_1p array  |             | 1    |      | yes    | BufW_114       | bram   | 1       | 32, 128, 1       |
+|    BufW_115_U                          | ram_1p array  |             | 1    |      | yes    | BufW_115       | bram   | 1       | 32, 128, 1       |
+|    BufW_116_U                          | ram_1p array  |             | 1    |      | yes    | BufW_116       | bram   | 1       | 32, 128, 1       |
+|    BufW_117_U                          | ram_1p array  |             | 1    |      | yes    | BufW_117       | bram   | 1       | 32, 128, 1       |
+|    BufW_118_U                          | ram_1p array  |             | 1    |      | yes    | BufW_118       | bram   | 1       | 32, 128, 1       |
+|    BufW_119_U                          | ram_1p array  |             | 1    |      | yes    | BufW_119       | bram   | 1       | 32, 128, 1       |
+|    BufW_120_U                          | ram_1p array  |             | 1    |      | yes    | BufW_120       | bram   | 1       | 32, 128, 1       |
+|    BufW_121_U                          | ram_1p array  |             | 1    |      | yes    | BufW_121       | bram   | 1       | 32, 128, 1       |
+|    BufW_122_U                          | ram_1p array  |             | 1    |      | yes    | BufW_122       | bram   | 1       | 32, 128, 1       |
+|    BufW_123_U                          | ram_1p array  |             | 1    |      | yes    | BufW_123       | bram   | 1       | 32, 128, 1       |
+|    BufW_124_U                          | ram_1p array  |             | 1    |      | yes    | BufW_124       | bram   | 1       | 32, 128, 1       |
+|    BufW_125_U                          | ram_1p array  |             | 1    |      | yes    | BufW_125       | bram   | 1       | 32, 128, 1       |
+|    BufW_126_U                          | ram_1p array  |             | 1    |      | yes    | BufW_126       | bram   | 1       | 32, 128, 1       |
+|    BufW_127_U                          | ram_1p array  |             | 1    |      | yes    | BufW_127       | bram   | 1       | 32, 128, 1       |
+|    BufW_128_U                          | ram_1p array  |             | 1    |      | yes    | BufW_128       | bram   | 1       | 32, 128, 1       |
+|    BufW_129_U                          | ram_1p array  |             | 1    |      | yes    | BufW_129       | bram   | 1       | 32, 128, 1       |
+|    BufW_130_U                          | ram_1p array  |             | 1    |      | yes    | BufW_130       | bram   | 1       | 32, 128, 1       |
+|    BufW_131_U                          | ram_1p array  |             | 1    |      | yes    | BufW_131       | bram   | 1       | 32, 128, 1       |
+|    BufW_132_U                          | ram_1p array  |             | 1    |      | yes    | BufW_132       | bram   | 1       | 32, 128, 1       |
+|    BufW_133_U                          | ram_1p array  |             | 1    |      | yes    | BufW_133       | bram   | 1       | 32, 128, 1       |
+|    BufW_134_U                          | ram_1p array  |             | 1    |      | yes    | BufW_134       | bram   | 1       | 32, 128, 1       |
+|    BufW_135_U                          | ram_1p array  |             | 1    |      | yes    | BufW_135       | bram   | 1       | 32, 128, 1       |
+|    BufW_136_U                          | ram_1p array  |             | 1    |      | yes    | BufW_136       | bram   | 1       | 32, 128, 1       |
+|    BufW_137_U                          | ram_1p array  |             | 1    |      | yes    | BufW_137       | bram   | 1       | 32, 128, 1       |
+|    BufW_138_U                          | ram_1p array  |             | 1    |      | yes    | BufW_138       | bram   | 1       | 32, 128, 1       |
+|    BufW_139_U                          | ram_1p array  |             | 1    |      | yes    | BufW_139       | bram   | 1       | 32, 128, 1       |
+|    BufW_140_U                          | ram_1p array  |             | 1    |      | yes    | BufW_140       | bram   | 1       | 32, 128, 1       |
+|    BufW_141_U                          | ram_1p array  |             | 1    |      | yes    | BufW_141       | bram   | 1       | 32, 128, 1       |
+|    BufW_142_U                          | ram_1p array  |             | 1    |      | yes    | BufW_142       | bram   | 1       | 32, 128, 1       |
+|    BufW_143_U                          | ram_1p array  |             | 1    |      | yes    | BufW_143       | bram   | 1       | 32, 128, 1       |
+|    BufO_U                              | ram_s2p array |             | 42   |      | yes    | BufO           | bram   | 1       | 32, 21632, 1     |
++----------------------------------------+---------------+-------------+------+------+--------+----------------+--------+---------+------------------+
+
+
+================================================================
+== Pragma Report
+================================================================
+* Valid Pragma Syntax
++-----------------+------------------------------------------------------------------------------------------------------------------+----------------------------------------------+
+| Type            | Options                                                                                                          | Location                                     |
++-----------------+------------------------------------------------------------------------------------------------------------------+----------------------------------------------+
+| inline          | off                                                                                                              | ../krnl_cnn.cpp:73 in load_inputs            |
+| pipeline        | II=1                                                                                                             | ../krnl_cnn.cpp:79 in load_inputs            |
+| inline          | off                                                                                                              | ../krnl_cnn.cpp:88 in load_weights           |
+| pipeline        | II=1                                                                                                             | ../krnl_cnn.cpp:93 in load_weights           |
+| loop_flatten    | off                                                                                                              | ../krnl_cnn.cpp:94 in load_weights           |
+| inline          | off                                                                                                              | ../krnl_cnn.cpp:105 in compute_tiles         |
+| array_partition | variable=BufI complete dim=1                                                                                     | ../krnl_cnn.cpp:107 in compute_tiles, BufI   |
+| array_partition | variable=BufI complete dim=2                                                                                     | ../krnl_cnn.cpp:108 in compute_tiles, BufI   |
+| array_partition | variable=BufI cyclic factor=(3) dim=3                                                                            | ../krnl_cnn.cpp:109 in compute_tiles, BufI   |
+| array_partition | variable=BufI cyclic factor=(3) dim=4                                                                            | ../krnl_cnn.cpp:110 in compute_tiles, BufI   |
+| bind_storage    | variable=BufI type=ram_1p impl=lutram latency=1                                                                  | ../krnl_cnn.cpp:113 in compute_tiles, BufI   |
+| array_partition | variable=BufW complete dim=1                                                                                     | ../krnl_cnn.cpp:115 in compute_tiles, BufW   |
+| array_partition | variable=BufW complete dim=3                                                                                     | ../krnl_cnn.cpp:116 in compute_tiles, BufW   |
+| array_partition | variable=BufW complete dim=4                                                                                     | ../krnl_cnn.cpp:117 in compute_tiles, BufW   |
+| array_partition | variable=BufW complete dim=5                                                                                     | ../krnl_cnn.cpp:118 in compute_tiles, BufW   |
+| bind_storage    | variable=BufW type=ram_1p impl=bram                                                                              | ../krnl_cnn.cpp:119 in compute_tiles, BufW   |
+| bind_storage    | variable=BufO type=ram_s2p impl=bram                                                                             | ../krnl_cnn.cpp:122 in compute_tiles, BufO   |
+| pipeline        | II=1                                                                                                             | ../krnl_cnn.cpp:143 in compute_tiles         |
+| dependence      | variable=BufO inter false                                                                                        | ../krnl_cnn.cpp:150 in compute_tiles, BufO   |
+| unroll          |                                                                                                                  | ../krnl_cnn.cpp:176 in compute_tiles         |
+| unroll          |                                                                                                                  | ../krnl_cnn.cpp:178 in compute_tiles         |
+| unroll          |                                                                                                                  | ../krnl_cnn.cpp:180 in compute_tiles         |
+| inline          | off                                                                                                              | ../krnl_cnn.cpp:209 in write_outputs         |
+| pipeline        | II=1                                                                                                             | ../krnl_cnn.cpp:213 in write_outputs         |
+| interface       | m_axi port=input offset=slave bundle=gmem_input depth=432000 max_read_burst_length=64 num_read_outstanding=4     | ../krnl_cnn.cpp:224 in krnl_cnn, input       |
+| interface       | m_axi port=weights offset=slave bundle=gmem_weights depth=221184 max_read_burst_length=64 num_read_outstanding=4 | ../krnl_cnn.cpp:225 in krnl_cnn, weights     |
+| interface       | m_axi port=output offset=slave bundle=gmem_output depth=216320 max_write_burst_length=64 num_write_outstanding=4 | ../krnl_cnn.cpp:226 in krnl_cnn, output      |
+| interface       | s_axilite port=input bundle=control                                                                              | ../krnl_cnn.cpp:227 in krnl_cnn, input       |
+| interface       | s_axilite port=weights bundle=control                                                                            | ../krnl_cnn.cpp:228 in krnl_cnn, weights     |
+| interface       | s_axilite port=output bundle=control                                                                             | ../krnl_cnn.cpp:229 in krnl_cnn, output      |
+| interface       | s_axilite port=batch_size bundle=control                                                                         | ../krnl_cnn.cpp:230 in krnl_cnn, batch_size  |
+| interface       | s_axilite port=return bundle=control                                                                             | ../krnl_cnn.cpp:231 in krnl_cnn, return      |
+| stream          | variable=input_fifo depth=256                                                                                    | ../krnl_cnn.cpp:235 in krnl_cnn, input_fifo  |
+| stream          | variable=weight_fifo depth=256                                                                                   | ../krnl_cnn.cpp:236 in krnl_cnn, weight_fifo |
+| stream          | variable=output_fifo depth=256                                                                                   | ../krnl_cnn.cpp:237 in krnl_cnn, output_fifo |
+| bind_storage    | variable=input_fifo type=fifo impl=bram                                                                          | ../krnl_cnn.cpp:238 in krnl_cnn, input_fifo  |
+| bind_storage    | variable=weight_fifo type=fifo impl=bram                                                                         | ../krnl_cnn.cpp:239 in krnl_cnn, weight_fifo |
+| bind_storage    | variable=output_fifo type=fifo impl=bram                                                                         | ../krnl_cnn.cpp:240 in krnl_cnn, output_fifo |
+| dataflow        |                                                                                                                  | ../krnl_cnn.cpp:249 in krnl_cnn              |
++-----------------+------------------------------------------------------------------------------------------------------------------+----------------------------------------------+
+
+
