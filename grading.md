@@ -609,7 +609,7 @@ All metrics below reflect full execution on the Ultra96v2 FPGA fabric across a b
 - **CRT's Class-Leading Innovation:** Group CRT achieved 81.49 GOP/s (sub-10 ms execution) by instantiating 192 parallel MACs per clock. Because 192 full FP32 multipliers would require 576 DSPs (exceeding the chip's 360 DSP ceiling), CRT decomposed the 32-bit integer multiplication into high/mid/low segments: utilizing DSP48E2 primitives for the wide segments and synthesizing the mid/top partial products into LUT fabric (`#pragma HLS BIND_OP impl=fabric`), hitting 99.4% DSP utilization (358/360 DSPs).
 
 #### 2. Multi-Image Batch Sharing & Arithmetic Intensity Champions (CKL, GPY, MPV)
-- **Baseline Arithmetic Intensity:** Standard designs that cache activations once per image achieve an arithmetic intensity of $\approx 65.35\text{ OP/Byte}$ (reading 172.8 KB input, 884.7 KB weights, and writing 86.5 KB output per image).
+- **Baseline Arithmetic Intensity:** Standard designs that cache activations once per image achieve an arithmetic intensity of $\approx 65.35\text{ OP/Byte}$ (reading 172.8 KB input, 884.7 KB weights, and writing 86.5 KB output per image).
 - **Weight Sharing Across Image Pairs (GPY, MPV):** Groups GPY and MPV scheduled the batch in image pairs ($B=2$ concurrent engines or paired batch scheduling), sharing the 884.7 KB weight footprint across two images simultaneously. This doubled their effective arithmetic intensity to **106.5 OP/Byte**, cutting DRAM weight read bandwidth in half.
 - **CKL's 5-Image On-Chip Buffering:** Group CKL retained output accumulators and active input tiles across 5 images simultaneously in BRAM, reading the weights only once every 5 images ($0.2\times$ weight read traffic), reaching the **highest arithmetic intensity in the entire class at 171.0 OP/Byte**.
 
@@ -655,7 +655,7 @@ A comprehensive, automated cross-audit of all 18 submissions was conducted compa
 
 Overall, the students displayed a high degree of technical precision:
 - **Tiling Dimensions:** 18 out of 18 groups (100%) accurately reported their architectural tiling parameters ($T_M, T_N, T_R, T_C$), matching their header definitions exactly.
-- **Arithmetic Consistency:** 18 out of 18 groups (100%) exhibited internal mathematical consistency between their reported runtime ($T$), achieved throughput ($\1{GOP/s} = 0.7476 / T$), DRAM bandwidth ($\1{GB/s}$), and arithmetic intensity ($\1{AI} = \1{GOP/s} / \1{BW}$).
+- **Arithmetic Consistency:** 18 out of 18 groups (100%) exhibited internal mathematical consistency between their reported runtime ($T$), achieved throughput ($\text{GOP/s} = 0.7476 / T$), DRAM bandwidth ($\text{GB/s}$), and arithmetic intensity ($\text{AI} = \text{GOP/s} / \text{BW}$).
 - **Vitis Flow Intent:** 17 groups confirmed Vitis flow adoption, and 1 group (SZZ) transparently confirmed planning an RTL alternative.
 
 However, several systematic factual inaccuracies, conceptual inversions, and domain ambiguities were identified across multiple groups:
@@ -692,30 +692,31 @@ The following table summarizes all identified factual inaccuracies across all 18
 | Group | Survey Field | Self-Reported Value | Codebase / Report Reality | Severity & Underlying Root Cause |
 |:---:|---|:---:|:---:|---|
 | **AJS** | `weight read`<br>`input feature read`<br>`output feature write` | `221,184`<br>`43,200`<br>`21,632` | Transfer Factor: **1.0**<br>Transfer Factor: **1.0**<br>Transfer Factor: **1.0** | **Metric Confusion:** Reported raw floating-point word counts of Layer 2 rather than average transfer factor per data value. |
-| **AJS** | `Kernel-only GOP/s Lab 3` | `120.00 GOP/s` | Array unroll = 400 MACs ($60 \1{ GOP/s}$) | **Unadjusted Lab 2 Value:** Direct copy-paste of Lab 2 ideal throughput; does not reflect Lab 3 unrolled compute loop ceiling. |
-| **BJO** | `weight read`<br>`input feature read`<br>`output feature write` | `221,184`<br>`43,200`<br>`21,632` | Transfer Factor: **1.0**<br>Transfer Factor: **1.0**<br>Transfer Factor: **1.0** | **Metric Confusion:** Reported total words per image ($W=221\1{k}, I=43.2\1{k}, O=21.6\1{k}$) instead of per-value transfer frequency. |
+| **AJS** | `Kernel-only GOP/s Lab 3` | `120.00 GOP/s` | Array unroll = 400 MACs ($60 \text{ GOP/s}$) | **Unadjusted Lab 2 Value:** Direct copy-paste of Lab 2 ideal throughput; does not reflect Lab 3 unrolled compute loop ceiling. |
+| **BJO** | `weight read`<br>`input feature read`<br>`output feature write` | `221,184`<br>`43,200`<br>`21,632` | Transfer Factor: **1.0**<br>Transfer Factor: **1.0**<br>Transfer Factor: **1.0** | **Metric Confusion:** Reported total words per image ($W=221\text{k}, I=43.2\text{k}, O=21.6\text{k}$) instead of per-value transfer frequency. |
 | **BJO** | `Fabric Clock frequency` | `150 MHz` | HLS Target: `clock=5ns` (**200 MHz**) | **Target vs Link Mismatch:** HLS synthesis targeted 200 MHz; link script omitted clock assignment, defaulting to platform default (150 MHz). |
 | **BSW** | `Group Name` | `Group BWS` | Official Canvas Name: **BSW** | **Typo:** Transposed initials (Bassi, Sridhar, Wan). |
 | **BSW** | `Fabric Clock frequency` | `150 MHz` | `cnn-link.cfg`: `id=4` (**200 MHz**)<br>`hls_config.cfg`: `4.4ns` (**227.3 MHz**) | **Factual Inaccuracy:** Explicitly linked to PL clock 4 (200 MHz) in hardware link script; self-reported 150 MHz. |
-| **BSW** | `Kernel-only GOP/s Lab 3` | `67.92 GOP/s` | Max Ceiling at 150 MHz: **33.60 GOP/s**<br>(112 MACs $\1 2 \1 150\1{ MHz}$) | **Unadjusted Lab 2 Value:** Direct copy-paste of Lab 2 ideal peak; physical 112-MAC hardware cannot exceed 33.6 GOP/s at 150 MHz. |
-| **BSW** | `DSP % of krnl_cnn` | `81.67%` (294 DSPs) | `csynth.rpt`: **95.00%** (342 DSPs) | **Tool Estimate Mismatch:** Code unrolls 112 FP multipliers ($112 \1 3 = 336$ DSPs + addressing = 342 DSPs in HLS). |
+| **BSW** | `Kernel-only GOP/s Lab 3` | `67.92 GOP/s` | Max Ceiling at 150 MHz: **33.60 GOP/s**<br>(112 MACs $\times 2 \times 150\text{ MHz}$) | **Unadjusted Lab 2 Value:** Direct copy-paste of Lab 2 ideal peak; physical 112-MAC hardware cannot exceed 33.6 GOP/s at 150 MHz. |
+| **BSW** | `DSP % of krnl_cnn` | `81.67%` (294 DSPs) | `csynth.rpt`: **95.00%** (342 DSPs) | **Tool Estimate Mismatch:** Code unrolls 112 FP multipliers ($112 \times 3 = 336$ DSPs + addressing = 342 DSPs in HLS). |
 | **CHL** | *All Fields Audited* | *No inaccuracies* | *Verified bit-exact against code/reports* | **Factually Accurate:** 100% compliant and mathematically exact across all fields ($T_M=32, T_N=2$, 200 MHz, 25.6 GOP/s ideal). |
 | **CJK** | `weight read`<br>`input feature read`<br>`output feature write` | `225,792`<br>`44,100`<br>`21,632` | Transfer Factor: **1.0**<br>(Padded: 28 tiles of $T_N=7 
-ightarrow 196$ ch) | **Metric Confusion:** Reported raw padded word counts ($196 \1 15 \1 15 = 44.1\1{k}$ input, $128 \1 196 \1 9 = 225.8\1{k}$ weight words) instead of factor 1.0. |
+
+ightarrow 196$ ch) | **Metric Confusion:** Reported raw padded word counts ($196 \times 15 \times 15 = 44.1\text{k}$ input, $128 \times 196 \times 9 = 225.8\text{k}$ weight words) instead of factor 1.0. |
 | **CJS** | `weight read`<br>`input feature read`<br>`output feature write` | `221,184`<br>`43,200`<br>`21,632` | Transfer Factor: **1.0**<br>Transfer Factor: **1.0**<br>Transfer Factor: **1.0** | **Metric Confusion:** Reported raw Layer 2 word count rather than dimensionless transfer frequency. |
-| **CJS** | `DSP % of krnl_cnn` | `77.0%` (277 DSPs) | `csynth.rpt`: **82.50%** (297 DSPs) | **Report Discrepancy:** HLS synthesis allocates 297 DSPs for 96 parallel MACs ($96 \1 3 = 288$ DSPs + address logic). |
-| **CKL** | `Kernel-only GOP/s Lab 3` | `3.2944 GOP/s` | Physical Achieved: **14.51 GOP/s**<br>Theoretical Peak: **19.20 GOP/s** | **Severe Conceptual Inversion:** Reported ideal peak is $4.4\1$ LOWER than achieved throughput! Accelerator cannot exceed ideal ceiling. |
+| **CJS** | `DSP % of krnl_cnn` | `77.0%` (277 DSPs) | `csynth.rpt`: **82.50%** (297 DSPs) | **Report Discrepancy:** HLS synthesis allocates 297 DSPs for 96 parallel MACs ($96 \times 3 = 288$ DSPs + address logic). |
+| **CKL** | `Kernel-only GOP/s Lab 3` | `3.2944 GOP/s` | Physical Achieved: **14.51 GOP/s**<br>Theoretical Peak: **19.20 GOP/s** | **Severe Conceptual Inversion:** Reported ideal peak is $4.4\times$ LOWER than achieved throughput! Accelerator cannot exceed ideal ceiling. |
 | **CRT** | *All Fields Audited* | *No inaccuracies* | *Verified bit-exact against code/reports* | **Factually Accurate:** 100% compliant. Custom 2-DSP multiplier accurately reported ($358 / 360 = 99.44\%$ DSPs, 300 MHz, 115.2 GOP/s ideal). |
-| **DEL** | `B18K % of krnl_cnn` | `22.7%` (98 B18K) | `csynth.rpt`: **49.07%** (212 B18K) | **Report Discrepancy:** HLS csynth allocates 212 BRAM_18K blocks to buffer the full 192-channel IFM; survey underreported BRAM by $2.16\1$. |
-| **DGW** | *All Fields Audited* | *No inaccuracies* | *Verified bit-exact against code/reports* | **Factually Accurate:** 100% compliant. 112 MACs array at 300 MHz accurately accounts for pipeline overhead ($67.17 pprox 67.2\1{ GOP/s}$). |
+| **DEL** | `B18K % of krnl_cnn` | `22.7%` (98 B18K) | `csynth.rpt`: **49.07%** (212 B18K) | **Report Discrepancy:** HLS csynth allocates 212 BRAM_18K blocks to buffer the full 192-channel IFM; survey underreported BRAM by $2.16\times$. |
+| **DGW** | *All Fields Audited* | *No inaccuracies* | *Verified bit-exact against code/reports* | **Factually Accurate:** 100% compliant. 112 MACs array at 300 MHz accurately accounts for pipeline overhead ($67.17 pprox 67.2\text{ GOP/s}$). |
 | **DLW** | `input feature write:` | `1` | Kernel Source Code: **0**<br>(Buffer is `const cnndata_t*` read-only) | **High Severity Factual Error:** Physical impossibility in CNN forward inference; input feature DRAM is never written to by the accelerator. |
 | **DLW** | `LUT %` / `FF %` / `B18K %` | `25.8%` / `17.9%` / `60.9%` | `csynth.rpt`: **34.3%** / **25.0%** / **69.2%** | **Domain Divergence:** Reported Vivado placed utilization rather than HLS synthesis report without explicit domain designation. |
-| **FLX** | `weight read`<br>`input feature read`<br>`output feature write` | `221,184`<br>`345,600`<br>`21,632` | Transfer Factor: **1.0**<br>Transfer Factor: **8.0** ($8\1$ reload)<br>Transfer Factor: **1.0** | **Metric Confusion:** Reported raw word counts. Accurately reflects $8\1$ input reload ($8 \1 43,200 = 345,600$), but reported as words instead of 8.0. |
-| **FLX** | `B18K % of krnl_cnn` | `1.9%` (1 BRAM / 54) | `csynth.rpt`: **9.72%** (42 B18K) | **Heuristic vs Tool Discrepancy:** Relied on manual analytical estimate ($1/54 pprox 1.85\%$) rather than actual HLS synthesis report. |
+| **FLX** | `weight read`<br>`input feature read`<br>`output feature write` | `221,184`<br>`345,600`<br>`21,632` | Transfer Factor: **1.0**<br>Transfer Factor: **8.0** ($8\times$ reload)<br>Transfer Factor: **1.0** | **Metric Confusion:** Reported raw word counts. Accurately reflects $8\times$ input reload ($8 \times 43,200 = 345,600$), but reported as words instead of 8.0. |
+| **FLX** | `B18K % of krnl_cnn` | `1.9%` (1 BRAM / 54) | `csynth.rpt`: **9.72%** (42 B18K) | **Heuristic vs Tool Discrepancy:** Relied on manual analytical estimate ($1/54 pprox 1.85\%$) rather than actual HLS synthesis report. |
 | **GPY** | `Fabric Clock frequency` | `200 MHz` | HLS Target: `clock=3.3ns` (**303.0 MHz**)<br>`cnn-link.cfg`: `id=4` (**200 MHz**) | **Contextual Nuance:** Accurately reported physical link operating clock (200 MHz), though HLS synthesis report was generated targeting 303 MHz. |
 | **GPY** | `LUT %` / `FF %` / `B18K %` | `20.9%` / `16.2%` / `69.9%` | `csynth.rpt`: **50.9%** / **29.2%** / **88.4%** | **Domain Divergence:** Reported Vivado placed/routed utilization (post-packing) rather than HLS synthesis report; DSP (92.78%) matches bit-exact. |
 | **JJS** | `Fabric Clock frequency` | `200 MHz` | HLS Target: `clock=6.6ns` (**151.5 MHz**)<br>`cnn-link.cfg`: `id=4` (**200 MHz**) | **Target vs Link Mismatch:** Accurately reported physical board clock (200 MHz), though HLS synthesis was synthesized targeting 150 MHz. |
-| **JMM** | `weight read`<br>`input feature read`<br>`output feature write` | `221,184`<br>`43,200`<br>`21,632` | Transfer Factor: **1.0**<br>Transfer Factor: **1.0**<br>Transfer Factor: **1.0** | **Metric Confusion:** Reported total words per image ($W=221\1{k}, I=43.2\1{k}, O=21.6\1{k}$) instead of per-value transfer frequency. |
+| **JMM** | `weight read`<br>`input feature read`<br>`output feature write` | `221,184`<br>`43,200`<br>`21,632` | Transfer Factor: **1.0**<br>Transfer Factor: **1.0**<br>Transfer Factor: **1.0** | **Metric Confusion:** Reported total words per image ($W=221\text{k}, I=43.2\text{k}, O=21.6\text{k}$) instead of per-value transfer frequency. |
 | **JMM** | `LUT %` / `FF %` / `B18K %` | `50.8%` / `12.8%` / `47.7%` | `csynth.rpt`: **67.0%** / **38.0%** / **59.0%** | **Domain Divergence:** Reported Vivado post-implementation placed utilization rather than HLS synthesis report (DSP 72.22% vs 73.33%). |
 | **LSX** | *All Fields Audited* | *No inaccuracies* | *Verified bit-exact against code/reports* | **Factually Accurate:** 100% compliant. Bit-exact match on HLS csynth utilization (LUT 17.2%, FF 5.0%, DSP 54.7%, BRAM 30.6%) and 19.2 GOP/s ideal. |
 | **MPV** | *All Fields Audited* | *No inaccuracies* | *Verified bit-exact against code/reports* | **Factually Accurate:** 100% compliant. Bit-exact match on HLS csynth (LUT 50%, FF 11%, DSP 90%, BRAM 80%), accurate paired weight transfer factor (0.5). |
@@ -730,8 +731,8 @@ ightarrow 196$ ch) | **Metric Confusion:** Reported raw padded word counts ($196
 - **Code & Config Files:** [`kernel643.h`](file:///home/user/Desktop/18643-lab3/extracted/ajs_LATE_97622_15160954_ajs_lab3/ajs_lab3/lab3/cnn_host/kernel643.h), [`krnl_cnn.cpp`](file:///home/user/Desktop/18643-lab3/extracted/ajs_LATE_97622_15160954_ajs_lab3/ajs_lab3/lab3/18643_cnn_src/krnl_cnn.cpp), `hls_config.cfg`.
 - **Tiling Accuracy:** **Accurate.** Reported $T_M=8, T_N=192, T_R=13, T_C=13$, exactly matching `kernel643.h`.
 - **Clock Frequency:** **Accurate.** Reported 150 MHz, matching default PL clock 0 link configuration.
-- **DRAM Transfers:** **Metric Inaccuracy.** Self-reported `weight read: 221,184`, `input feature read: 43,200`, and `output feature write: 21,632`. The survey explicitly requested the *"average number of times a data value is transferred between DRAM and fabric"*. AJS reported total floating-point words transferred per image for Layer 2 ($128 \1 192 \1 9 = 221,184$; $192 \1 15 \1 15 = 43,200$; $128 \1 13 \1 13 = 21,632$). Because the input map is cached globally on-chip and each weight is read once per image, the true transfer factors are **1.0, 1.0, and 1.0**.
-- **Ideal Throughput:** **Inaccuracy.** Self-reported Ideal L3 throughput of `120.0 GOP/s`, identical to their Lab 2 response. At 150 MHz, an ideal throughput of 120 GOP/s requires 400 parallel MACs ($2 \1 400 \1 150 \1 10^6 = 120\1{ GOP/s}$). In their Lab 3 code, unrolling was restructured around an on-chip accumulator without re-computing the theoretical compute ceiling.
+- **DRAM Transfers:** **Metric Inaccuracy.** Self-reported `weight read: 221,184`, `input feature read: 43,200`, and `output feature write: 21,632`. The survey explicitly requested the *"average number of times a data value is transferred between DRAM and fabric"*. AJS reported total floating-point words transferred per image for Layer 2 ($128 \times 192 \times 9 = 221,184$; $192 \times 15 \times 15 = 43,200$; $128 \times 13 \times 13 = 21,632$). Because the input map is cached globally on-chip and each weight is read once per image, the true transfer factors are **1.0, 1.0, and 1.0**.
+- **Ideal Throughput:** **Inaccuracy.** Self-reported Ideal L3 throughput of `120.0 GOP/s`, identical to their Lab 2 response. At 150 MHz, an ideal throughput of 120 GOP/s requires 400 parallel MACs ($2 \times 400 \times 150 \times 10^6 = 120\text{ GOP/s}$). In their Lab 3 code, unrolling was restructured around an on-chip accumulator without re-computing the theoretical compute ceiling.
 
 #### 2. Group BJO
 - **Code & Config Files:** [`kernel643.h`](file:///home/user/Desktop/18643-lab3/extracted/bjo_LATE_92116_15119908_BJO_lab3/BJO_lab3_workspace_unzipped/lab3/cnn_host/kernel643.h), [`krnl_cnn.cpp`](file:///home/user/Desktop/18643-lab3/extracted/bjo_LATE_92116_15119908_BJO_lab3/BJO_lab3_workspace_unzipped/lab3/18643_cnn_src/krnl_cnn.cpp), `hls_config.cfg`, [`hls_syn_report_krnl_cnn_csynth.rpt`](file:///home/user/Desktop/18643-lab3/extracted/bjo_LATE_92116_15119908_BJO_lab3/BJO_lab3_workspace_unzipped/lab3/krnl_cnn/hls_reports/hls_syn_report_krnl_cnn_csynth.rpt).
@@ -744,16 +745,16 @@ ightarrow 196$ ch) | **Metric Confusion:** Reported raw padded word counts ($196
 - **Code & Config Files:** [`kernel643.h`](file:///home/user/Desktop/18643-lab3/extracted/bsw_LATE_144616_15163943_BWS_lab3/kernel643.h), [`krnl_cnn.cpp`](file:///home/user/Desktop/18643-lab3/extracted/bsw_LATE_144616_15163943_BWS_lab3/krnl_cnn.cpp), `hls_config.cfg`, `cnn-link.cfg`, [`hls_syn_report_krnl_cnn_csynth.rpt`](file:///home/user/Desktop/18643-lab3/extracted/bsw_LATE_144616_15163943_BWS_lab3/krnl_cnn/hls_reports/hls_syn_report_krnl_cnn_csynth.rpt).
 - **Group Name Typo:** Self-reported as **Group BWS** instead of the official Canvas name **BSW** (Abnash Bassi, Upasana Sridhar, Chenxi Wan).
 - **Clock Frequency:** **Factual Inaccuracy.** Reported `150 MHz`. In `cnn-link.cfg`, BSW explicitly specified `[clock] id=4:krnl_cnn_1`, which binds the kernel to the **200 MHz** PL clock. Furthermore, in `hls_config.cfg`, they set `clock=4.4ns` (**227.3 MHz**). Reporting 150 MHz contradicts their actual build scripts.
-- **Ideal Throughput:** **Inaccuracy & Physical Ceiling Violation.** Reported `67.92 GOP/s` ideal peak at 150 MHz. BSW instantiated 112 parallel MACs ($T_M=16, T_N=7$). At 150 MHz, 112 MACs can at most achieve $2 \1 112 \1 150 \1 10^6 = \mathbf{33.60\1{ GOP/s}}$ (exactly half of 67.92). The reported 67.92 GOP/s is an unadjusted copy-paste from Lab 2.
-- **Resource Utilization:** **Report Discrepancy.** Reported DSP utilization of `81.667%` (294 DSPs). `krnl_cnn_csynth.rpt` reports **342 DSPs (95.0%)**, matching 112 FP multipliers ($112 \1 3 = 336$ DSPs) plus address generators.
-- **DRAM Transfers:** **Accurate.** Correctly reported per-value transfer factors ($W_{rd}=1, W_{wr}=0, I_{rd}=8, I_{wr}=0, O_{rd}=0, O_{wr}=1$), accurately capturing that their loop ordering reloaded the input feature map 8 times per image ($16 \1 8 = 128$ output channels).
+- **Ideal Throughput:** **Inaccuracy & Physical Ceiling Violation.** Reported `67.92 GOP/s` ideal peak at 150 MHz. BSW instantiated 112 parallel MACs ($T_M=16, T_N=7$). At 150 MHz, 112 MACs can at most achieve $2 \times 112 \times 150 \times 10^6 = \mathbf{33.60\text{ GOP/s}}$ (exactly half of 67.92). The reported 67.92 GOP/s is an unadjusted copy-paste from Lab 2.
+- **Resource Utilization:** **Report Discrepancy.** Reported DSP utilization of `81.667%` (294 DSPs). `krnl_cnn_csynth.rpt` reports **342 DSPs (95.0%)**, matching 112 FP multipliers ($112 \times 3 = 336$ DSPs) plus address generators.
+- **DRAM Transfers:** **Accurate.** Correctly reported per-value transfer factors ($W_{rd}=1, W_{wr}=0, I_{rd}=8, I_{wr}=0, O_{rd}=0, O_{wr}=1$), accurately capturing that their loop ordering reloaded the input feature map 8 times per image ($16 \times 8 = 128$ output channels).
 
 #### 4. Group CHL
 - **Code & Config Files:** [`kernel643.h`](file:///home/user/Desktop/18643-lab3/extracted/chl_LATE_151187_15160251_CHL_lab3-1/CHL_lab3/lab3_unzipped/lab3/cnn_host/kernel643.h), [`krnl_cnn.cpp`](file:///home/user/Desktop/18643-lab3/extracted/chl_LATE_151187_15160251_CHL_lab3-1/CHL_lab3/lab3_unzipped/lab3/18643_cnn_src/krnl_cnn.cpp), `hls_config.cfg`, `cnn-link.cfg`, [`hls_syn_report_krnl_cnn_csynth.rpt`](file:///home/user/Desktop/18643-lab3/extracted/chl_LATE_151187_15160251_CHL_lab3-1/CHL_lab3/lab3_unzipped/lab3/krnl_cnn/hls_reports/hls_syn_report_krnl_cnn_csynth.rpt).
 - **Audit Result:** **Factually Accurate Across All Fields.**
   - Tiling: $T_M=32, T_N=2, T_R=13, T_C=13$ (Bit-exact match).
   - Clock: 200 MHz (Matches `id=4` in `cnn-link.cfg` and `clock=5ns` in `hls_config.cfg`).
-  - Ideal GOP/s: 25.60 GOP/s ($2 \1 64\1{ MACs} \1 200\1{ MHz} = 25.60\1{ GOP/s}$, bit-exact).
+  - Ideal GOP/s: 25.60 GOP/s ($2 \times 64\text{ MACs} \times 200\text{ MHz} = 25.60\text{ GOP/s}$, bit-exact).
   - Transfers: $W_{rd}=1, W_{wr}=0, I_{rd}=1, I_{wr}=0, O_{rd}=0, O_{wr}=1$ (Correct transfer factors).
   - Utilization: Reported DSP 54.17% (195 DSPs) vs HLS csynth 54.72% (197 DSPs); LUT 26.9% vs 22.37%; BRAM 20.28% vs 35.19%.
 
@@ -766,14 +767,14 @@ ightarrow 196$ ch) | **Metric Confusion:** Reported raw padded word counts ($196
   - FF: 25.54% ($36,044 / 141,120 = 25.54\%$).
   - DSP: 95.28% ($343 / 360 = 95.28\%$).
   - BRAM: 19.21% ($83 / 432 = 19.21\%$).
-- **DRAM Transfers:** **Metric Inaccuracy.** Reported `weight read: 225,792`, `input feature read: 44,100`, and `output feature write: 21,632`. Because CJK's hardware padded $N_{IFM}=192$ up to 196 channels (28 tiles of $T_N=7$), their kernel transferred $196 \1 15 \1 15 = 44,100$ input words and $128 \1 196 \1 9 = 225,792$ weight words. These are raw padded word counts rather than per-value transfer factors (which are nominally 1.0).
+- **DRAM Transfers:** **Metric Inaccuracy.** Reported `weight read: 225,792`, `input feature read: 44,100`, and `output feature write: 21,632`. Because CJK's hardware padded $N_{IFM}=192$ up to 196 channels (28 tiles of $T_N=7$), their kernel transferred $196 \times 15 \times 15 = 44,100$ input words and $128 \times 196 \times 9 = 225,792$ weight words. These are raw padded word counts rather than per-value transfer factors (which are nominally 1.0).
 
 #### 6. Group CJS
 - **Code & Config Files:** [`kernel643.h`](file:///home/user/Desktop/18643-lab3/extracted/cjs_141367_15113610_chiehhss_shukangj_yichingc_lab3/lab3_workspace_unzipped/lab3/cnn_host/kernel643.h), [`krnl_cnn.cpp`](file:///home/user/Desktop/18643-lab3/extracted/cjs_141367_15113610_chiehhss_shukangj_yichingc_lab3/lab3_workspace_unzipped/lab3/18643_cnn_src/krnl_cnn.cpp), `hls_config.cfg`, [`hls_syn_report_krnl_cnn_csynth.rpt`](file:///home/user/Desktop/18643-lab3/extracted/cjs_141367_15113610_chiehhss_shukangj_yichingc_lab3/lab3_workspace_unzipped/lab3/krnl_cnn/hls_reports/hls_syn_report_krnl_cnn_csynth.rpt).
 - **Tiling Accuracy:** **Accurate.** Reported $T_M=8, T_N=12, T_R=13, T_C=13$, matching `kernel643.h`.
 - **Clock Frequency:** **Accurate.** Reported 150 MHz (matches default link).
 - **DRAM Transfers:** **Metric Inaccuracy.** Reported raw Layer 2 word counts ($221,184, 43,200, 21,632$) instead of transfer factors ($1.0, 1.0, 1.0$).
-- **Resource Utilization:** **Report Discrepancy.** Reported DSP 77.0% (277 DSPs) and BRAM 20.0% (86 B18K). In `krnl_cnn_csynth.rpt`, HLS synthesis allocated 297 DSPs (82.50%) for 96 parallel MACs ($96 \1 3 = 288$ DSPs + address logic) and 104 BRAM_18K blocks (24.07%).
+- **Resource Utilization:** **Report Discrepancy.** Reported DSP 77.0% (277 DSPs) and BRAM 20.0% (86 B18K). In `krnl_cnn_csynth.rpt`, HLS synthesis allocated 297 DSPs (82.50%) for 96 parallel MACs ($96 \times 3 = 288$ DSPs + address logic) and 104 BRAM_18K blocks (24.07%).
 
 #### 7. Group CKL
 - **Code & Config Files:** [`kernel643.h`](file:///home/user/Desktop/18643-lab3/extracted/ckl_97773_15116707_akrzyzan_dchan2_kodyl_lab3/akrzyzan_dchan2_kodyl_lab3/lab3_unzipped/lab3/cnn_host/kernel643.h), [`krnl_cnn.cpp`](file:///home/user/Desktop/18643-lab3/extracted/ckl_97773_15116707_akrzyzan_dchan2_kodyl_lab3/akrzyzan_dchan2_kodyl_lab3/lab3_unzipped/lab3/18643_cnn_src/krnl_cnn.cpp), `hls_config.cfg`, [`hls_syn_report_krnl_cnn_csynth.rpt`](file:///home/user/Desktop/18643-lab3/extracted/ckl_97773_15116707_akrzyzan_dchan2_kodyl_lab3/akrzyzan_dchan2_kodyl_lab3/lab3_unzipped/lab3/krnl_cnn/hls_reports/hls_syn_report_krnl_cnn_csynth.rpt).
@@ -784,21 +785,21 @@ ightarrow 196$ ch) | **Metric Confusion:** Reported raw padded word counts ($196
   - FF: 7.0% ($9,978 / 141,120 = 7.07\%$).
   - DSP: 58.0% ($212 / 360 = 58.89\%$).
   - BRAM: 65.0% ($282 / 432 = 65.28\%$).
-- **Ideal Throughput:** **Severe Inversion / Factual Error.** Reported Ideal L3 throughput of `3.2944 GOP/s`. However, their actual achieved throughput on the physical FPGA was **14.5053 GOP/s** ($4.4\1$ higher than their reported ideal!). For 64 parallel MACs ($T_M=8, T_N=8$) at 150 MHz, the theoretical compute ceiling is $2 \1 64 \1 150 \1 10^6 = \mathbf{19.20\1{ GOP/s}}$. Reporting 3.2944 GOP/s represents a mathematical computation error in their self-report.
+- **Ideal Throughput:** **Severe Inversion / Factual Error.** Reported Ideal L3 throughput of `3.2944 GOP/s`. However, their actual achieved throughput on the physical FPGA was **14.5053 GOP/s** ($4.4\times$ higher than their reported ideal!). For 64 parallel MACs ($T_M=8, T_N=8$) at 150 MHz, the theoretical compute ceiling is $2 \times 64 \times 150 \times 10^6 = \mathbf{19.20\text{ GOP/s}}$. Reporting 3.2944 GOP/s represents a mathematical computation error in their self-report.
 
 #### 8. Group CRT
 - **Code & Config Files:** [`kernel643.h`](file:///home/user/Desktop/18643-lab3/extracted/crt_98394_15116513_cjyu_jcestero_jrogan_otank_lab3-1/cjyu_jcestero_jrogan_otank_lab3/lab3_workspace_unzipped/lab3/cnn_host/src/kernel643.h), [`krnl_cnn.cpp`](file:///home/user/Desktop/18643-lab3/extracted/crt_98394_15116513_cjyu_jcestero_jrogan_otank_lab3-1/cjyu_jcestero_jrogan_otank_lab3/lab3_workspace_unzipped/lab3/18643_cnn_src/krnl_cnn.cpp), `hls_config.cfg`, `cnn-link.cfg`.
 - **Audit Result:** **Factually Accurate Across All Fields.**
   - Tiling: $T_M=8, T_N=24, T_R=13, T_C=13$ (Matches `kernel643.h`).
   - Clock: 300 MHz (Matches `id=1` in `cnn-link.cfg`).
-  - Ideal GOP/s: 115.20 GOP/s ($2 \1 192\1{ MACs} \1 300\1{ MHz} = 115.20\1{ GOP/s}$, bit-exact).
+  - Ideal GOP/s: 115.20 GOP/s ($2 \times 192\text{ MACs} \times 300\text{ MHz} = 115.20\text{ GOP/s}$, bit-exact).
   - Transfers: $W_{rd}=1, W_{wr}=0, I_{rd}=1, I_{wr}=0, O_{rd}=0, O_{wr}=1$ (Correct transfer factors).
   - Utilization: DSP 99.44% (358 / 360 DSPs, exactly matching their decomposed 2-DSP multiplication architecture).
 
 #### 9. Group DEL
 - **Code & Config Files:** [`kernel643.h`](file:///home/user/Desktop/18643-lab3/extracted/del_92659_15117835_fpel_ldas_sienahol_lab3-1/fpel_ldas_sienahol_lab3/cnn_host/kernel643.h), [`krnl_cnn.cpp`](file:///home/user/Desktop/18643-lab3/extracted/del_92659_15117835_fpel_ldas_sienahol_lab3-1/fpel_ldas_sienahol_lab3/18643_cnn_src/krnl_cnn.cpp), `hls_config.cfg`, `cnn-link.cfg`, [`hls_syn_report_krnl_cnn_csynth.rpt`](file:///home/user/Desktop/18643-lab3/extracted/del_92659_15117835_fpel_ldas_sienahol_lab3-1/fpel_ldas_sienahol_lab3/krnl_cnn/hls_reports/hls_syn_report_krnl_cnn_csynth.rpt).
 - **Tiling Accuracy:** **Accurate.** Reported $T_M=8, T_N=12, T_R=13, T_C=13$, matching `kernel643.h`.
-- **Clock & Ideal Throughput:** **Accurate.** Reported 200 MHz (`id=4`) and 38.40 GOP/s ($2 \1 96\1{ MACs} \1 200\1{ MHz} = 38.40\1{ GOP/s}$).
+- **Clock & Ideal Throughput:** **Accurate.** Reported 200 MHz (`id=4`) and 38.40 GOP/s ($2 \times 96\text{ MACs} \times 200\text{ MHz} = 38.40\text{ GOP/s}$).
 - **DRAM Transfers:** **Accurate.** Correctly reported per-value transfer factors ($1, 0, 1, 0, 0, 1$).
 - **Resource Utilization:** **Discrepancy in BRAM.** Reported BRAM utilization of `22.7%` (98 B18K). However, in `krnl_cnn_csynth.rpt`, HLS synthesis allocates **212 BRAM_18K blocks (49.07%)** to store the full 192-channel input feature map.
 
@@ -807,7 +808,7 @@ ightarrow 196$ ch) | **Metric Confusion:** Reported raw padded word counts ($196
 - **Audit Result:** **Factually Accurate Across All Fields.**
   - Tiling: $T_M=128, T_N=14, T_R=13, T_C=13$ (Matches `kernel643.h`).
   - Clock: 300 MHz (Matches `id=1` in `cnn-link.cfg`).
-  - Ideal GOP/s: 67.17 GOP/s (Accurately reflects 112 parallel MACs at 300 MHz [$2 \1 112 \1 300 = 67.2\1{ GOP/s}$] minus pipelined loop overhead).
+  - Ideal GOP/s: 67.17 GOP/s (Accurately reflects 112 parallel MACs at 300 MHz [$2 \times 112 \times 300 = 67.2\text{ GOP/s}$] minus pipelined loop overhead).
   - Transfers: $W_{rd}=1, W_{wr}=0, I_{rd}=1, I_{wr}=0, O_{rd}=0, O_{wr}=1$ (Correct transfer factors).
   - Utilization: DSP 96.1% (346 / 360 DSPs, matching 112 FP multipliers + address generation).
 
@@ -821,9 +822,9 @@ ightarrow 196$ ch) | **Metric Confusion:** Reported raw padded word counts ($196
 #### 12. Group FLX
 - **Code & Config Files:** [`kernel643.h`](file:///home/user/Desktop/18643-lab3/extracted/flx_135476_15115377_freddyfu_peiranx_wenzhuol_lab3/freddyfu_peiranx_wenzhuol_lab3/cnn_host/kernel643.h), [`krnl_cnn.cpp`](file:///home/user/Desktop/18643-lab3/extracted/flx_135476_15115377_freddyfu_peiranx_wenzhuol_lab3/freddyfu_peiranx_wenzhuol_lab3/18643_cnn_src/krnl_cnn.cpp), `hls_config.cfg`, `cnn-link.cfg`, [`hls_syn_report_krnl_cnn_csynth.rpt`](file:///home/user/Desktop/18643-lab3/extracted/flx_135476_15115377_freddyfu_peiranx_wenzhuol_lab3/freddyfu_peiranx_wenzhuol_lab3/krnl_cnn/hls_reports/hls_syn_report_krnl_cnn_csynth.rpt).
 - **Tiling Accuracy:** **Accurate.** Reported $T_M=16, T_N=6, T_R=13, T_C=13$, matching `kernel643.h`.
-- **Clock & Ideal Throughput:** **Accurate.** Reported 200 MHz (`id=4`) and 38.00 GOP/s ($2 \1 96\1{ MACs} \1 200\1{ MHz} = 38.40\1{ GOP/s}$).
-- **DRAM Transfers:** **Metric Inaccuracy.** Reported raw word counts ($W_{rd}=221,184$, $I_{rd}=345,600$, $O_{wr}=21,632$) instead of transfer factors ($1.0, 8.0, 1.0$). Notably, FLX's reported input word count ($345,600 = 8 \1 43,200$) accurately reflects their outer loop reloading the IFM 8 times, but mapped onto the wrong metric units.
-- **Resource Utilization:** **Analytical Estimate Divergence.** Reported BRAM utilization of `1.9%`. In their survey text, FLX noted they derived this from an analytical estimate of 1 BRAM block ($1 / 54 pprox 1.85\%$). However, in `krnl_cnn_csynth.rpt`, HLS synthesis allocated **42 BRAM_18K blocks (9.72%)**.
+- **Clock & Ideal Throughput:** **Accurate.** Reported 200 MHz (`id=4`) and 38.00 GOP/s ($2 \times 96\text{ MACs} \times 200\text{ MHz} = 38.40\text{ GOP/s}$).
+- **DRAM Transfers:** **Metric Inaccuracy.** Reported raw word counts ($W_{rd}=221,184$, $I_{rd}=345,600$, $O_{wr}=21,632$) instead of transfer factors ($1.0, 8.0, 1.0$). Notably, FLX's reported input word count ($345,600 = 8 \times 43,200$) accurately reflects their outer loop reloading the IFM 8 times, but mapped onto the wrong metric units.
+- **Resource Utilization:** **Analytical Estimate Divergence.** Reported BRAM utilization of `1.9%`. In their survey text, FLX noted they derived this from an analytical estimate of 1 BRAM block ($1 / 54 pprox 1.85\%$). However, in `krnl_cnn_csynth.rpt`, HLS synthesis allocated **42 BRAM_18K blocks (9.72%)**.
 
 #### 13. Group GPY
 - **Code & Config Files:** [`kernel643.h`](file:///home/user/Desktop/18643-lab3/extracted/gpy_151161_15119231_alpan_shengfeg_sutongy_lab3/alpan_shengfeg_sutongy_lab3/lab3_workspace_unzipped/lab3/cnn_host/kernel643.h), [`krnl_cnn.cpp`](file:///home/user/Desktop/18643-lab3/extracted/gpy_151161_15119231_alpan_shengfeg_sutongy_lab3/alpan_shengfeg_sutongy_lab3/lab3_workspace_unzipped/lab3/18643_cnn_src/krnl_cnn.cpp), `hls_config.cfg`, `cnn-link.cfg`, [`hls_syn_report_krnl_cnn_csynth.rpt`](file:///home/user/Desktop/18643-lab3/extracted/gpy_151161_15119231_alpan_shengfeg_sutongy_lab3/alpan_shengfeg_sutongy_lab3/lab3_workspace_unzipped/lab3/krnl_cnn/hls_reports/hls_syn_report_krnl_cnn_csynth.rpt).
@@ -848,7 +849,7 @@ ightarrow 196$ ch) | **Metric Confusion:** Reported raw padded word counts ($196
 - **Audit Result:** **Factually Accurate Across All Fields.**
   - Tiling: $T_M=16, T_N=4, T_R=13, T_C=13$ (Matches `kernel643.h`).
   - Clock: 150 MHz (Matches default link).
-  - Ideal GOP/s: 19.20 GOP/s ($2 \1 64\1{ MACs} \1 150\1{ MHz} = 19.20\1{ GOP/s}$, bit-exact).
+  - Ideal GOP/s: 19.20 GOP/s ($2 \times 64\text{ MACs} \times 150\text{ MHz} = 19.20\text{ GOP/s}$, bit-exact).
   - Transfers: $W_{rd}=1, W_{wr}=0, I_{rd}=1, I_{wr}=0, O_{rd}=0, O_{wr}=1$ (Correct transfer factors).
   - Resource Utilization: **Bit-Exact Match with HLS csynth.** LUT 17.21% ($12,143 / 70,560$), FF 4.98% ($7,032 / 141,120$), DSP 54.72% ($197 / 360$), BRAM 30.56% ($132 / 432$).
 
@@ -864,6 +865,232 @@ ightarrow 196$ ch) | **Metric Confusion:** Reported raw padded word counts ($196
 - **Code & Config Files:** [`kernel643.h`](file:///home/user/Desktop/18643-lab3/extracted/szz_LATE_71254_15160116_chenhao7_rzamir_sseshan_lab3/lab3/cnn_host/kernel643.h), [`krnl_cnn.cpp`](file:///home/user/Desktop/18643-lab3/extracted/szz_LATE_71254_15160116_chenhao7_rzamir_sseshan_lab3/lab3/18643_cnn_src/krnl_cnn.cpp), `hls_config.cfg`, `cnn-link.cfg`, [`hls_syn_report_krnl_cnn_csynth.rpt`](file:///home/user/Desktop/18643-lab3/extracted/szz_LATE_71254_15160116_chenhao7_rzamir_sseshan_lab3/lab3/krnl_cnn/hls_reports/hls_syn_report_krnl_cnn_csynth.rpt).
 - **Tiling & Clock:** **Accurate.** Reported $T_M=7, T_N=16, T_R=13, T_C=13$ and 200 MHz (`id=4`).
 - **Resource Utilization:** **Bit-Exact Match on DSP & BRAM.** In `krnl_cnn_csynth.rpt`, DSP is 97.5% (351 / 360, rounded to 97%) and BRAM is 78.47% (339 / 432, rounded to 78%). LUT (42%) and FF (13%) reflect post-routing placed utilization.
-- **DRAM Transfers:** **Metric Inaccuracy.** Self-reported `weight read: 44,236.80`, `input feature read: 43,200`, and `output feature write: 21,632`. In SZZ's code, `krnl_cnn.cpp` defines `batch_tiles = 5` and streams weights across groups of 5 images simultaneously, loading the 221,184 weight words only twice across the 10-image batch ($221,184 / 5 = \mathbf{44,236.80\1{ words per image}}$). While the students' calculation precisely matches their code down to two decimal places, they reported the amortized word count rather than the dimensionless transfer factor (**0.20**).
+- **DRAM Transfers:** **Metric Inaccuracy.** Self-reported `weight read: 44,236.80`, `input feature read: 43,200`, and `output feature write: 21,632`. In SZZ's code, `krnl_cnn.cpp` defines `batch_tiles = 5` and streams weights across groups of 5 images simultaneously, loading the 221,184 weight words only twice across the 10-image batch ($221,184 / 5 = \mathbf{44,236.80\text{ words per image}}$). While the students' calculation precisely matches their code down to two decimal places, they reported the amortized word count rather than the dimensionless transfer factor (**0.20**).
+
+---
+
+
+---
+
+### 7.4 Information Confirmability Analysis: What Can vs. Cannot Be Confirmed from Source Code
+
+When auditing the Canvas self-reporting CSV against the provided C++ source files ([`krnl_cnn.cpp`](file:///home/user/Desktop/18643-lab3/starter_src/18643_cnn_src/krnl_cnn.cpp), [`kernel643.h`](file:///home/user/Desktop/18643-lab3/starter_src/18643_cnn_src/kernel643.h), [`cnn.cpp`](file:///home/user/Desktop/18643-lab3/starter_src/18643_cnn_src/cnn.cpp), [`cnn.h`](file:///home/user/Desktop/18643-lab3/starter_src/18643_cnn_src/cnn.h)), the survey metrics divide into distinct categories based on whether they can be verified from source code alone:
+
+| CSV Information Category | Confirmable from Source Code? | Required Source of Truth / Verification Domain |
+|---|:---:|---|
+| **Tile Dimensions ($T_M, T_N, T_R, T_C$)** | **YES** | [`kernel643.h`](file:///home/user/Desktop/18643-lab3/starter_src/18643_cnn_src/kernel643.h) (`#define` constants & loop bounds) |
+| **DRAM Transfer Factors ($W_{rd}, I_{rd}, O_{wr}$)** | **YES** | [`krnl_cnn.cpp`](file:///home/user/Desktop/18643-lab3/starter_src/18643_cnn_src/krnl_cnn.cpp) (Loop nesting, buffer reuse, batch tiling) |
+| **Input Feature Write = 0** | **YES** | [`krnl_cnn.cpp`](file:///home/user/Desktop/18643-lab3/starter_src/18643_cnn_src/krnl_cnn.cpp) (`const cnndata_t* input` read-only prototype) |
+| **Execution Strategy & "Secret Sauce"** | **YES** | [`krnl_cnn.cpp`](file:///home/user/Desktop/18643-lab3/starter_src/18643_cnn_src/krnl_cnn.cpp) (DATAFLOW, ping-pong buffers, AXI bursts) |
+| **Ideal Peak Throughput (Lab 3)** | **PARTIAL** | Unroll factors in code $\times 2 \times f_{\text{clk}}$ (requires knowing $f_{\text{clk}}$ from link config) |
+| **Fabric Clock Frequency (MHz)** | **NO** | `cnn-link.cfg` or platform default PLL (System linker script) |
+| **Total Runtime & Achieved GOP/s** | **NO** | Physical FPGA hardware run / OpenCL event profiling log |
+| **DRAM Bandwidth (GB/s)** | **NO** | Physical runtime measurement on board |
+| **Resource Utilization (% LUT, FF, DSP, BRAM)** | **NO** | Vitis HLS `csynth.rpt` / Vivado `system_utilization_placed.rpt` |
+| **Lab 2 Metrics & Discarded Ideas** | **NO** | Subjective student self-reporting questionnaire responses |
+
+#### Why Certain Metrics Cannot Be Confirmed from Source Code
+1. **Dynamic Hardware Measurements (Runtime, GOP/s, DRAM Bandwidth):** Static C++ code cannot predict wall-clock physical execution time because runtime depends on physical AXI interconnect arbitration, LPDDR4 memory controller refresh cycles, DDR channel page hit rates, DMA setup overhead, and OpenCL driver dispatch latency.
+2. **Post-Synthesis & Post-Routing Utilization (LUT, FF, DSP, BRAM):** Source code expresses algorithmic intent and pragmas, but exact hardware gate counts require running the Vitis HLS compiler (`v++ -c`) and Vivado place-and-route implementation (`v++ -l`). Auxiliary DSPs for integer address indexing, logic synthesis LUT-packing, and routing overhead are entirely EDA tool-driven.
+3. **Hardware Operating Clock:** In the Vitis OpenCL flow, the accelerator's physical clock frequency is determined by the system link configuration (`cnn-link.cfg`: e.g. `[clock] id=1` for 300 MHz or `id=4` for 200 MHz), not by C++ language constructs.
+4. **Historical, Discarded, & Subjective Questionnaire Fields:** Past lab metrics (Lab 2 ideal GOP/s), aborted engineering attempts (e.g. failed double buffering), and future project plans leave zero footprint in the final submitted source files.
+
+---
+
+### 7.5 Microarchitectural Plausibility Analysis of Unconfirmed Metrics
+
+Although the physical runtime, achieved throughput, and resource utilization cannot be confirmed purely from source code syntax, an engineering cross-audit reveals that they are **overwhelmingly plausible and microarchitecturally consistent** with the underlying hardware code:
+
+#### 1. Physical Runtime & Achieved Throughput Plausibility
+- **Zero Physical Violations:** For all 18 groups, the reported physical runtime ($T_{\text{rep}}$) is strictly greater than the theoretical ideal compute time ($T_{\text{ideal}} = \text{Total Operations} / [2 \times N_{\text{MAC}} \times f_{\text{clk}}]$). No team reported an impossible runtime faster than their compute engine could execute.
+- **Microarchitectural Slowdown Consistency:** The slowdown factor ($T_{\text{rep}} / T_{\text{ideal}}$) ranges from **1.07x to 4.0x**, matching each group's buffering and scheduling architecture:
+  - *Deep Double-Buffering / Multi-Image Caching (JMM, DLW, DGW, CKL, CRT, GPY, MPV):* Achieved slowdowns of only **1.07x to 1.55x** ($65\%\text{--}93\%$ of ideal peak). Their ping-pong buffers and multi-image BRAM caching successfully hid DRAM latency behind compute cycles.
+  - *Sequential Unbuffered Execution (AJS, JJS, SZZ, CJK):* Achieved slowdowns of **1.85x to 2.5x**, reflecting expected sequential transitions between DRAM burst transfers and compute tile execution.
+  - *Input-Reloading Loops (FLX, BSW, CHL):* Achieved slowdowns of **3.8x to 4.0x**, consistent with outer loops that repeatedly reloaded the input feature map from DRAM (e.g. FLX reloaded 8 times).
+
+#### 2. DRAM Bandwidth Plausibility
+- The Ultra96v2 features a 32-bit LPDDR4 memory subsystem running at 533 MHz (1066 MT/s), providing a theoretical peak bandwidth of **4.26 GB/s**.
+- All reported DRAM bandwidths fall between **0.085 GB/s and 1.25 GB/s** ($2\%\text{ to }29\%$ of peak LPDDR4 bandwidth):
+  - *Peak Bandwidth (CRT: 1.247 GB/s):* Fully plausible because CRT instantiated three separate 128-bit AXI master ports operating at 300 MHz (each capable of $16\text{ B} \times 300\text{ MHz} = 4.8\text{ GB/s}$ burst peak).
+  - *Minimum Bandwidth (CKL: 0.085 GB/s):* Fully plausible because CKL cached 5 images on-chip simultaneously, reducing DRAM traffic to a trickle.
+
+#### 3. Resource Utilization Plausibility
+- **DSP Utilization:** Theoretical DSP requirements ($N_{\text{MAC}} \times 3\text{ DSPs}$) match reported percentages almost exactly across the class:
+  - 64 MACs (CHL, LSX, CKL): Theoretical $64 \times 3 = 192$ DSPs (53.3%). Reported: **54.2%, 54.7%, 58.0%**.
+  - 96 MACs (BJO, DEL, FLX, JJS, CJS): Theoretical $96 \times 3 = 288$ DSPs (80.0%). Reported: **76.7% to 77.5%**.
+  - 112 MACs (CJK, DGW, DLW, SZZ): Theoretical $112 \times 3 = 336$ DSPs (93.3%). Reported: **95.3% to 97.0%** (the remaining 10--15 DSPs correspond to integer address generation).
+  - Decomposed Multiplier (CRT): 192 MACs would normally require 576 DSPs (exceeding the chip's 360 DSP limit). CRT used 2 DSPs + LUT fabric mid-pieces per MAC $\rightarrow$ **358 DSPs (99.4%)**, matching reported numbers exactly.
+  - Dual-Engine (GPY): 160 MACs with integer-optimized multipliers $\rightarrow$ **334 DSPs (92.8%)**, matching reported numbers bit-for-bit.
+- **BRAM Utilization:** Accurately reflects array dimensions in code:
+  - Groups holding full $192 \times 15 \times 15$ input maps (172.8 KB) or multi-image output banks (MPV, SZZ, BJO, CKL, DLW) reported **60% to 80% BRAM** (out of 432 B18K blocks).
+  - Groups using lean streaming FIFOs (FLX, BSW) reported low BRAM utilization (**5.8% to 9.7%**).
+- **LUT & FF Utilization:** Reported ranges (**15%--52% LUT**, **5%--25% FF**) are typical for pipelined AXI accelerator designs on the Zynq UltraScale+ ZU3EG, fitting comfortably below device limits.
+
+---
+
+### 7.6 Prominent Implausibilities & Red Flags Breakdown
+
+While the majority of unconfirmed metrics are microarchitecturally sound, five specific reporting anomalies stand out as **physically impossible**, **mathematically inverted**, or **microarchitecturally contradictory**:
+
+#### 1. Physical Impossibility: Writing to Read-Only Input Memory (Group DLW)
+- **Reported Value:** `input feature write: 1`
+- **Code Reality:** In [`krnl_cnn.cpp`](file:///home/user/Desktop/18643-lab3/extracted/dlw_LATE_75009_15160450_dlw_lab3/lab3/krnl_cnn/krnl_cnn.cpp), the input buffer is declared as:
+  ```cpp
+  void krnl_cnn(const cnndata_t* input, const cnndata_t* weights, cnndata_t* output, ...)
+  ```
+- **Why it is Implausible:** In CNN forward inference, the accelerator reads input activations computed by the previous layer; it never modifies or writes back to input feature memory. The pointer is `const`, and the hardware datapath contains zero write masters to input memory. Reporting `1` is a direct physical impossibility.
+
+#### 2. Mathematical Inversion: Achieved Performance Exceeding Ideal Peak by 4.4x (Group CKL)
+- **Reported Values:**
+  - Achieved Throughput: **14.5053 GOP/s**
+  - Ideal Peak Throughput (Lab 3): **3.2944 GOP/s**
+- **Code Reality:** CKL instantiates $8 \times 8 = 64$ parallel MACs running at 150 MHz.
+- **Why it is Implausible:** By definition, "ideal peak throughput" represents the theoretical upper bound of the hardware ($2 \times N_{\text{MAC}} \times f_{\text{clk}}$), assuming 100% compute efficiency, zero memory stalls, and zero pipeline bubbles. An accelerator **cannot physically achieve $4.4\times$ higher throughput than its theoretical ideal peak**. For 64 MACs at 150 MHz, their true ideal ceiling is:
+  $$2 \times 64 \times 150 \times 10^6 = \mathbf{19.20\text{ GOP/s}}$$
+  Reporting 3.2944 GOP/s represents an inverted mathematical calculation.
+
+#### 3. Hardware Ceiling Contradiction: 67.92 GOP/s Ideal Peak at 150 MHz (Group BSW)
+- **Reported Values:**
+  - Ideal Peak Throughput (Lab 3): **67.92 GOP/s**
+  - Fabric Clock: **150 MHz**
+- **Code Reality:** In [`krnl_cnn.cpp`](file:///home/user/Desktop/18643-lab3/extracted/bsw_LATE_144616_15163943_BWS_lab3/krnl_cnn.cpp), BSW's compute loop unrolls $T_M=16$ and $T_N=7$, giving $16 \times 7 = \mathbf{112\text{ parallel MACs}}$.
+- **Why it is Implausible:** At 150 MHz, the maximum compute ceiling 112 MACs can ever attain is:
+  $$2 \times 112 \times 150 \times 10^6 = \mathbf{33.60\text{ GOP/s}}$$
+  Claiming an ideal peak of 67.92 GOP/s at 150 MHz is **more than double the physical limit of their hardware**. BSW simply copy-pasted their Lab 2 response without recalculating it for their Lab 3 hardware configuration.
+
+#### 4. Microarchitectural BRAM Disconnect: Full IFM in 22.7% BRAM (Group DEL)
+- **Reported Value:** `B18K % of krnl_cnn: 22.7%` (98 B18K blocks)
+- **Code Reality:** In [`krnl_cnn.cpp`](file:///home/user/Desktop/18643-lab3/extracted/del_92659_15117835_fpel_ldas_sienahol_lab3-1/fpel_ldas_sienahol_lab3/18643_cnn_src/krnl_cnn.cpp), DEL declared on-chip storage for the **entire 192-channel input feature map**:
+  ```cpp
+  cnndata_t BufI[192][15][15];
+  #pragma HLS ARRAY_PARTITION variable=BufI cyclic factor=12 dim=1
+  ```
+- **Why it is Implausible:** Storing $192 \times 15 \times 15 = 43,200\text{ floats}$ requires 172.8 KB of raw data. To supply 12 parallel MAC channels every clock cycle without bank conflicts, the array is partitioned across multiple independent memory banks. In UltraScale+ fabric, each BRAM_18K block holds 2.25 KB; supporting this capacity and multi-bank partitioning requires at least 150--200 blocks. Vitis HLS synthesis actually allocated **212 B18K blocks (49.07%)**---more than **double** DEL's reported 22.7%.
+
+#### 5. Build Script Contradiction: Reporting 150 MHz while Linking to 200 MHz (Group BSW)
+- **Reported Value:** `Fabric Clock frequency: 150 MHz`
+- **Build Script Reality:** In their system link configuration file ([`cnn-link.cfg`](file:///home/user/Desktop/18643-lab3/extracted/bsw_LATE_144616_15163943_BWS_lab3/krnl_cnn/cnn-link.cfg)), BSW explicitly wrote:
+  ```ini
+  [clock]
+  id=4:krnl_cnn_1
+  ```
+  And in `hls_config.cfg`, they set `clock=4.4ns` (**227.3 MHz**).
+- **Why it is Implausible:** Clock `id=4` on the Ultra96v2 base platform routes the **200 MHz PL clock** to the accelerator instance `krnl_cnn_1`. Claiming the hardware operated at 150 MHz directly contradicts the explicit command given to the `v++` linker.
+
+#### 6. Literal Interpretation Anomaly: DRAM Transfers of 221,184 per Value (7 Groups)
+- **Reported Values:** Weight Read: `221,184`, Input Read: `43,200` (AJS, BJO, CJK, CJS, FLX, JMM, SZZ)
+- **Why it is Implausible:** The survey explicitly asked for the *"average number of times a data value is transferred between DRAM and fabric"*. While this is clearly a metric confusion (reporting raw word counts per image), if taken literally as asked, reading each of the 221,184 weights 221,184 times would mean transferring **48.9 billion words (195.7 GB) per image**, which would require hundreds of seconds and exceed the physical bandwidth of DDR memory by orders of magnitude. The true transfer factors are **1.0, 1.0, and 1.0**.
+
+---
+
+
+---
+
+## 8. Compliance with Assignment Rules and Pedagogical Spirit
+
+### 8.1 Overview & Integrity Confirmation
+
+A comprehensive evaluation was conducted to assess whether any student submission violated the explicit rules or the pedagogical intent of [Handout #7 (Lab 3)](file:///home/user/Desktop/18643-lab3/H07-lab3-2026.pdf).
+
+- **Academic Integrity & Hardware Authenticity Confirmed:** **18 out of 18 groups (100%)** successfully implemented authentic hardware acceleration pipelines in the Ultra96v2 FPGA fabric. All 18 submissions passed **bit-exact golden verification** against the reference algorithm [`ZhangIsfpga15_1_fp()`](file:///home/user/Desktop/18643-lab3/starter_src/18643_cnn_src/cnn.cpp#L358) across the full batch of 10 images ($747,601,920$ operations).
+- **No Cheating or Bypassing:** No group attempted to cheat on verification, hardcode outputs, truncate the batch of 10 images, offload computation back to the ARM CPU host, or substitute reduced-precision approximations (e.g. FP16/INT8). Every group performed all 747.6 million floating-point operations directly within the FPGA accelerator kernel.
+
+However, significant divergences were identified regarding adherence to **formal submission rules** and the **pedagogical spirit** of the lab:
+
+```
++----------------------------------------------------------------------------------------------------+
+|                               COMPLIANCE & PEDAGOGICAL SPIRIT SUMMARY                               |
++--------------------------+-------------------------------------------------------------------------+
+| Category                 | Evaluation & Affected Groups                                            |
++--------------------------+-------------------------------------------------------------------------+
+| 1. Severe Rule Violation | Group BSW: Missing krnl_cnn.cpp in submission archive (external AFS    |
+|    (Missing Deliverables)| path) and missing mandatory datapath block diagram (Score: 1 / 5).      |
+| 2. Minor Scope Infraction| Group AJS: Modified forbidden starter file cnn_host/cnn.cpp with        |
+|    (Prohibited Files)    | diagnostic debug prints (Score: 3 / 5).                                 |
+| 3. Minimalist Shortcut   | Group BSW: Reused Lab 2 kernel inside unoptimized starter loops without |
+|    (Bypassing Spirit)    | fine-tuning DRAM buffering; reloaded IFM 8x per image (31.1 OP/B).      |
+| 4. Engineering Exemplars | CRT, CKL, GPY, MPV, DLW, DGW: Pushed UltraScale+ fabric boundaries with |
+|    (Embodying Spirit)    | custom arithmetic decomposition, multi-image BRAM caching, & 300 MHz.   |
++--------------------------+-------------------------------------------------------------------------+
+```
+
+---
+
+### 8.2 Detailed Audit of Explicit Rule Violations
+
+#### 1. Group BSW: Severe Rule Non-Compliance (Compliance Score: 1 / 5)
+- **Rule Violated (Handout pages 2 and 4):**
+  > *"You have full flexibility to modify krnl_cnn.cpp and kernel643.h... Include in the submission directory a zip of your complete workspace... Include in the submission directory a drawn block diagram of the synthesized kernel datapath."*
+- **The Violation:**
+  1. **Omission of the Accelerator Kernel ([`krnl_cnn.cpp`](file:///home/user/Desktop/18643-lab3/extracted/bsw_LATE_144616_15163943_BWS_lab3/krnl_cnn.cpp)):** In their submitted archive (`bsw_LATE_144616_15163943_BWS_lab3.zip`), the primary technical deliverable—[`krnl_cnn.cpp`](file:///home/user/Desktop/18643-lab3/extracted/bsw_LATE_144616_15163943_BWS_lab3/krnl_cnn.cpp)—was completely missing. BSW created their Vitis project by linking to an external AFS user directory (`/afs/ece.cmu.edu/usr/cbw/...`) rather than importing the file into their local workspace directory. Consequently, when the workspace was zipped, the kernel code was left behind on AFS. The instructor had to manually supply the missing source file to evaluate functional correctness.
+  2. **Omission of Datapath Block Diagram:** BSW failed to include a drawn datapath diagram (`.pdf`, `.png`, `.jpg`).
+  3. **Packaging Cleanliness:** BSW submitted raw build directories with uncleaned intermediate files (42 MB).
+
+#### 2. Group AJS: Minor Technical Scope Infraction (Compliance Score: 3 / 5)
+- **Rule Violated (Handout page 2):**
+  > *"You have full flexibility to modify krnl_cnn.cpp and kernel643.h. You may not add or modify other files in the final submission."*
+- **The Infraction:** Group AJS modified [`cnn_host/cnn.cpp`](file:///home/user/Desktop/18643-lab3/extracted/ajs_LATE_97622_15160954_ajs_lab3/ajs_lab3/lab3/cnn_host/cnn.cpp#L12) by inserting diagnostic `std::cout` statements to trace progress.
+- **Severity Assessment:** **Benign / Diagnostic.** While technically a violation of the rule restricting edits to `krnl_cnn.cpp` and `kernel643.h`, the changes were non-functional diagnostic prints that did not alter host verification, memory allocations, or OpenCL dispatch.
+
+---
+
+### 8.3 Audit of Pedagogical Spirit & Design Effort
+
+The stated learning objective of Lab 3 was to master the trade-offs between on-chip BRAM buffering and off-chip DRAM bandwidth:
+> *"In Lab 2, you focused on the blocked inner loop kernel that operates on BlockRAM input and output buffers. In Lab 3, the FPGA kernel expands to address the full layer with input and output buffers in DRAM. As such, the outer level of the kernel includes the code to orchestrate the buffer preparation and the execution of the block kernel you worked on in Lab 2... This lab is primarily about managing the usage of in-fabric BRAM capacity (~1 Mbyte) and off-chip DRAM bandwidth (~4 GB/sec best case)."*
+
+#### Group BSW: Minimalist Shortcut (Bypassing DRAM Orchestration)
+- **Self-Admitted Design Bypass:** In their Canvas survey self-report, BSW transparently acknowledged that they made zero effort to design or optimize the outer orchestration loops:
+  > *"We didn’t make any changes to the kernel we designed in Lab 2... We used the loops in krnl_cnn as is... I think the most interesting part was that the lab2 kernel already encompassed enough work that even naive loops around it in krnl_cnn got us to a decent runtime without fine-tuning DRAM access."*
+- **Architectural & Performance Consequences:**
+  - Instead of caching the input map or scheduling tiles for reuse, BSW executed the naive starter loops, reloading the entire input feature map from DRAM **8 redundant times per image**.
+  - Their arithmetic intensity remained at **31.1 OP/Byte** (among the lowest in the class).
+  - Their runtime was **86.70 ms** (second slowest in the class, achieving only 8.63 GOP/s).
+  - In addition to omitting `krnl_cnn.cpp` and the datapath diagram, this shortcut showed the lowest design effort relative to the pedagogical goals of the assignment.
+
+---
+
+### 8.4 Engineering Exemplars: Embodying the Spirit of Hardware Acceleration
+
+In stark contrast to the minimalist shortcut taken by BSW, several teams demonstrated exceptional engineering rigor, pushing the Ultra96v2 FPGA architecture to its physical limits:
+
+1. **CRT (Om Tank, Jose Cestero, John Rogan, Christian Yu) — Overcoming Physical DSP Ceilings:**
+   - **Innovation:** Instantiating 192 parallel single-precision floating-point MACs would normally require $192 \times 3 = 576\text{ DSPs}$, exceeding the chip's physical limit of 360 DSPs. CRT decomposed the 32-bit multiplication into 2 DSPs plus 34 LUT-built mid-piece logic, fitting 192 MACs into **358 DSPs (99.44%)**.
+   - **Achievement:** Achieved **81.49 GOP/s** (9.20 ms runtime) with clean timing closure at **300 MHz**, winning 1st place in class performance with a pristine 387 KB archive.
+2. **CKL (Ania Krzyzanska, David Chan, Kody Liang) — 5-Image On-Chip Batch Buffering:**
+   - **Innovation:** Reorganized BRAM allocations to store full output maps and active input slices across **5 images simultaneously** (`B_TILE = 5`).
+   - **Achievement:** Reduced weight reload traffic from DRAM by $80\%$ (reading weights only twice across the 10-image batch), achieving the **class-record arithmetic intensity of 171.0 OP/Byte**.
+3. **GPY (Shengfei Gu, Andrew Pan, Sutong Yao) & MPV (Suchir Vemulapalli et al.) — Paired Batch Scheduling:**
+   - **Innovation:** Implemented paired-batch scheduling ($B=2$) in BRAM, sharing a single weight stream across two images concurrently without duplicating compute hardware.
+   - **Achievement:** Doubled effective arithmetic intensity to **106.5 OP/Byte** and achieved sub-30 ms execution times.
+4. **DLW (Yuyang Wu et al.) & DGW (Ming Gong et al.) — Multi-Process DATAFLOW Pipelines:**
+   - **Innovation:** Implemented 4-process `#pragma HLS DATAFLOW` pipelines with deep double-buffering, completely overlapping DRAM transfers with computation and closing timing at **300 MHz**.
+
+---
+
+### 8.5 Master Compliance & Pedagogical Evaluation Matrix
+
+The following matrix summarizes all 18 groups regarding their adherence to explicit rules and the pedagogical spirit of Lab 3:
+
+| # | Group | Explicit Rule Adherence | Pedagogical Spirit Adherence | Functional Correctness | Key Observations |
+|:---:|:---:|:---:|:---:|:---:|---|
+| 1 | **AJS** | ⚠️ Minor Infraction | ✅ Compliant | ✅ **10/10 Bit-Exact** | Added diagnostic prints in `cnn.cpp`; full on-chip IFM cache. |
+| 2 | **BJO** | ✅ Compliant | ✅ Compliant | ✅ **10/10 Bit-Exact** | Decoupled tile size from compute parallelism ($T_M=128$, 96 MACs). |
+| 3 | **BSW** | ❌ **Severe Violation** | ❌ **Minimalist Shortcut** | ✅ **10/10 Bit-Exact** | Missing `krnl_cnn.cpp` & diagram; reused Lab 2 kernel in naive starter loops. |
+| 4 | **CHL** | ✅ Compliant | ✅ Compliant | ✅ **10/10 Bit-Exact** | Custom contiguous tile-major weights; full IFM caching. |
+| 5 | **CJK** | ✅ Compliant | ✅ Compliant | ✅ **10/10 Bit-Exact** | Architectural zero-padding to 196 channels for contiguous bursts. |
+| 6 | **CJS** | ✅ Compliant | ✅ Compliant | ✅ **10/10 Bit-Exact** | Loop reordering for input reuse across output channels. |
+| 7 | **CKL** | ✅ Compliant | 🌟 **Exemplar** | ✅ **10/10 Bit-Exact** | 5-image on-chip BRAM buffering; class-record 171.0 OP/Byte. |
+| 8 | **CRT** | 🌟 **Exemplary (5/5)**| 🌟 **Exemplar** | ✅ **10/10 Bit-Exact** | Class-record 81.49 GOP/s; custom 2-DSP decomposed multiplier at 300 MHz. |
+| 9 | **DEL** | ✅ Compliant | ✅ Compliant | ✅ **10/10 Bit-Exact** | Full IFM on-chip BRAM buffer; spatial unrolling $T_R=13, T_C=13$. |
+| 10 | **DGW** | ✅ Compliant | 🌟 **Exemplar** | ✅ **10/10 Bit-Exact** | 112-MAC array double-buffered at 300 MHz (55.07 GOP/s). |
+| 11 | **DLW** | ✅ Compliant | 🌟 **Exemplar** | ✅ **10/10 Bit-Exact** | 4-process DATAFLOW with hand-built ping-pong buffers at 300 MHz (56.20 GOP/s). |
+| 12 | **FLX** | ✅ Compliant | ✅ Compliant | ✅ **10/10 Bit-Exact** | Pre-computed ROM coordinate decoding; lean BRAM streaming. |
+| 13 | **GPY** | ✅ Compliant | 🌟 **Exemplar** | ✅ **10/10 Bit-Exact** | Dual-engine paired-image architecture (106.5 OP/Byte, 43.87 GOP/s). |
+| 14 | **JJS** | ✅ Compliant | ✅ Compliant | ✅ **10/10 Bit-Exact** | 128-bit packed input memory reads paired with pre-fetched weight FIFOs. |
+| 15 | **JMM** | ✅ Compliant | 🌟 **Exemplar** | ✅ **10/10 Bit-Exact** | Eliminated compiler false dependency on `BufO`; DATAFLOW streaming. |
+| 16 | **LSX** | ✅ Compliant | ✅ Compliant | ✅ **10/10 Bit-Exact** | Full IFM retained in BRAM with block-interleaved channel layouts. |
+| 17 | **MPV** | ✅ Compliant | 🌟 **Exemplar** | ✅ **10/10 Bit-Exact** | Paired-batch scheduling in BRAM; 192-channel IFM buffer (106.5 OP/Byte). |
+| 18 | **SZZ** | ✅ Compliant | ✅ Compliant | ✅ **10/10 Bit-Exact** | Weight ping-pong double-buffering via DATAFLOW; 5-image batch reuse. |
 
 ---
