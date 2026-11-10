@@ -23,7 +23,7 @@ This dimension evaluates each team's adherence to the official submission specif
 | **4 / 5** | **Strong Compliance (Single Minor Packaging Blemish)** | All essential technical deliverables present and compliant (code, diagram, complete workspace), but with a single packaging deviation: either forgetting to purge build artifacts before creating the workspace zip, or omitting the nested zip wrapper while thoroughly cleaning build files, or minor AndrewID ordering permutation. | CJK, CJS, CKL, GPY, JJS |
 | **3 / 5** | **Moderate Compliance (Dual Packaging Deviations)** | Core design code and diagram present, but compounded by two packaging deviations: (a) using group acronym name + uncleaned build tree, or (b) submitting raw unzipped workspace + uncleaned build tree (24 MB – 160 MB), or (c) acronym naming + raw workspace directory + minor diagnostic edits. | AJS, BJO, CHL, DEL, DGW, FLX, JMM, LSX, MPV, SZZ |
 | **2 / 5** | **Substantial Deficiencies (Triple Packaging Failure)** | Submissions exhibiting three concurrent packaging failures: acronym naming + raw unzipped workspace folder + large uncleaned build tree (> 800 files). | DLW |
-| **1 / 5** | **Severe Non-Compliance (Critical Missing Deliverables)** | Missing primary deliverables required for evaluation: absence of the datapath block diagram and omission of `krnl_cnn.cpp` from the submission archive, along with uncleaned build artifacts. | BSW |
+| **1 / 5** | **Severe Non-Compliance (Critical Missing Deliverables)** | Missing primary deliverables required for evaluation in initial raw submission: absence of datapath block diagram and omission of `krnl_cnn.cpp` from the archive, along with uncleaned build artifacts. | BSW (Initial: 1/5; Recovered: 3.5/5) |
 | **0 / 5** | **Void / Empty Submission** | Submission archive contains 0 bytes of payload (empty folder); missing workspace, code, and diagram. | — |
 
 ---
@@ -34,7 +34,7 @@ This dimension evaluates each team's adherence to the official submission specif
 | :-: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
 | 1 | **AJS** | ❌ Acronym (`ajs`) | ✅ `datapath.png` | ⚠️ Raw directory | ✅ **Cleaned (198 KB)** | ⚠️ Diagnostic edit in `cnn_host/cnn.cpp` | **3 / 5** | **PARTIAL** (Acronym name, Raw WS, edit in cnn.cpp) |
 | 2 | **BJO** | ❌ Acronym (`BJO`) | ✅ `block_diagram.pdf` | ✅ Nested `BJO_lab3_workspace.zip` | ❌ Uncleaned (90 MB) | ✅ Compliant | **3 / 5** | **PARTIAL** (Acronym name, Uncleaned build) |
-| 3 | **BSW** | ❌ Acronym (`BWS`) | ❌ None | ⚠️ Raw directory | ❌ Uncleaned (42 MB) | ⚠️ Omitted from zip; supplied by instructor | **1 / 5** (Raw sub) / **2.5 / 5** (with code) | **RECOVERED** (Kernel code supplied; diagram missing) |
+| 3 | **BSW** | ❌ Acronym (`BWS`) | ✅ [`lab3_block_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/bsw_LATE_144616_15163943_BWS_lab3/lab3_block_diagram.pdf)* | ⚠️ Raw directory | ❌ Uncleaned (42 MB) | ⚠️ Omitted from zip; supplied by instructor | **1 / 5** (Raw sub) / **3.5 / 5** (Recovered) | **RECOVERED** (Kernel code & block diagram supplied post-submission) |
 | 4 | **CHL** | ❌ Acronym (`CHL`) | ✅ `block_diagram.pdf` | ✅ Nested `lab3.zip` | ❌ Uncleaned (35 MB) | ✅ Compliant | **3 / 5** | **PARTIAL** (Acronym name, Uncleaned build) |
 | 5 | **CJK** | ⚠️ Semi (`akim2` 3rd) | ✅ `kernel_block_diagram.pdf` | ✅ Nested `lab3_workspace.zip` | ❌ Uncleaned (68 MB) | ✅ Compliant | **4 / 5** | **STRONG** (Uncleaned build) |
 | 6 | **CJS** | ✅ Alphabetical | ✅ `blcok_diagram.png` | ✅ Nested `lab3_workspace.zip` | ❌ Uncleaned (37 MB) | ✅ Compliant | **4 / 5** | **STRONG** (Uncleaned build) |
@@ -51,6 +51,8 @@ This dimension evaluates each team's adherence to the official submission specif
 | 17 | **MPV** | ❌ Acronym (`mpv`) | ✅ `mpv_lab3_block_diagram.png`| ✅ Nested workspace zip | ❌ Uncleaned (88 MB) | ✅ Compliant | **3 / 5** | **MODERATE** (Acronym name, Uncleaned build) |
 | 18 | **SZZ** | ✅ Alphabetical | ✅ `Kernel Datapath.pdf` | ⚠️ Raw directory | ❌ Uncleaned (160 MB)| ✅ Compliant | **3 / 5** | **MODERATE** (Raw WS, Uncleaned build) |
 
+*\* Note on BSW: In their initial submission archive, `krnl_cnn.cpp` was omitted due to an absolute AFS path in the Vitis configuration, and no block diagram was included. Both `krnl_cnn.cpp` and [`lab3_block_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/bsw_LATE_144616_15163943_BWS_lab3/lab3_block_diagram.pdf) were provided post-submission, raising their recovered compliance score to **3.5 / 5**.*
+
 ---
 
 ## 3. Detailed Group Evaluations
@@ -61,6 +63,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Submission Archive:** `ajs_LATE_97622_15160954_ajs_lab3.zip` (198 KB updated archive)
 - **Identified Members:** Misho Alexandrov, Mizuki Jiang, Kaloyan Stefanov (`kastefan`)
 - **Rubric Dimension 1 (Submission Compliance):** **3 / 5**
+- **2nd Rubric Dimension (Block Diagram Quality):** **4.0 / 5.0 (Strong / Highly Informative)** — [`datapath.png`](file:///home/user/Desktop/18643-lab3/extracted/ajs_LATE_97622_15160954_ajs_lab3/ajs_lab3/datapath.png) (See Section 11 for detailed breakdown)
   - *Naming (-1 pt):* Non-compliant. Used group acronym `ajs` rather than alphabetical AndrewIDs.
   - *Block Diagram (+1 pt):* Compliant. Included `datapath.png` (148.8 KB).
   - *Workspace Archive (-0.5 pt):* Minor packaging deviation. Submitted unzipped workspace folder `lab3/` directly inside `ajs_lab3/` rather than as a nested workspace `.zip`.
@@ -75,6 +78,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Submission Archive:** `bjo_LATE_92116_15119908_BJO_lab3.zip` (89.9 MB)
 - **Identified Members:** T'saurus Beasley, Wellington Jiang, Nicholas Ortiz
 - **Rubric Dimension 1 (Submission Compliance):** **3 / 5**
+- **2nd Rubric Dimension (Block Diagram Quality):** **3.5 / 5.0 (Moderate Plus / Good Core Architecture)** — [`block_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/bjo_LATE_92116_15119908_BJO_lab3/block_diagram.pdf) (See Section 11 for detailed breakdown)
   - *Naming (-1 pt):* Used group acronym `BJO` instead of alphabetical AndrewIDs.
   - *Block Diagram (+1 pt):* Compliant. Included `block_diagram.pdf`.
   - *Workspace Archive (+1 pt):* Compliant packaging. Provided nested `BJO_lab3_workspace.zip`.
@@ -88,12 +92,13 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Team Name / Directory:** `BWS_lab3`
 - **Submission Archive:** `bsw_LATE_144616_15163943_BWS_lab3.zip` (42.3 MB)
 - **Identified Members:** Abnash Bassi, Upasana Sridhar, Chenxi Wan
-- **Rubric Dimension 1 (Submission Compliance):** **1 / 5** *(Initial submission) / **2.5 / 5** (Recovered evaluation with instructor-supplied kernel)*
+- **Rubric Dimension 1 (Submission Compliance):** **1 / 5** *(Initial submission) / **3.5 / 5** (Recovered evaluation with instructor-supplied kernel & updated block diagram)*
+- **2nd Rubric Dimension (Block Diagram Quality):** **4.0 / 5.0 (Strong / Highly Informative)** — [`lab3_block_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/bsw_LATE_144616_15163943_BWS_lab3/lab3_block_diagram.pdf) (See Section 11 for detailed breakdown)
   - *Naming (-0.5 pt):* Used group acronym `BWS` instead of alphabetical AndrewIDs.
-  - *Block Diagram (-1.5 pts):* **Missing.** No datapath diagram included in submission.
+  - *Block Diagram (+1.0 pt / *Updated Post-Submission*):* Provided [`lab3_block_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/bsw_LATE_144616_15163943_BWS_lab3/lab3_block_diagram.pdf). Accurately illustrates their synthesized $T_M=16, T_N=7$ datapath with 112 parallel multipliers, an adder reduction tree, pipelined pixel processing ($II=1$), and the specialized `LocalO` dual-port RAM ping-pong accumulation scheme. It also depicts direct tiled DRAM loads (`BufI`, `BufW`, `BufO`), reflecting their unbuffered outer loops and $8.0\times$ input reload structure.
   - *Workspace Archive (-0.5 pt):* Submitted raw unzipped workspace directory instead of nested zip.
   - *Build Cleaning (-0.5 pt):* Left 587 build files uncleaned (42.3 MB archive).
-  - *Code Integrity (-1.5 pts / *Resolved for Code Evaluation*):* Omitted `krnl_cnn.cpp` from the submission archive (workspace configuration pointed to an unsubmitted external AFS path). *Post-Submission Note:* Instructor manually uploaded the missing `krnl_cnn.cpp` into `extracted/bsw_LATE_144616_15163943_BWS_lab3/krnl_cnn.cpp`, enabling complete evaluation of their design.
+  - *Code Integrity (+1.0 pt / *Recovered via Instructor Upload*):* Omitted `krnl_cnn.cpp` from the submission archive (workspace configuration pointed to an unsubmitted external AFS path). Instructor manually uploaded the missing [`krnl_cnn.cpp`](file:///home/user/Desktop/18643-lab3/extracted/bsw_LATE_144616_15163943_BWS_lab3/krnl_cnn.cpp), which passed bit-exact golden reference verification across all 10 images.
 
 ---
 
@@ -103,6 +108,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Submission Archive:** `chl_LATE_151187_15160251_CHL_lab3-1.zip` (35.1 MB)
 - **Identified Members:** Ryder Chou, Mu-Wei Hsieh, Yosen Lin
 - **Rubric Dimension 1 (Submission Compliance):** **3 / 5**
+- **2nd Rubric Dimension (Block Diagram Quality):** **5.0 / 5.0 (Exemplary / Publication-Quality)** — [`block_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/chl_LATE_151187_15160251_CHL_lab3-1/CHL_lab3/block_diagram.pdf) (See Section 11 for detailed breakdown)
   - *Naming (-1 pt):* Used group acronym `CHL` instead of alphabetical AndrewIDs.
   - *Block Diagram (+1 pt):* Compliant. Included `CHL_lab3/block_diagram.pdf`.
   - *Workspace Archive (+1 pt):* Compliant packaging. Provided nested `CHL_lab3/lab3.zip`.
@@ -117,6 +123,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Submission Archive:** `cjk_LATE_142202_15162393_rickycui_yantingj_akim2_lab3.zip` (67.8 MB)
 - **Identified Members:** Ricky Cui (`rickycui`), Yanting Ji (`yantingj`), Andrew Kim (`akim2`)
 - **Rubric Dimension 1 (Submission Compliance):** **4 / 5**
+- **2nd Rubric Dimension (Block Diagram Quality):** **5.0 / 5.0 (Exemplary / Publication-Quality)** — [`kernel_block_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/cjk_LATE_142202_15162393_rickycui_yantingj_akim2_lab3/kernel_block_diagram.pdf) (See Section 11 for detailed breakdown)
   - *Naming (-0.5 pt):* Used AndrewIDs, but `akim2` was placed third instead of strictly alphabetical order.
   - *Block Diagram (+1 pt):* Compliant. Included `kernel_block_diagram.pdf`.
   - *Workspace Archive (+1 pt):* Compliant packaging. Provided nested `lab3_workspace.zip`.
@@ -131,6 +138,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Submission Archive:** `cjs_141367_15113610_chiehhss_shukangj_yichingc_lab3.zip` (36.8 MB)
 - **Identified Members:** Chieh-Hsin Shih (`chiehhss`), Shukang Jia (`shukangj`), Yi-Ching Chen (`yichingc`)
 - **Rubric Dimension 1 (Submission Compliance):** **4 / 5**
+- **2nd Rubric Dimension (Block Diagram Quality):** **5.0 / 5.0 (Exemplary / Publication-Quality)** — [`blcok_diagram.png`](file:///home/user/Desktop/18643-lab3/extracted/cjs_141367_15113610_chiehhss_shukangj_yichingc_lab3/blcok_diagram.png) (See Section 11 for detailed breakdown)
   - *Naming (+1 pt):* Compliant. Exact alphabetical AndrewIDs concatenation.
   - *Block Diagram (+1 pt):* Compliant. Included `blcok_diagram.png`.
   - *Workspace Archive (+1 pt):* Compliant packaging. Provided nested `lab3_workspace.zip`.
@@ -145,6 +153,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Submission Archive:** `ckl_97773_15116707_akrzyzan_dchan2_kodyl_lab3.zip` (36.9 MB)
 - **Identified Members:** Ania Krzyzanska (`akrzyzan`), David Chan (`dchan2`), Kody Liang (`kodyl`)
 - **Rubric Dimension 1 (Submission Compliance):** **4 / 5**
+- **2nd Rubric Dimension (Block Diagram Quality):** **2.5 / 5.0 (Basic / Substantial Omissions)** — [`kernel_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/ckl_97773_15116707_akrzyzan_dchan2_kodyl_lab3/akrzyzan_dchan2_kodyl_lab3/lab3/kernel_diagram.pdf) (See Section 11 for detailed breakdown)
   - *Naming (+1 pt):* Compliant. Exact alphabetical AndrewIDs concatenation.
   - *Block Diagram (+1 pt):* Compliant. Included `kernel_diagram.pdf`.
   - *Workspace Archive (+1 pt):* Compliant packaging. Provided nested `lab3.zip`.
@@ -159,6 +168,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Submission Archive:** `crt_98394_15116513_cjyu_jcestero_jrogan_otank_lab3-1.zip` (387 KB)
 - **Identified Members:** Christian Yu (`cjyu`), Jose Cestero (`jcestero`), John Rogan (`jrogan`), Om Tank (`otank`)
 - **Rubric Dimension 1 (Submission Compliance):** **5 / 5 (Exemplary)**
+- **2nd Rubric Dimension (Block Diagram Quality):** **5.0 / 5.0 (Exemplary / Publication-Quality Masterpiece)** — [`datapath_block_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/crt_98394_15116513_cjyu_jcestero_jrogan_otank_lab3-1/cjyu_jcestero_jrogan_otank_lab3/datapath_block_diagram.pdf) (See Section 11 for detailed breakdown)
   - *Naming (+1 pt):* Compliant. Exact alphabetical AndrewIDs concatenation.
   - *Block Diagram (+1 pt):* Compliant. Included both `datapath_block_diagram.pdf` and `.png`.
   - *Workspace Archive (+1 pt):* Compliant packaging. Provided nested `lab3_workspace.zip`.
@@ -173,6 +183,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Submission Archive:** `del_92659_15117835_fpel_ldas_sienahol_lab3-1.zip` (24.1 MB)
 - **Identified Members:** Feya Epel (`fpel`), Lilly Das (`ldas`), Siena Lee (`sienahol`)
 - **Rubric Dimension 1 (Submission Compliance):** **3 / 5**
+- **2nd Rubric Dimension (Block Diagram Quality):** **3.5 / 5.0 (Moderate Plus / Good Core Architecture)** — [`lab3 diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/del_92659_15117835_fpel_ldas_sienahol_lab3-1/fpel_ldas_sienahol_lab3/lab3 diagram.pdf) (See Section 11 for detailed breakdown)
   - *Naming (+1 pt):* Compliant. Exact alphabetical AndrewIDs concatenation.
   - *Block Diagram (+1 pt):* Compliant. Included `lab3 diagram.pdf`.
   - *Workspace Archive (-1 pt):* Non-compliant. Subdirectory contains unzipped workspace rather than a nested zip.
@@ -187,6 +198,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Submission Archive:** `dgw_98738_15077348_mgong2_sdupont_tongwu2_lab3.zip` (72.7 MB)
 - **Identified Members:** Ming Gong (`mgong2`), Soren Dupont (`sdupont`), Tong Wu (`tongwu2`)
 - **Rubric Dimension 1 (Submission Compliance):** **3 / 5**
+- **2nd Rubric Dimension (Block Diagram Quality):** **5.0 / 5.0 (Exemplary / Publication-Quality)** — [`block_diagram.png`](file:///home/user/Desktop/18643-lab3/extracted/dgw_98738_15077348_mgong2_sdupont_tongwu2_lab3/mgong2_sdupont_tongwu2_lab3/block_diagram.png) (See Section 11 for detailed breakdown)
   - *Naming (+1 pt):* Compliant. Exact alphabetical AndrewIDs concatenation.
   - *Block Diagram (+1 pt):* Compliant. Included `block_diagram.png` (plus supplementary `IMG_2201.jpg`).
   - *Workspace Archive (-1 pt):* Non-compliant. Submitted unzipped workspace directory directly.
@@ -201,6 +213,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Submission Archive:** `dlw_LATE_75009_15160450_dlw_lab3.zip` (31.7 MB)
 - **Identified Members:** Caleb Doan (`cdoan`), Diac Liu (`diacl`), Yuyang Wu (`yuyangw2`)
 - **Rubric Dimension 1 (Submission Compliance):** **2 / 5**
+- **2nd Rubric Dimension (Block Diagram Quality):** **3.0 / 5.0 (Moderate / Abstract Flowchart)** — [`block_diagram.png`](file:///home/user/Desktop/18643-lab3/extracted/dlw_LATE_75009_15160450_dlw_lab3/lab3/block_diagram.png) (See Section 11 for detailed breakdown)
   - *Naming (-1 pt):* Used group acronym `dlw` instead of alphabetical AndrewIDs.
   - *Block Diagram (+1 pt):* Compliant. Included `lab3/block_diagram.png`.
   - *Workspace Archive (-1 pt):* Submitted unzipped workspace directory directly inside zip.
@@ -215,6 +228,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Submission Archive:** `flx_135476_15115377_freddyfu_peiranx_wenzhuol_lab3.zip` (47.9 MB)
 - **Identified Members:** Freddy Fu (`freddyfu`), Raymond Xiang (`peiranx`), Wenzhuo Li (`wenzhuol`)
 - **Rubric Dimension 1 (Submission Compliance):** **3 / 5**
+- **2nd Rubric Dimension (Block Diagram Quality):** **3.5 / 5.0 (Moderate Plus / Good Core Architecture)** — [`kernel_datapath.jpg`](file:///home/user/Desktop/18643-lab3/extracted/flx_135476_15115377_freddyfu_peiranx_wenzhuol_lab3/freddyfu_peiranx_wenzhuol_lab3/kernel_datapath.jpg) (See Section 11 for detailed breakdown)
   - *Naming (+1 pt):* Compliant. Exact alphabetical AndrewIDs concatenation.
   - *Block Diagram (+1 pt):* Compliant. Included `kernel_datapath.jpg`.
   - *Workspace Archive (-1 pt):* Non-compliant. Submitted unzipped workspace directory directly.
@@ -229,6 +243,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Submission Archive:** `gpy_151161_15119231_alpan_shengfeg_sutongy_lab3.zip` (36.8 MB)
 - **Identified Members:** Andrew Pan (`alpan`), Shengfei Gu (`shengfeg`), Sutong Yao (`sutongy`)
 - **Rubric Dimension 1 (Submission Compliance):** **4 / 5**
+- **2nd Rubric Dimension (Block Diagram Quality):** **5.0 / 5.0 (Exemplary / Course Benchmark Standard)** — [`kernel_datapath.pdf`](file:///home/user/Desktop/18643-lab3/extracted/gpy_151161_15119231_alpan_shengfeg_sutongy_lab3/alpan_shengfeg_sutongy_lab3/kernel_datapath.pdf) (See Section 11 for detailed breakdown)
   - *Naming (+1 pt):* Compliant. Exact alphabetical AndrewIDs concatenation.
   - *Block Diagram (+1 pt):* Compliant. Included `kernel_datapath.pdf`.
   - *Workspace Archive (+1 pt):* Compliant packaging. Provided nested `lab3_workspace.zip`.
@@ -243,6 +258,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Submission Archive:** `jjs_143329_15117582_garysu_rachelji_yanxinj_lab3.zip` (113 KB)
 - **Identified Members:** Gary Su (`garysu`), Rachel Jiang (`rachelji`), Yanxin Jiang (`yanxinj`)
 - **Rubric Dimension 1 (Submission Compliance):** **4 / 5**
+- **2nd Rubric Dimension (Block Diagram Quality):** **3.5 / 5.0 (Moderate Plus / Good Core Architecture)** — [`Datapath Block Diagram.png`](file:///home/user/Desktop/18643-lab3/extracted/jjs_143329_15117582_garysu_rachelji_yanxinj_lab3/garysu_rachelji_yanxinj_lab3/Datapath Block Diagram.png) (See Section 11 for detailed breakdown)
   - *Naming (+1 pt):* Compliant. Exact alphabetical AndrewIDs concatenation.
   - *Block Diagram (+1 pt):* Compliant. Included `Datapath Block Diagram.png`.
   - *Workspace Archive (-1 pt):* Minor packaging oversight. Included unzipped workspace folder `lab3/` directly rather than as a nested `.zip`.
@@ -257,6 +273,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Submission Archive:** `jmm_LATE_142309_15158865_jjagielo_kminihan_zrmoore_lab3-1.zip` (152.1 MB)
 - **Identified Members:** Jason Jagielo (`jjagielo`), Kyle Minihan (`kminihan`), Zach Moore (`zrmoore`)
 - **Rubric Dimension 1 (Submission Compliance):** **3 / 5**
+- **2nd Rubric Dimension (Block Diagram Quality):** **2.5 / 5.0 (Basic / Substantial Omissions)** — [`diagram.jpg`](file:///home/user/Desktop/18643-lab3/extracted/jmm_LATE_142309_15158865_jjagielo_kminihan_zrmoore_lab3-1/lab3/diagram.jpg) (See Section 11 for detailed breakdown)
   - *Naming (+1 pt):* Compliant. Exact alphabetical AndrewIDs concatenation (`jjagielo_kminihan_zrmoore`).
   - *Block Diagram (+1 pt):* Compliant. Included `lab3/diagram.jpg`.
   - *Workspace Archive (-1 pt):* Non-compliant. Submitted unzipped workspace directory directly inside archive.
@@ -271,6 +288,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Submission Archive:** `lsx_LATE_95470_15163599_aqx_jieunlim_serenas_lab3.zip` (84.6 MB)
 - **Identified Members:** Aaron Xu (`aqx`), Jieun Lim (`jieunlim`), Serena Shih (`serenas`)
 - **Rubric Dimension 1 (Submission Compliance):** **3 / 5**
+- **2nd Rubric Dimension (Block Diagram Quality):** **4.5 / 5.0 (Strong Plus / Near-Exemplary)** — [`lab3_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/lsx_LATE_95470_15163599_aqx_jieunlim_serenas_lab3/aqx_jieunlim_serenas_lab3/lab3_diagram.pdf) (See Section 11 for detailed breakdown)
   - *Naming (+1 pt):* Compliant. Exact alphabetical AndrewIDs concatenation.
   - *Block Diagram (+1 pt):* Compliant. Included `lab3_diagram.pdf`.
   - *Workspace Archive (-1 pt):* Non-compliant. Subdirectory contains unzipped workspace instead of a nested zip.
@@ -285,6 +303,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Submission Archive:** `mpv_142631_15119319_mpv_lab3-1.zip` (88.1 MB)
 - **Identified Members:** Kaeshav Mandyam (`kmandyam`), Krish Patel (`kpatel`), Suchir Vemulapalli (`svemulap`)
 - **Rubric Dimension 1 (Submission Compliance):** **3 / 5**
+- **2nd Rubric Dimension (Block Diagram Quality):** **5.0 / 5.0 (Exemplary / Publication-Quality)** — [`mpv_lab3_block_diagram.png`](file:///home/user/Desktop/18643-lab3/extracted/mpv_142631_15119319_mpv_lab3-1/mpv_lab3/mpv_lab3_block_diagram.png) (See Section 11 for detailed breakdown)
   - *Naming (-1 pt):* Used group acronym `mpv` instead of alphabetical AndrewIDs.
   - *Block Diagram (+1 pt):* Compliant. Included `mpv_lab3_block_diagram.png`.
   - *Workspace Archive (+1 pt):* Compliant packaging. Provided nested `mpv_lab3_code_workspace.zip`.
@@ -299,6 +318,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Submission Archive:** `szz_LATE_71254_15160116_chenhao7_rzamir_sseshan_lab3.zip` (159.9 MB)
 - **Identified Members:** Chenhao (Rock) Zhang (`chenhao7`), Rayyan Zamir (`rzamir`), Sanjay Seshan (`sseshan`)
 - **Rubric Dimension 1 (Submission Compliance):** **3 / 5**
+- **2nd Rubric Dimension (Block Diagram Quality):** **2.0 / 5.0 (Deficient / High-Level Conceptual)** — [`Kernel Datapath.pdf`](file:///home/user/Desktop/18643-lab3/extracted/szz_LATE_71254_15160116_chenhao7_rzamir_sseshan_lab3/lab3/Kernel Datapath.pdf) (See Section 11 for detailed breakdown)
   - *Naming (+1 pt):* Compliant. Exact alphabetical AndrewIDs concatenation.
   - *Block Diagram (+1 pt):* Compliant. Included `Kernel Datapath.pdf`.
   - *Workspace Archive (-1 pt):* Non-compliant. Submitted unzipped workspace directory directly.
@@ -335,7 +355,7 @@ Per the lab specification ([H07-lab3-2026.pdf](file:///home/user/Desktop/18643-l
 | 17 | **MPV** | ✏️ Modified | ✏️ Modified | ✅ Pristine | ✅ Pristine | ✅ Pristine | ✅ Pristine | (13, 13, 12, 192) | 96 MACs ($TM'=8$) | Natural row-major |
 | 18 | **SZZ** | ✏️ Modified | ✏️ Modified | ✅ Pristine | ✅ Pristine | ✅ Pristine | ✅ Pristine | (13, 13, 7, 16) | 112 MACs | Channel-tile packed `ARRAYw` |
 
-*\* Note on BSW: `krnl_cnn.cpp` was omitted from the student's submitted zip archive due to an absolute AFS path in their Vitis project config; it was subsequently uploaded by the instructor directly into the extracted folder for evaluation.*
+*\* Note on BSW: `krnl_cnn.cpp` and the datapath block diagram were omitted from the student's submitted zip archive due to an absolute AFS path and packaging oversight; both `krnl_cnn.cpp` and [`lab3_block_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/bsw_LATE_144616_15163943_BWS_lab3/lab3_block_diagram.pdf) were supplied post-submission, enabling complete functional, performance, and microarchitectural evaluation.*
 
 ---
 
@@ -365,7 +385,7 @@ Per the lab specification ([H07-lab3-2026.pdf](file:///home/user/Desktop/18643-l
   - [`kernel643.h`](file:///home/user/Desktop/18643-lab3/extracted/bsw_LATE_144616_15163943_BWS_lab3/cnn_host/kernel643.h): Configured $T_R=13, T_C=13, T_M=16, T_N=7$. Preserved natural layout macros.
   - [`krnl_cnn.cpp`](file:///home/user/Desktop/18643-lab3/extracted/bsw_LATE_144616_15163943_BWS_lab3/krnl_cnn.cpp): Restructured `cnn_blocked_kernel` into an outer kernel window traversal (`Krow`, `Kcol`) enclosing a single flattened spatial pixel loop `Pix` ($rc \in 0 .. 168$) pipelined at `II=1` with `#pragma HLS LOOP_FLATTEN off` and `#pragma HLS DEPENDENCE variable=LocalO type=inter false`. Completely unrolls `To` ($T_M=16$) and `Ti` ($T_N=7$).
 - **Pristine Starter Files:** `cnn.cpp`, `cnn.h`, `instance643.h`, `util643.h`.
-- **Architectural Highlights:** Performs $16 \times 7 = 112$ parallel MACs per cycle ($112 \times 3 = 336$ DSPs, 93.3% DSP utilization). Allocates a dedicated local buffer `LocalO[16][13][13]` bound to simple dual-port BRAM (`ram_s2p`) partitioned completely along dim 1; the first pass loads initial sums, intermediate kernel passes accumulate strictly in `LocalO`, and the final pass writes back to `BufO`, completely avoiding BRAM read/write port contention. Target clock: PL4 (200 MHz).
+- **Architectural Highlights & Datapath Block Diagram:** Illustrated in [`lab3_block_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/bsw_LATE_144616_15163943_BWS_lab3/lab3_block_diagram.pdf). Performs $16 \times 7 = 112$ parallel MACs per cycle ($112 \times 3 = 336$ DSPs, 93.3% DSP utilization). Allocates a dedicated local buffer `LocalO[16][13][13]` bound to simple dual-port BRAM (`ram_s2p`) partitioned completely along dim 1; the first pass loads initial sums, intermediate kernel passes accumulate strictly in `LocalO`, and the final pass writes back to `BufO`, completely avoiding BRAM read/write port contention. As shown in their block diagram, inputs, weights, and outputs are loaded directly from DRAM without an outer-level IFM cache, resulting in 8.0× redundant DRAM reads of the input feature map across the 8 output channel tiles. Target clock: PL4 (200 MHz).
 
 ---
 
@@ -742,8 +762,9 @@ ightarrow 196$ ch) | **Metric Confusion:** Reported raw padded word counts ($196
 - **Resource Utilization:** **Placed vs HLS Synthesis Divergence.** Reported LUT 15.08%, FF 6.53%, DSP 76.67%, BRAM 70.83%. In `krnl_cnn_csynth.rpt`, HLS synthesis allocated LUT 31.43% (22,179), FF 19.25% (27,159), DSP 81.39% (293), and BRAM 67.59% (292 B18K). The self-reported figures reflect Vivado post-implementation placed/routed utilization.
 
 #### 3. Group BSW (BWS)
-- **Code & Config Files:** [`kernel643.h`](file:///home/user/Desktop/18643-lab3/extracted/bsw_LATE_144616_15163943_BWS_lab3/kernel643.h), [`krnl_cnn.cpp`](file:///home/user/Desktop/18643-lab3/extracted/bsw_LATE_144616_15163943_BWS_lab3/krnl_cnn.cpp), `hls_config.cfg`, `cnn-link.cfg`, [`hls_syn_report_krnl_cnn_csynth.rpt`](file:///home/user/Desktop/18643-lab3/extracted/bsw_LATE_144616_15163943_BWS_lab3/krnl_cnn/hls_reports/hls_syn_report_krnl_cnn_csynth.rpt).
+- **Code & Config Files:** [`kernel643.h`](file:///home/user/Desktop/18643-lab3/extracted/bsw_LATE_144616_15163943_BWS_lab3/kernel643.h), [`krnl_cnn.cpp`](file:///home/user/Desktop/18643-lab3/extracted/bsw_LATE_144616_15163943_BWS_lab3/krnl_cnn.cpp), [`lab3_block_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/bsw_LATE_144616_15163943_BWS_lab3/lab3_block_diagram.pdf), `hls_config.cfg`, `cnn-link.cfg`, [`hls_syn_report_krnl_cnn_csynth.rpt`](file:///home/user/Desktop/18643-lab3/extracted/bsw_LATE_144616_15163943_BWS_lab3/krnl_cnn/hls_reports/hls_syn_report_krnl_cnn_csynth.rpt).
 - **Group Name Typo:** Self-reported as **Group BWS** instead of the official Canvas name **BSW** (Abnash Bassi, Upasana Sridhar, Chenxi Wan).
+- **Datapath Block Diagram:** [`lab3_block_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/bsw_LATE_144616_15163943_BWS_lab3/lab3_block_diagram.pdf) was provided post-submission. It accurately details the $T_M \times T_N = 16 \times 7 = 112$ parallel multipliers with adder tree accumulation, pipelined pixel processing ($II=1$), and the specialized `LocalO` dual-port BRAM accumulation scheme. Furthermore, the diagram explicitly illustrates direct DRAM loads into `BufI`, `BufW`, and `BufO`, confirming the lack of on-chip IFM reuse across output channel blocks.
 - **Clock Frequency:** **Factual Inaccuracy.** Reported `150 MHz`. In `cnn-link.cfg`, BSW explicitly specified `[clock] id=4:krnl_cnn_1`, which binds the kernel to the **200 MHz** PL clock. Furthermore, in `hls_config.cfg`, they set `clock=4.4ns` (**227.3 MHz**). Reporting 150 MHz contradicts their actual build scripts.
 - **Ideal Throughput:** **Inaccuracy & Physical Ceiling Violation.** Reported `67.92 GOP/s` ideal peak at 150 MHz. BSW instantiated 112 parallel MACs ($T_M=16, T_N=7$). At 150 MHz, 112 MACs can at most achieve $2 \times 112 \times 150 \times 10^6 = \mathbf{33.60\text{ GOP/s}}$ (exactly half of 67.92). The reported 67.92 GOP/s is an unadjusted copy-paste from Lab 2.
 - **Resource Utilization:** **Report Discrepancy.** Reported DSP utilization of `81.667%` (294 DSPs). `krnl_cnn_csynth.rpt` reports **342 DSPs (95.0%)**, matching 112 FP multipliers ($112 \times 3 = 336$ DSPs) plus address generators.
@@ -1003,8 +1024,8 @@ However, significant divergences were identified regarding adherence to **formal
 +--------------------------+-------------------------------------------------------------------------+
 | Category                 | Evaluation & Affected Groups                                            |
 +--------------------------+-------------------------------------------------------------------------+
-| 1. Severe Rule Violation | Group BSW: Missing krnl_cnn.cpp in submission archive (external AFS    |
-|    (Missing Deliverables)| path) and missing mandatory datapath block diagram (Score: 1 / 5).      |
+| 1. Packaging & Recovered | Group BSW: krnl_cnn.cpp (omitted due to external AFS link) & block      |
+|    Deliverables          | diagram supplied post-submission; uncleaned build (Score: 3.5 / 5).     |
 | 2. Minor Scope Infraction| Group AJS: Modified forbidden starter file cnn_host/cnn.cpp with        |
 |    (Prohibited Files)    | diagnostic debug prints (Score: 3 / 5).                                 |
 | 3. Minimalist Shortcut   | Group BSW: Reused Lab 2 kernel inside unoptimized starter loops without |
@@ -1018,13 +1039,17 @@ However, significant divergences were identified regarding adherence to **formal
 
 ### 8.2 Detailed Audit of Explicit Rule Violations
 
-#### 1. Group BSW: Severe Rule Non-Compliance (Compliance Score: 1 / 5)
-- **Rule Violated (Handout pages 2 and 4):**
+#### 1. Group BSW: Submission Deliverables & Recovery Audit (Compliance Score: 1 / 5 Raw / 3.5 / 5 Recovered)
+- **Rules Evaluated (Handout pages 2 and 4):**
   > *"You have full flexibility to modify krnl_cnn.cpp and kernel643.h... Include in the submission directory a zip of your complete workspace... Include in the submission directory a drawn block diagram of the synthesized kernel datapath."*
-- **The Violation:**
-  1. **Omission of the Accelerator Kernel ([`krnl_cnn.cpp`](file:///home/user/Desktop/18643-lab3/extracted/bsw_LATE_144616_15163943_BWS_lab3/krnl_cnn.cpp)):** In their submitted archive (`bsw_LATE_144616_15163943_BWS_lab3.zip`), the primary technical deliverable—[`krnl_cnn.cpp`](file:///home/user/Desktop/18643-lab3/extracted/bsw_LATE_144616_15163943_BWS_lab3/krnl_cnn.cpp)—was completely missing. BSW created their Vitis project by linking to an external AFS user directory (`/afs/ece.cmu.edu/usr/cbw/...`) rather than importing the file into their local workspace directory. Consequently, when the workspace was zipped, the kernel code was left behind on AFS. The instructor had to manually supply the missing source file to evaluate functional correctness.
-  2. **Omission of Datapath Block Diagram:** BSW failed to include a drawn datapath diagram (`.pdf`, `.png`, `.jpg`).
-  3. **Packaging Cleanliness:** BSW submitted raw build directories with uncleaned intermediate files (42 MB).
+- **Deliverables Audit & Status:**
+  1. **Kernel Code ([`krnl_cnn.cpp`](file:///home/user/Desktop/18643-lab3/extracted/bsw_LATE_144616_15163943_BWS_lab3/krnl_cnn.cpp)):** Omitted from original submitted archive (`bsw_LATE_144616_15163943_BWS_lab3.zip`) because the student workspace linked to an absolute AFS path (`/afs/ece.cmu.edu/usr/cbw/...`). *Resolved:* Provided post-submission by instructor, enabling full functional simulation and bit-exact golden reference verification (10/10 images pass).
+  2. **Datapath Block Diagram ([`lab3_block_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/bsw_LATE_144616_15163943_BWS_lab3/lab3_block_diagram.pdf)):** *Updated & Verified.* The block diagram was subsequently provided and incorporated into the evaluation repository. Microarchitectural inspection confirms:
+     - **Compute Pipeline Fidelity:** Faithfully captures the $T_M \times T_N = 16 \times 7 = 112$ parallel multipliers with an adder reduction tree feeding an accumulation pipeline operating at initiation interval $II=1$.
+     - **Multi-Pass Partial-Sum Memory:** Accurately depicts the dual-buffer accumulation scheme using an internal `LocalO` buffer (`ram_s2p`) that reads previous partial sums from `BufO` on the first iteration pass and commits final accumulated sums to `BufO` on the last pass, resolving BRAM port contention.
+     - **DRAM Interface & Loop Structure:** Explicitly shows naive direct tiled loads from off-chip DRAM into `BufI`, `BufW`, and `BufO`, accurately representing why the implementation reloads the input feature map from DRAM 8 times per image ($8.0\times$ reload penalty).
+     - **Diagram Errata:** Contains minor label typos (the multiplier stage reads "multiply BufI with BufO" instead of `BufW`; `BufO` load box references "input feature channels"), but the structural datapath logic and memory hierarchy match the HLS C++ code.
+  3. **Packaging Cleanliness:** BSW submitted raw unzipped build directories containing 587 uncleaned intermediate files (42.3 MB).
 
 #### 2. Group AJS: Minor Technical Scope Infraction (Compliance Score: 3 / 5)
 - **Rule Violated (Handout page 2):**
@@ -1046,7 +1071,7 @@ The stated learning objective of Lab 3 was to master the trade-offs between on-c
   - Instead of caching the input map or scheduling tiles for reuse, BSW executed the naive starter loops, reloading the entire input feature map from DRAM **8 redundant times per image**.
   - Their arithmetic intensity remained at **31.1 OP/Byte** (among the lowest in the class).
   - Their runtime was **86.70 ms** (second slowest in the class, achieving only 8.63 GOP/s).
-  - In addition to omitting `krnl_cnn.cpp` and the datapath diagram, this shortcut showed the lowest design effort relative to the pedagogical goals of the assignment.
+  - Even though the kernel code and datapath block diagram were ultimately supplied and verified post-submission, this shortcut showed the lowest design effort relative to the pedagogical goals of the assignment.
 
 ---
 
@@ -1076,7 +1101,7 @@ The following matrix summarizes all 18 groups regarding their adherence to expli
 |:---:|:---:|:---:|:---:|:---:|---|
 | 1 | **AJS** | ⚠️ Minor Infraction | ✅ Compliant | ✅ **10/10 Bit-Exact** | Added diagnostic prints in `cnn.cpp`; full on-chip IFM cache. |
 | 2 | **BJO** | ✅ Compliant | ✅ Compliant | ✅ **10/10 Bit-Exact** | Decoupled tile size from compute parallelism ($T_M=128$, 96 MACs). |
-| 3 | **BSW** | ❌ **Severe Violation** | ❌ **Minimalist Shortcut** | ✅ **10/10 Bit-Exact** | Missing `krnl_cnn.cpp` & diagram; reused Lab 2 kernel in naive starter loops. |
+| 3 | **BSW** | ⚠️ **Recovered (3.5/5)** | ❌ **Minimalist Shortcut** | ✅ **10/10 Bit-Exact** | Kernel & diagram supplied post-submission; diagram accurately reflects 112-MAC LocalO pipeline; naive starter loops reload IFM 8.0x from DRAM. |
 | 4 | **CHL** | ✅ Compliant | ✅ Compliant | ✅ **10/10 Bit-Exact** | Custom contiguous tile-major weights; full IFM caching. |
 | 5 | **CJK** | ✅ Compliant | ✅ Compliant | ✅ **10/10 Bit-Exact** | Architectural zero-padding to 196 channels for contiguous bursts. |
 | 6 | **CJS** | ✅ Compliant | ✅ Compliant | ✅ **10/10 Bit-Exact** | Loop reordering for input reuse across output channels. |
@@ -1311,3 +1336,246 @@ The table below details every required correction across all 18 student submissi
 
 #### 3. Full-Batch vs. Per-Image Weight Read Normalization
 - Because weights are shared across images in CNN inference, reading weights once per image across 10 images represents **$10.0\times$ full-batch transfers** (or $1.0\times$ per image). The survey should explicitly annotate whether the weight factor represents total batch reloads or per-image reloads to preserve clarity between single-image designs ($10.0\times$) and multi-image reuse architectures ($2.0\times\text{--}5.0\times$).
+
+
+---
+
+## 11. 2nd Grading Rubric: Datapath Block Diagram Completeness & Informativeness (0 – 5 Points)
+
+### 11.1 Context & Pedagogical Purpose
+The assignment handout ([H07-lab3-2026.pdf](file:///home/user/Desktop/18643-lab3/H07-lab3-2026.pdf#L4), page 4) mandates:
+> *"Include in the submission directory a drawn block diagram of the synthesized kernel datapath."*
+
+In hardware accelerator design using High-Level Synthesis (HLS), the block diagram is not merely an illustrative figure; it is the **primary architectural contract** between high-level algorithmic intent and physical hardware execution. A rigorous datapath diagram must clearly articulate:
+1. How nested software loops translate into spatial hardware parallelism (unrolling, pipelining, and adder trees).
+2. How on-chip BRAM/LUTRAM buffers are physically partitioned to satisfy parallel memory access ports.
+3. How off-chip DRAM memory interfaces (AXI4 Master/Stream) orchestrate high-throughput burst streaming without stalling the compute fabric.
+
+To grade this deliverable rigorously and objectively across all 18 student groups, this **2nd Grading Rubric** evaluates each submitted block diagram on a 5-point scale based on **completeness**, **microarchitectural fidelity**, and **informativeness**.
+
+---
+
+### 11.2 Evaluation Framework & Five Core Assessment Pillars
+
+Each block diagram is evaluated across five fundamental architectural dimensions, each contributing up to **1.0 point** toward the total 5.0-point score:
+
+```
++---------------------------------------------------------------------------------------------------------+
+|                                    BLOCK DIAGRAM RUBRIC: 5 CORE PILLARS                                  |
++---------------------------------+-----------------------------------------------------------------------+
+| Evaluation Pillar               | Architectural Criteria & Technical Expectations                       |
++---------------------------------+-----------------------------------------------------------------------+
+| 1. Compute Datapath &           | Explicit depiction of parallel arithmetic units (multipliers, adders),|
+|    Spatial Parallelism (1.0 pt) | unrolling factors (TM, TN, or KxK), reduction tree topology, register |
+|                                 | accumulators, Initiation Interval (II=1), and pipeline depth/stages.  |
++---------------------------------+-----------------------------------------------------------------------+
+| 2. On-Chip Memory Subsystem &   | Buffer representation (BufI, BufW, BufO, acc), exact array dimensions,|
+|    Banking Architecture (1.0 pt)| memory partitioning (cyclic, block, complete), bank counts, and port  |
+|                                 | arbitration (single-port, simple dual-port ram_s2p, ping-pong RAMs).  |
++---------------------------------+-----------------------------------------------------------------------+
+| 3. DRAM / Off-Chip Interface &  | AXI4 Master/Stream interface specifications (bundle separation, bus  |
+|    Streaming Mechanics (1.0 pt) | bit-widths e.g. 32b/128b/256b, burst lengths), dataflow processes,  |
+|                                 | inter-process FIFOs/channels, and transfer counts/byte footprints.   |
++---------------------------------+-----------------------------------------------------------------------+
+| 4. Control Sequencing, Loop     | Loop traversal order (row -> col -> to -> ti), double-buffering       |
+|    Scheduling & Dataflow (1.0 pt| synchronization, state controllers, and explicit depiction of design  |
+|                                 | innovations (e.g. multi-image batching, IFM caching, DSP mid-piece).  |
++---------------------------------+-----------------------------------------------------------------------+
+| 5. Presentation Precision &     | Visual clarity, precision CAD/vector execution, functional color-     |
+|    Technical Clarity (1.0 pt)   | coding, comprehensive annotations, and strict fidelity to synthesized |
+|                                 | HLS C++ source code (avoiding vague generic block sketches).          |
++---------------------------------+-----------------------------------------------------------------------+
+```
+
+---
+
+### 11.3 Scoring Scale & Performance Tiers
+
+| Score Tier | Category & Performance Level | Description & Microarchitectural Depth | Qualifying Teams |
+| :---: | :--- | :--- | :--- |
+| **5.0 / 5.0** | **Exemplary / Publication-Quality** | Flawless, publication-ready schematic (IEEE/ACM conference standard). Exhaustively details compute datapath ($T_M \times T_N$ multipliers, adder trees, $II=1$), on-chip BRAM banking and dimensions, multi-port DRAM/AXI interfaces with bit-widths, dataflow processes with FIFO depths, loop schedules, and quantitative hardware metrics (cycle counts, DSPs, BRAMs, clock frequency). Strictly matches synthesized C++ implementation. | **CHL, CJK, CJS, CRT, DGW, GPY, MPV** (7 groups) |
+| **4.5 / 5.0** | **Strong Plus / Near-Exemplary** | High-quality vector schematic with excellent architectural clarity, color coding, and explicit hardware parameters. Minor omission in secondary detail (e.g., omitted internal multiplier gate decomposition or unified AXI port without explicit bus bit-widths). | **LSX** (1 group) |
+| **4.0 / 5.0** | **Strong / Highly Informative** | Well-structured, clear schematic detailing compute array and memory buffers with explicit dimensions and unrolling factors. Minor label typos or abstract representation of DRAM transfer bursting. | **AJS, BSW** (2 groups) |
+| **3.5 / 5.0** | **Moderate Plus / Good Core Architecture** | Captures essential compute or memory mechanics with accurate parameters, but exhibits distinct scope limits: either focuses on inner MAC multiplexing while omitting DRAM/AXI interfaces (FLX), provides excellent AXI/FIFO memory flow while leaving compute as an opaque block (JJS), or uses informal hand-drawn sketches that nonetheless convey correct banking and unrolling (BJO, DEL). | **BJO, DEL, FLX, JJS** (4 groups) |
+| **3.0 / 5.0** | **Moderate / Abstract Flowchart** | Clean visual presentation of system dataflow and ping-pong buffers, but completely devoid of quantitative microarchitectural parameters (zero tile sizes, no unrolling factors, no MAC counts, no banking factors, no bit-widths). | **DLW** (1 group) |
+| **2.5 / 5.0** | **Basic / Substantial Omissions** | Informal hand-drawn sketch with major omissions: either leaves out the team's signature architectural innovation (e.g., CKL omitting 5-image batch buffering) or depicts coarse boxes with minimal labeling (JMM). | **CKL, JMM** (2 groups) |
+| **2.0 / 5.0** | **Deficient / High-Level Conceptual** | Extremely sparse diagram. Compute datapath is reduced to a single blank box labeled "Compute"; lacks memory banking, bit-widths, and datapath elaboration. | **SZZ** (1 group) |
+| **0.0 – 1.0** | **Non-Compliant / Missing** | Generic unannotated boxes or failure to submit a diagram. | — |
+
+---
+
+### 11.4 Master Block Diagram Evaluation & Scoreboard Table
+
+The table below provides an itemized breakdown of scores across all 18 student groups, arranged in strict alphabetical order:
+
+| # | Group | Submitted Diagram Deliverable | Visual Style | Compute Datapath (/1.0) | Memory Hierarchy (/1.0) | DRAM / AXI Interface (/1.0) | Control & Scheduling (/1.0) | Precision & Clarity (/1.0) | Total Diagram Score (/5.0) | Rating Tier |
+| :-: | :---: | :--- | :--- | :-: | :-: | :-: | :-: | :-: | :-: | :--- |
+| 1 | **AJS** | [`datapath.png`](file:///home/user/Desktop/18643-lab3/extracted/ajs_LATE_97622_15160954_ajs_lab3/ajs_lab3/datapath.png) | Vector PNG | 0.8 | 0.8 | 0.7 | 0.9 | 0.8 | **4.0 / 5.0** | Strong |
+| 2 | **BJO** | [`block_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/bjo_LATE_92116_15119908_BJO_lab3/block_diagram.pdf) | Tablet Sketch | 0.9 | 0.9 | 0.5 | 0.5 | 0.7 | **3.5 / 5.0** | Moderate Plus |
+| 3 | **BSW** | [`lab3_block_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/bsw_LATE_144616_15163943_BWS_lab3/lab3_block_diagram.pdf) | Vector PDF | 0.9 | 0.8 | 0.7 | 0.8 | 0.8 | **4.0 / 5.0** | Strong |
+| 4 | **CHL** | [`block_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/chl_LATE_151187_15160251_CHL_lab3-1/CHL_lab3/block_diagram.pdf) | Vector PDF | 1.0 | 1.0 | 1.0 | 1.0 | 1.0 | **5.0 / 5.0** | **Exemplary** |
+| 5 | **CJK** | [`kernel_block_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/cjk_LATE_142202_15162393_rickycui_yantingj_akim2_lab3/kernel_block_diagram.pdf) | Vector PDF | 1.0 | 1.0 | 1.0 | 1.0 | 1.0 | **5.0 / 5.0** | **Exemplary** |
+| 6 | **CJS** | [`blcok_diagram.png`](file:///home/user/Desktop/18643-lab3/extracted/cjs_141367_15113610_chiehhss_shukangj_yichingc_lab3/blcok_diagram.png) | Vector PNG | 1.0 | 1.0 | 1.0 | 1.0 | 1.0 | **5.0 / 5.0** | **Exemplary** |
+| 7 | **CKL** | [`kernel_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/ckl_97773_15116707_akrzyzan_dchan2_kodyl_lab3/akrzyzan_dchan2_kodyl_lab3/lab3/kernel_diagram.pdf) | Pencil Sketch | 0.6 | 0.6 | 0.5 | 0.3 | 0.5 | **2.5 / 5.0** | Basic |
+| 8 | **CRT** | [`datapath_block_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/crt_98394_15116513_cjyu_jcestero_jrogan_otank_lab3-1/cjyu_jcestero_jrogan_otank_lab3/datapath_block_diagram.pdf) | Vector PDF | 1.0 | 1.0 | 1.0 | 1.0 | 1.0 | **5.0 / 5.0** | **Exemplary** |
+| 9 | **DEL** | [`lab3 diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/del_92659_15117835_fpel_ldas_sienahol_lab3-1/fpel_ldas_sienahol_lab3/lab3 diagram.pdf) | Vector PDF | 0.7 | 0.8 | 0.6 | 0.7 | 0.7 | **3.5 / 5.0** | Moderate Plus |
+| 10 | **DGW** | [`block_diagram.png`](file:///home/user/Desktop/18643-lab3/extracted/dgw_98738_15077348_mgong2_sdupont_tongwu2_lab3/mgong2_sdupont_tongwu2_lab3/block_diagram.png) | Vector PNG | 1.0 | 1.0 | 1.0 | 1.0 | 1.0 | **5.0 / 5.0** | **Exemplary** |
+| 11 | **DLW** | [`block_diagram.png`](file:///home/user/Desktop/18643-lab3/extracted/dlw_LATE_75009_15160450_dlw_lab3/lab3/block_diagram.png) | Vector PNG | 0.6 | 0.6 | 0.6 | 0.6 | 0.6 | **3.0 / 5.0** | Moderate |
+| 12 | **FLX** | [`kernel_datapath.jpg`](file:///home/user/Desktop/18643-lab3/extracted/flx_135476_15115377_freddyfu_peiranx_wenzhuol_lab3/freddyfu_peiranx_wenzhuol_lab3/kernel_datapath.jpg) | Tablet Sketch | 0.9 | 0.8 | 0.4 | 0.6 | 0.8 | **3.5 / 5.0** | Moderate Plus |
+| 13 | **GPY** | [`kernel_datapath.pdf`](file:///home/user/Desktop/18643-lab3/extracted/gpy_151161_15119231_alpan_shengfeg_sutongy_lab3/alpan_shengfeg_sutongy_lab3/kernel_datapath.pdf) | Vector PDF | 1.0 | 1.0 | 1.0 | 1.0 | 1.0 | **5.0 / 5.0** | **Exemplary** |
+| 14 | **JJS** | [`Datapath Block Diagram.png`](file:///home/user/Desktop/18643-lab3/extracted/jjs_143329_15117582_garysu_rachelji_yanxinj_lab3/garysu_rachelji_yanxinj_lab3/Datapath Block Diagram.png) | Vector PNG | 0.5 | 0.9 | 0.9 | 0.5 | 0.7 | **3.5 / 5.0** | Moderate Plus |
+| 15 | **JMM** | [`diagram.jpg`](file:///home/user/Desktop/18643-lab3/extracted/jmm_LATE_142309_15158865_jjagielo_kminihan_zrmoore_lab3-1/lab3/diagram.jpg) | Marker Sketch | 0.5 | 0.6 | 0.5 | 0.5 | 0.4 | **2.5 / 5.0** | Basic |
+| 16 | **LSX** | [`lab3_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/lsx_LATE_95470_15163599_aqx_jieunlim_serenas_lab3/aqx_jieunlim_serenas_lab3/lab3_diagram.pdf) | Vector PDF | 0.9 | 0.9 | 0.9 | 0.9 | 0.9 | **4.5 / 5.0** | Strong Plus |
+| 17 | **MPV** | [`mpv_lab3_block_diagram.png`](file:///home/user/Desktop/18643-lab3/extracted/mpv_142631_15119319_mpv_lab3-1/mpv_lab3/mpv_lab3_block_diagram.png) | Vector PNG | 1.0 | 1.0 | 1.0 | 1.0 | 1.0 | **5.0 / 5.0** | **Exemplary** |
+| 18 | **SZZ** | [`Kernel Datapath.pdf`](file:///home/user/Desktop/18643-lab3/extracted/szz_LATE_71254_15160116_chenhao7_rzamir_sseshan_lab3/lab3/Kernel Datapath.pdf) | Vector PDF | 0.3 | 0.5 | 0.4 | 0.4 | 0.4 | **2.0 / 5.0** | Deficient |
+
+---
+
+### 11.5 Detailed Per-Group Diagram Audits & Justifications
+
+#### 1. AJS
+- **Diagram File:** [`datapath.png`](file:///home/user/Desktop/18643-lab3/extracted/ajs_LATE_97622_15160954_ajs_lab3/ajs_lab3/datapath.png) (PNG, $1652 \times 1134$)
+- **Score Breakdown:** Compute: **0.8** | Memory: **0.8** | DRAM: **0.7** | Control: **0.9** | Precision: **0.8** | **Total: 4.0 / 5.0**
+- **Microarchitectural Findings:**
+  - *Strengths:* Clean vector diagram layout. Outlines external DRAM structures (`ARRAYi`, `ARRAYw`, `ARRAYo`), BRAM/LUTRAM buffer allocations, 8 parallel MAC lanes with accumulator registers, and provides an explicit execution order control box detailing their single-image input feature map cache reuse.
+  - *Omissions & Errata:* In the MAC lane call-out, labels "27 DSPs + 1 Adder Tree", reflecting 9 single-precision multipliers ($9 \times 3 = 27$ DSPs) rather than detailing individual multipliers. Buffer banking specifies 8 banks for `BufI` rather than the 192 channels cached in BRAM. AXI bus bit-widths are omitted.
+
+#### 2. BJO
+- **Diagram File:** [`block_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/bjo_LATE_92116_15119908_BJO_lab3/block_diagram.pdf) (Hand-drawn tablet graphic, $1275 \times 1650$)
+- **Score Breakdown:** Compute: **0.9** | Memory: **0.9** | DRAM: **0.5** | Control: **0.5** | Precision: **0.7** | **Total: 3.5 / 5.0**
+- **Microarchitectural Findings:**
+  - *Strengths:* Highly accurate microarchitectural numbers. Captures their exact memory partitioning: 96 single-port banks for `BufW`, 48 single-port banks for `BufI`, and 2 dual-port banks for `BufO`. Accurately illustrates two parallel lanes of $48\times$ multipliers ($2 \times 48 = 96$ MACs) with 47-input reduction adder trees and accumulator feedback into `BufO`.
+  - *Omissions & Errata:* Hand-drawn digital sketch style. Treats the DRAM interface as a generic bottom bar without burst mechanics, AXI channels, or loop scheduling.
+
+#### 3. BSW (BWS)
+- **Diagram File:** [`lab3_block_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/bsw_LATE_144616_15163943_BWS_lab3/lab3_block_diagram.pdf) (Vector PDF, $2100 \times 1275$)
+- **Score Breakdown:** Compute: **0.9** | Memory: **0.8** | DRAM: **0.7** | Control: **0.8** | Precision: **0.8** | **Total: 4.0 / 5.0**
+- **Microarchitectural Findings:**
+  - *Strengths:* Accurately illustrates their unrolled $T_M=16, T_N=7$ array (112 multipliers), adder reduction tree, pipelined pixel processing ($II=1$), and the specialized `LocalO` dual-port RAM ping-pong accumulation scheme that circumvents HLS loop-carried dependency limits. Confirms direct tiled DRAM loads matching their $8.0\times$ input reload traffic.
+  - *Omissions & Errata:* Contains minor label typos (reads "multiply BufI with BufO" instead of `BufW`; `BufO` tiled load box includes "input feature channels"). Does not document AXI port bit-widths.
+
+#### 4. CHL
+- **Diagram File:** [`block_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/chl_LATE_151187_15160251_CHL_lab3-1/CHL_lab3/block_diagram.pdf) (Vector PDF, $2500 \times 938$)
+- **Score Breakdown:** Compute: **1.0** | Memory: **1.0** | DRAM: **1.0** | Control: **1.0** | Precision: **1.0** | **Total: 5.0 / 5.0 (Exemplary)**
+- **Microarchitectural Findings:**
+  - *Strengths:* Publication-grade quality. Documents exact memory footprints in DRAM (input: $10 \times 173\text{ KB}$, weights: $885\text{ KB}$, output: $10 \times 87\text{ KB}$), 32-bit AXI bursts, burst lengths (43,200 words, 576 words, 5,408 words), and cycle latencies (651 cycles/tile, 1521 steps at $II=1$). Details 32 unrolled compute lanes, cyclic 2-bank IFM splits, 64 weight banks, and exact partial-sum read-add-write cycles across 169 steps.
+  - *Omissions & Errata:* None. Flawless architectural representation.
+
+#### 5. CJK
+- **Diagram File:** [`kernel_block_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/cjk_LATE_142202_15162393_rickycui_yantingj_akim2_lab3/kernel_block_diagram.pdf) (Vector PDF, $2250 \times 1297$)
+- **Score Breakdown:** Compute: **1.0** | Memory: **1.0** | DRAM: **1.0** | Control: **1.0** | Precision: **1.0** | **Total: 5.0 / 5.0 (Exemplary)**
+- **Microarchitectural Findings:**
+  - *Strengths:* Pristine, clear vector execution. Documents 3 independent AXI interfaces (`gmem0`, `gmem1`, `gmem2`), explicit buffer banking (7 banks for `BufI`, 112 banks for `BufW`, 16 banks for `BufO`), and a 112-product pipelined convolution engine operating at Col $II=1$. Features a detailed zoom-in of an output-channel lane showing 7 unrolled multipliers, an adder tree, partial-sum feedback, and a per-image loop sequence box.
+  - *Omissions & Errata:* None.
+
+#### 6. CJS
+- **Diagram File:** [`blcok_diagram.png`](file:///home/user/Desktop/18643-lab3/extracted/cjs_141367_15113610_chiehhss_shukangj_yichingc_lab3/blcok_diagram.png) (PNG, $1774 \times 887$)
+- **Score Breakdown:** Compute: **1.0** | Memory: **1.0** | DRAM: **1.0** | Control: **1.0** | Precision: **1.0** | **Total: 5.0 / 5.0 (Exemplary)**
+- **Microarchitectural Findings:**
+  - *Strengths:* Exceptional visual hierarchy. Combines macro system dataflow (AXI Memory Interface, `BufI`, `BufW`, `BufO`, and a large `Partial Buffer` storing $128 \times 13 \times 13$ intermediate sums) with a zoomed-in callout of their Parallel MAC Engine ($T_M=8, T_N=12$). Schematically depicts 12 input values and 12 weights feeding multipliers and adders across 8 output channels, accompanied by explanatory bullets on input reuse and loop scheduling.
+  - *Omissions & Errata:* None.
+
+#### 7. CKL
+- **Diagram File:** [`kernel_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/ckl_97773_15116707_akrzyzan_dchan2_kodyl_lab3/akrzyzan_dchan2_kodyl_lab3/lab3/kernel_diagram.pdf) (Pencil sketch on dot grid paper, $3530 \times 3300$)
+- **Score Breakdown:** Compute: **0.6** | Memory: **0.6** | DRAM: **0.5** | Control: **0.3** | Precision: **0.5** | **Total: 2.5 / 5.0**
+- **Microarchitectural Findings:**
+  - *Strengths:* Captures the core $8 \times 8 = 64$ multiplier array, column adder units, and 8-bank partitioning on `BufI` and `BufO`.
+  - *Omissions & Errata:* Hand-drawn pencil sketch on dot paper. **Major Architectural Omission:** Fails to depict or explain their 5-image on-chip BRAM batch buffering (`B_TILE = 5`), which was their defining architectural innovation responsible for the class-record 171.0 OP/Byte arithmetic intensity. Lacks loop schedules, AXI burst parameters, and cycle budgets.
+
+#### 8. CRT
+- **Diagram File:** [`datapath_block_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/crt_98394_15116513_cjyu_jcestero_jrogan_otank_lab3-1/cjyu_jcestero_jrogan_otank_lab3/datapath_block_diagram.pdf) (Vector PDF, $1831 \times 1111$)
+- **Score Breakdown:** Compute: **1.0** | Memory: **1.0** | DRAM: **1.0** | Control: **1.0** | Precision: **1.0** | **Total: 5.0 / 5.0 (Exemplary)**
+- **Microarchitectural Findings:**
+  - *Strengths:* A flawless masterwork of hardware visualization. Documents their 4-process HLS DATAFLOW architecture linked by FIFOs (`sI`, `sW`, `sO`) with exact word depths, 128-bit AXI masters over HP0, 24 banks for `BufI`, $8 \times 24$ RAMs for `BufW`, and 8 `ram_s2p` RAMs for `BufO`. Features explicit DSP/LUT arithmetic decomposition ($26 \times 17$ DSP + $15 \times 15$ DSP + $6 \times 6$ LUT = 358 DSPs total) to fit 192 MACs at 300 MHz ($II=1$, 1521 cycles/block), complete with post-route utilization, timing slack (+0.070 ns), and board runtime (9.174 ms).
+  - *Omissions & Errata:* None. Benchmark standard for the course.
+
+#### 9. DEL
+- **Diagram File:** [`lab3 diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/del_92659_15117835_fpel_ldas_sienahol_lab3-1/fpel_ldas_sienahol_lab3/lab3 diagram.pdf) (Vector PDF, $1500 \times 844$)
+- **Score Breakdown:** Compute: **0.7** | Memory: **0.8** | DRAM: **0.6** | Control: **0.7** | Precision: **0.7** | **Total: 3.5 / 5.0**
+- **Microarchitectural Findings:**
+  - *Strengths:* Clear, readable block flowchart. Explicitly identifies array dimensions and banking: `BufI` ($192 \times 15 \times 15$, 12 banks), `BufW` ($8 \times 192 \times 3 \times 3$, 96 banks), `BufO` ($8 \times 13 \times 13$, 8 banks), and specifies 96 parallel MACs ($T_M \times T_N = 8 \times 12$).
+  - *Omissions & Errata:* Very high-level and conceptual. Compute engine is depicted as text blocks ("Compute 12 products per row", "Compute 8 row sums") without structural multiplier/adder tree schematics. DRAM interfaces omit AXI bus widths, burst lengths, and dataflow mechanics.
+
+#### 10. DGW
+- **Diagram File:** [`block_diagram.png`](file:///home/user/Desktop/18643-lab3/extracted/dgw_98738_15077348_mgong2_sdupont_tongwu2_lab3/mgong2_sdupont_tongwu2_lab3/block_diagram.png) (PNG, $1931 \times 2500$)
+- **Score Breakdown:** Compute: **1.0** | Memory: **1.0** | DRAM: **1.0** | Control: **1.0** | Precision: **1.0** | **Total: 5.0 / 5.0 (Exemplary)**
+- **Microarchitectural Findings:**
+  - *Strengths:* Exceptional dual-level architectural blueprint. The macro view details the 4-process DATAFLOW pipeline with ping-pong buffering (`BufI 0/1`, `BufW 0/1`, `BufO 0/1`) with exact cycle budgets per block (19,443 cycles load, 24,347 cycles compute, 21,716 cycles store). The micro view details the 2D spatial crossbar datapath: column broadcasts of `BufI[0..13]`, localized $14 \times 8$ weight taps, row adder trees $\Sigma$, accumulation muxes, and address generator counters.
+  - *Omissions & Errata:* None.
+
+#### 11. DLW
+- **Diagram File:** [`block_diagram.png`](file:///home/user/Desktop/18643-lab3/extracted/dlw_LATE_75009_15160450_dlw_lab3/lab3/block_diagram.png) (PNG, $3102 \times 730$)
+- **Score Breakdown:** Compute: **0.6** | Memory: **0.6** | DRAM: **0.6** | Control: **0.6** | Precision: **0.6** | **Total: 3.0 / 5.0**
+- **Microarchitectural Findings:**
+  - *Strengths:* Clean vector graphic layout. Accurately illustrates their 4-process DATAFLOW architecture: `rd_input`, `rd_weights`, `cnn_compute`, `wr_output` linked by FIFOs and ping-pong buffers.
+  - *Omissions & Errata:* Completely abstract and devoid of quantitative microarchitectural metrics. Omits tile dimensions ($T_M, T_N, T_R, T_C$), multiplier/adder array sizing, BRAM bank counts, FIFO depths, and AXI bus parameters.
+
+#### 12. FLX
+- **Diagram File:** [`kernel_datapath.jpg`](file:///home/user/Desktop/18643-lab3/extracted/flx_135476_15115377_freddyfu_peiranx_wenzhuol_lab3/freddyfu_peiranx_wenzhuol_lab3/kernel_datapath.jpg) (Digital tablet sketch, $1000 \times 1099$)
+- **Score Breakdown:** Compute: **0.9** | Memory: **0.8** | DRAM: **0.4** | Control: **0.6** | Precision: **0.8** | **Total: 3.5 / 5.0**
+- **Microarchitectural Findings:**
+  - *Strengths:* Deep microarchitectural insight into their inner compute engine. Clearly illustrates their time-multiplexed 2-cycle pipeline: cycle 0 / cycle 1 $2:1$ input multiplexing, 120-product multiplier stage, flip-flop pipeline staging, 16 adder tree lanes, and alternating read/write phases to single-port `BufO` banks.
+  - *Omissions & Errata:* Hand-drawn digital sketch. Restricts focus strictly to the inner compute engine; completely omits DRAM interfaces, AXI burst mechanics, ROM coordinate decoders, and outer loop DRAM reload orchestration.
+
+#### 13. GPY
+- **Diagram File:** [`kernel_datapath.pdf`](file:///home/user/Desktop/18643-lab3/extracted/gpy_151161_15119231_alpan_shengfeg_sutongy_lab3/alpan_shengfeg_sutongy_lab3/kernel_datapath.pdf) (Vector PDF, $3125 \times 2188$)
+- **Score Breakdown:** Compute: **1.0** | Memory: **1.0** | DRAM: **1.0** | Control: **1.0** | Precision: **1.0** | **Total: 5.0 / 5.0 (Exemplary)**
+- **Microarchitectural Findings:**
+  - *Strengths:* The highest-scoring, most comprehensive diagram submitted in the entire class. Details the paired-engine multi-image architecture (Engine 0 for Image A, Engine 1 for Image B) with shared weight broadcast, 3 AXI masters (including a 256-bit write bus), FIFO depths, LUTRAM double-buffers, 160 multipliers, and accumulator banks. Includes full schematic breakdowns of single output lanes, the gate/DSP-level `mul32lo` 2-DSP decomposition, a complete resource cost breakdown, and schedule cycle latency tables.
+  - *Omissions & Errata:* None. Exemplary benchmark.
+
+#### 14. JJS
+- **Diagram File:** [`Datapath Block Diagram.png`](file:///home/user/Desktop/18643-lab3/extracted/jjs_143329_15117582_garysu_rachelji_yanxinj_lab3/garysu_rachelji_yanxinj_lab3/Datapath Block Diagram.png) (PNG, $1920 \times 1080$)
+- **Score Breakdown:** Compute: **0.5** | Memory: **0.9** | DRAM: **0.9** | Control: **0.5** | Precision: **0.7** | **Total: 3.5 / 5.0**
+- **Microarchitectural Findings:**
+  - *Strengths:* Superb depiction of external DRAM and AXI interfaces: 128-bit `gmem0` with 4-lane unpack, 256-bit `gmem1` weight prefetching into a decoupling FIFO, `BufI` ($12 \times 15 \times 15$, 12 banks), `BufW` ($8 \times 12 \times 3 \times 3$), `BufO` ($16 \times 8 \times 13 \times 13$, 8 banks), and output gather logic.
+  - *Omissions & Errata:* The central compute engine is collapsed into an unelaborated gray box labeled "Computation Unit: 8 output lanes, II=1" without showing multipliers, adder trees, or datapath routing.
+
+#### 15. JMM
+- **Diagram File:** [`diagram.jpg`](file:///home/user/Desktop/18643-lab3/extracted/jmm_LATE_142309_15158865_jjagielo_kminihan_zrmoore_lab3-1/lab3/diagram.jpg) (Marker sketch, $1721 \times 989$)
+- **Score Breakdown:** Compute: **0.5** | Memory: **0.6** | DRAM: **0.5** | Control: **0.5** | Precision: **0.4** | **Total: 2.5 / 5.0**
+- **Microarchitectural Findings:**
+  - *Strengths:* Captures their asynchronous multi-process pipeline: Input/Weight loader threads, inter-process FIFOs, ping-pong tile buffers, and states "Convolution engine (72 MACs)".
+  - *Omissions & Errata:* Very rough hand-drawn marker sketch. Lacks quantitative buffer dimensions, BRAM banking factors, bit-widths, burst lengths, and collapses the entire convolution datapath into an opaque box.
+
+#### 16. LSX
+- **Diagram File:** [`lab3_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/lsx_LATE_95470_15163599_aqx_jieunlim_serenas_lab3/aqx_jieunlim_serenas_lab3/lab3_diagram.pdf) (Vector PDF, $1650 \times 1275$)
+- **Score Breakdown:** Compute: **0.9** | Memory: **0.9** | DRAM: **0.9** | Control: **0.9** | Precision: **0.9** | **Total: 4.5 / 5.0 (Strong Plus)**
+- **Microarchitectural Findings:**
+  - *Strengths:* Extremely clean and elegant vector diagram. Outlines tile dimensions ($T_M=16, T_N=4, T_R=T_C=13$, 64 MACs/cycle, 150 MHz), DDR memory mapping, AXI interfaces, 4-bank `BufI`, 64-register `BufW`, 16-bank `BufO`, 64-multiplier / 16-adder tree MAC array ($II=1$, 192 DSPs), and partial sum accumulation feedback. Features functional color-coding.
+  - *Omissions & Errata:* Compute array is drawn as a grid of generic rectangles without internal multiplier/adder tree routing; AXI interface is drawn as a unified block without explicit data bus bit-widths.
+
+#### 17. MPV
+- **Diagram File:** [`mpv_lab3_block_diagram.png`](file:///home/user/Desktop/18643-lab3/extracted/mpv_142631_15119319_mpv_lab3-1/mpv_lab3/mpv_lab3_block_diagram.png) (PNG, $1400 \times 1000$)
+- **Score Breakdown:** Compute: **1.0** | Memory: **1.0** | DRAM: **1.0** | Control: **1.0** | Precision: **1.0** | **Total: 5.0 / 5.0 (Exemplary)**
+- **Microarchitectural Findings:**
+  - *Strengths:* Outstanding technical visualization. Accurately details their paired-image spatial banking: 16 shared spatial banks ($4 \times 4$) with interleaved A|B packing, $3 \times 3$ window selection logic with base pointer offsets, 12 weight banks ($192 \times 288$ bits) packing 9 weights/word, 12 parallel compute lanes ($12 \times 9 = 108$ multipliers unrolled across the $3 \times 3$ kernel), accumulator BRAMs, and a controller flow chart.
+  - *Omissions & Errata:* None.
+
+#### 18. SZZ
+- **Diagram File:** [`Kernel Datapath.pdf`](file:///home/user/Desktop/18643-lab3/extracted/szz_LATE_71254_15160116_chenhao7_rzamir_sseshan_lab3/lab3/Kernel Datapath.pdf) (Vector PDF, $2482 \times 1754$)
+- **Score Breakdown:** Compute: **0.3** | Memory: **0.5** | DRAM: **0.4** | Control: **0.4** | Precision: **0.4** | **Total: 2.0 / 5.0**
+- **Microarchitectural Findings:**
+  - *Strengths:* Mentions the 5-image batch buffering, DDR, ping-pong weight buffers, and notes 95 output tile blocks.
+  - *Omissions & Errata:* Severely deficient in microarchitectural depth. Compute datapath is represented as a single blank box labeled "Compute", with a textual note stating *"The cnn_blocked_kernel dataflow follows the lab2 submission still"*. Lacks buffer dimensions, banking factors, multiplier/adder schematics, bit-widths, and cycle counts.
+
+---
+
+### 11.6 Comparative Synthesis & Key Pedagogical Takeaways
+
+#### 1. The Publication-Grade Elite Tier (Score: 5.0 / 5.0)
+Seven groups (**CRT, GPY, CHL, MPV, CJS, CJK, DGW**) produced block diagrams of exceptional engineering caliber. These schematics stand out because they:
+- Provide **dual-level visibility**: bridging macro-level system dataflow (DRAM bursts, FIFOs, double buffers) with bit-level compute schematics (unrolled MAC arrays, adder trees, and accumulation registers).
+- Quantify all hardware parameters: memory banking dimensions, AXI bus widths, pipeline initiation intervals, cycle budgets, and physical FPGA resource footprints.
+- Accurately communicate advanced microarchitectural innovations, such as custom 2-DSP multiplier decomposition (CRT, GPY), paired-batch interleaved spatial banking (MPV, GPY), and 4-process pipelined double-buffering (DGW).
+
+#### 2. The Abstract Flowchart vs. Physical Datapath Dichotomy
+Several groups submitted diagrams that, while clean, operated at too high a level of abstraction:
+- **DLW (3.0 / 5.0)** and **JJS (3.5 / 5.0)** provided excellent overviews of memory streams and FIFOs, but treated the compute engine as an unelaborated black box.
+- Conversely, **FLX (3.5 / 5.0)** provided deep insight into their time-multiplexed 2-cycle compute datapath, but omitted the off-chip DRAM memory interface entirely.
+
+#### 3. Hand-Drawn Sketches vs. Digital CAD Precision
+While hand-drawn sketches were accepted under the submission rules, they universally suffered in technical completeness:
+- **CKL (2.5 / 5.0)** submitted a pencil sketch on dot paper that completely omitted their standout 5-image batch buffering innovation.
+- **JMM (2.5 / 5.0)** and **SZZ (2.0 / 5.0)** submitted rudimentary box sketches with minimal labeling and opaque compute blocks.
+- In contrast, **BJO (3.5 / 5.0)** proved that a digital tablet sketch can achieve good technical informativeness if exact memory banking, reduction trees, and multiplier lane counts are rigorously labeled.
