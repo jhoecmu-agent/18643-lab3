@@ -29,6 +29,35 @@ This dimension evaluates each team's adherence to the official submission specif
 ---
 
 ## 2. Master Evaluation Summary Table
+### 2.1 Master Cumulative Scoreboard Across All 13 Rubrics (65.0 Total Points)
+
+The table below presents the definitive course standings across all **13 distinct evaluation rubrics** (totaling 65.0 points) plus binary golden verification, ranked from highest to lowest cumulative score:
+
+| Rank | Group | R1 | R2 | R3 | R4 | R5 | R6 | R7 | R8 | R9 | R10 | R11 | R12 | R13 | Total (/65.0) | Grade (/5.00) | Pct (%) | Golden Verif | Standing & Primary Hallmark |
+| :-: | :---: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :---: | :---: | :---: | :---: | :--- |
+| **#1** | **CRT** | 5.0 | 5.0 | 5.0 | 5.0 | 5.0 | 5.0 | 5.0 | 5.0 | 5.0 | 5.0 | 5.0 | 5.0 | 5.0 | **65.0 / 65.0** | **5.00** | **100.0%** | ✅ Pass (10/10) | Flawless Master Sweep — All-Category Champion |
+| **#2** | **GPY** | 4.0 | 5.0 | 5.0 | 4.5 | 4.5 | 5.0 | 5.0 | 5.0 | 5.0 | 4.5 | 5.0 | 5.0 | 5.0 | **62.5 / 65.0** | **4.81** | **96.2%** | ✅ Pass (10/10) | Elite Dual-Engine Breakthrough |
+| **#3** | **DGW** | 3.0 | 5.0 | 4.5 | 5.0 | 5.0 | 5.0 | 5.0 | 4.5 | 5.0 | 5.0 | 5.0 | 5.0 | 5.0 | **62.0 / 65.0** | **4.77** | **95.4%** | ✅ Pass (10/10) | The Empirical Treatise (300 MHz Champion) |
+| **#4** | **MPV** | 3.0 | 5.0 | 4.5 | 4.0 | 4.5 | 4.0 | 4.0 | 3.5 | 4.0 | 5.0 | 5.0 | 5.0 | 4.5 | **56.0 / 65.0** | **4.31** | **86.2%** | ✅ Pass (10/10) | Spatial 3x3 Banking & Paired Batching |
+| **#5** | **DLW** | 2.0 | 3.0 | 4.5 | 5.0 | 5.0 | 5.0 | 5.0 | 5.0 | 5.0 | 3.5 | 4.0 | 3.5 | 5.0 | **55.5 / 65.0** | **4.27** | **85.4%** | ✅ Pass (10/10) | 8-Process Streaming Dataflow Champion |
+| **#6** | **JMM** | 3.0 | 2.5 | 3.5 | 4.0 | 4.0 | 4.5 | 4.5 | 4.5 | 4.5 | 4.5 | 4.5 | 4.5 | 4.5 | **53.0 / 65.0** | **4.08** | **81.5%** | ✅ Pass (10/10) | Peak Hardware Elegance (92.9% Duty Cycle) |
+| **#7** | **CKL** | 4.0 | 2.5 | 4.5 | 3.5 | 3.5 | 4.0 | 4.5 | 4.0 | 3.0 | 3.5 | 4.5 | 4.5 | 4.5 | **50.5 / 65.0** | **3.88** | **77.7%** | ✅ Pass (10/10) | Deep Batching Memory Leader (182.1 OP/B) |
+| **#8** | **JJS** | 4.0 | 3.5 | 3.5 | 4.0 | 3.5 | 3.5 | 3.5 | 3.5 | 3.5 | 4.5 | 4.5 | 4.0 | 3.5 | **49.0 / 65.0** | **3.77** | **75.4%** | ✅ Pass (10/10) | Strong AXI Streaming Mid-Tier |
+| **#9** | **CJK** | 4.0 | 5.0 | 3.0 | 3.5 | 3.5 | 3.0 | 3.0 | 3.5 | 3.5 | 4.5 | 3.5 | 4.5 | 4.0 | **48.5 / 65.0** | **3.73** | **74.6%** | ✅ Pass (10/10) | Tri-Bus Interconnect with Irregular Bursting |
+| **#10** | **CJS** | 4.0 | 5.0 | 3.5 | 4.0 | 3.0 | 3.5 | 4.0 | 3.5 | 2.0 | 4.0 | 4.0 | 4.0 | 4.0 | **48.5 / 65.0** | **3.73** | **74.6%** | ✅ Pass (10/10) | Occam's Razor Dual-Paradigm Study |
+| **#11** | **SZZ** | 3.0 | 2.0 | 4.0 | 3.5 | 4.5 | 3.5 | 3.5 | 3.5 | 3.5 | 3.5 | 4.0 | 3.5 | 4.0 | **46.0 / 65.0** | **3.54** | **70.8%** | ✅ Pass (10/10) | Weight Ping-Pong Buffering & Tuning |
+| **#12** | **CHL** | 3.0 | 5.0 | 4.0 | 4.5 | 3.0 | 2.5 | 2.0 | 2.0 | 1.5 | 5.0 | 4.5 | 4.0 | 4.5 | **45.5 / 65.0** | **3.50** | **70.0%** | ✅ Pass (10/10) | High-Effort 5D Tensor Engine (Rose +1 Rank) |
+| **#13** | **DEL** | 3.0 | 3.5 | 2.5 | 2.5 | 3.5 | 3.5 | 3.5 | 3.0 | 4.0 | 4.0 | 4.0 | 4.5 | 3.5 | **45.0 / 65.0** | **3.46** | **69.2%** | ✅ Pass (10/10) | Full-IFM On-Chip Caching Baseline |
+| **#14** | **BJO** | 3.0 | 3.5 | 3.0 | 3.5 | 3.5 | 3.5 | 3.5 | 3.0 | 3.5 | 4.0 | 3.0 | 3.5 | 4.0 | **44.5 / 65.0** | **3.42** | **68.5%** | ✅ Pass (10/10) | Systematic Exploration & Multi-Trial Sizing |
+| **#15** | **FLX** | 3.0 | 3.5 | 4.0 | 3.5 | 3.0 | 3.0 | 3.0 | 3.0 | 2.5 | 3.5 | 4.5 | 4.0 | 3.5 | **44.0 / 65.0** | **3.38** | **67.7%** | ✅ Pass (10/10) | Coordinate ROMs & Analytical Modeling |
+| **#16** | **LSX** | 3.0 | 4.5 | 2.5 | 2.5 | 2.5 | 3.0 | 3.0 | 3.0 | 2.5 | 5.0 | 4.0 | 4.5 | 3.5 | **43.5 / 65.0** | **3.35** | **66.9%** | ✅ Pass (10/10) | Conservative Baseline (19.8x speedup) |
+| **#17** | **AJS** | 3.0 | 4.0 | 2.0 | 2.5 | 2.0 | 2.0 | 2.0 | 2.0 | 1.5 | 3.0 | 3.0 | 2.5 | 3.0 | **32.5 / 65.0** | **2.50** | **50.0%** | ✅ Pass (10/10) | Basic Scope / Fixed II=2 Bug Only |
+| **#18** | **BSW** | 1.0 | 4.0 | 3.0 | 3.0 | 3.0 | 1.5 | 1.5 | 1.5 | 2.0 | 2.0 | 2.5 | 1.5 | 1.5 | **28.0 / 65.0** | **2.15** | **43.1%** | ✅ Pass (10/10) | Minimal Effort / Self-Admitted Stagnation |
+
+---
+
+### 2.2 Master Submission Compliance Table (Rubric Dimension 1)
+
 
 | # | Group | AndrewID Naming? | Datapath Diagram? | Workspace Archive? | Build Cleaned? | Permitted Edits Only? | Compliance Score (/5) | Overall Compliance Status |
 | :-: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
@@ -62,6 +91,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Team Name / Directory:** `ajs_lab3`
 - **Submission Archive:** `ajs_LATE_97622_15160954_ajs_lab3.zip` (198 KB updated archive)
 - **Identified Members:** Misho Alexandrov, Mizuki Jiang, Kaloyan Stefanov (`kastefan`)
+- **Cumulative Total Score (All 13 Rubrics):** **32.5 / 65.0 (50.0%)** — Grade: **2.50 / 5.00** (Cohort Rank: **#17 / 18** — *Basic Scope / Fixed II=2 Bug Only*)
 - **Rubric Dimension 1 (Submission Compliance):** **3 / 5**
 - **2nd Rubric Dimension (Block Diagram Quality):** **4.0 / 5.0 (Strong / Highly Informative)** — [`datapath.png`](file:///home/user/Desktop/18643-lab3/extracted/ajs_LATE_97622_15160954_ajs_lab3/ajs_lab3/datapath.png) (See Section 11 for detailed breakdown)
 - **3rd Rubric Dimension (Novelty & Innovativeness):** **2.0 / 5.0 (Tier 5: Minimal Baseline)** — (See Section 12 for detailed breakdown)
@@ -88,6 +118,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Team Name / Directory:** `BJO_lab3`
 - **Submission Archive:** `bjo_LATE_92116_15119908_BJO_lab3.zip` (89.9 MB)
 - **Identified Members:** T'saurus Beasley, Wellington Jiang, Nicholas Ortiz
+- **Cumulative Total Score (All 13 Rubrics):** **44.5 / 65.0 (68.5%)** — Grade: **3.42 / 5.00** (Cohort Rank: **#14 / 18** — *Systematic Exploration & Multi-Trial Sizing*)
 - **Rubric Dimension 1 (Submission Compliance):** **3 / 5**
 - **2nd Rubric Dimension (Block Diagram Quality):** **3.5 / 5.0 (Moderate Plus / Good Core Architecture)** — [`block_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/bjo_LATE_92116_15119908_BJO_lab3/block_diagram.pdf) (See Section 11 for detailed breakdown)
 - **3rd Rubric Dimension (Novelty & Innovativeness):** **3.0 / 5.0 (Tier 4: Competent Domain Optimization)** — (See Section 12 for detailed breakdown)
@@ -114,6 +145,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Team Name / Directory:** `BWS_lab3`
 - **Submission Archive:** `bsw_LATE_144616_15163943_BWS_lab3.zip` (42.3 MB)
 - **Identified Members:** Abnash Bassi, Upasana Sridhar, Chenxi Wan
+- **Cumulative Total Score (All 13 Rubrics):** **28.0 / 65.0 (43.1%)** — Grade: **2.15 / 5.00** (Cohort Rank: **#18 / 18** — *Minimal Effort / Self-Admitted Stagnation*)
 - **Rubric Dimension 1 (Submission Compliance):** **1 / 5** *(Initial submission) / **3.5 / 5** (Recovered evaluation with instructor-supplied kernel & updated block diagram)*
 - **2nd Rubric Dimension (Block Diagram Quality):** **4.0 / 5.0 (Strong / Highly Informative)** — [`lab3_block_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/bsw_LATE_144616_15163943_BWS_lab3/lab3_block_diagram.pdf) (See Section 11 for detailed breakdown)
 - **3rd Rubric Dimension (Novelty & Innovativeness):** **3.0 / 5.0 (Tier 4: Competent Domain Optimization)** — (See Section 12 for detailed breakdown)
@@ -140,6 +172,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Team Name / Directory:** `CHL_lab3`
 - **Submission Archive:** `chl_LATE_151187_15160251_CHL_lab3-1.zip` (35.1 MB)
 - **Identified Members:** Ryder Chou, Mu-Wei Hsieh, Yosen Lin
+- **Cumulative Total Score (All 13 Rubrics):** **45.5 / 65.0 (70.0%)** — Grade: **3.50 / 5.00** (Cohort Rank: **#12 / 18** — *High-Effort 5D Tensor Engine (Rose +1 Rank)*)
 - **Rubric Dimension 1 (Submission Compliance):** **3 / 5**
 - **2nd Rubric Dimension (Block Diagram Quality):** **5.0 / 5.0 (Exemplary / Publication-Quality)** — [`block_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/chl_LATE_151187_15160251_CHL_lab3-1/CHL_lab3/block_diagram.pdf) (See Section 11 for detailed breakdown)
 - **3rd Rubric Dimension (Novelty & Innovativeness):** **4.0 / 5.0 (Tier 3: Notable Microarchitectural Innovator)** — (See Section 12 for detailed breakdown)
@@ -166,6 +199,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Team Name / Directory:** `rickycui_yantingj_akim2_lab3`
 - **Submission Archive:** `cjk_LATE_142202_15162393_rickycui_yantingj_akim2_lab3.zip` (67.8 MB)
 - **Identified Members:** Ricky Cui (`rickycui`), Yanting Ji (`yantingj`), Andrew Kim (`akim2`)
+- **Cumulative Total Score (All 13 Rubrics):** **48.5 / 65.0 (74.6%)** — Grade: **3.73 / 5.00** (Cohort Rank: **#9 / 18** — *Tri-Bus Interconnect with Irregular Bursting*)
 - **Rubric Dimension 1 (Submission Compliance):** **4 / 5**
 - **2nd Rubric Dimension (Block Diagram Quality):** **5.0 / 5.0 (Exemplary / Publication-Quality)** — [`kernel_block_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/cjk_LATE_142202_15162393_rickycui_yantingj_akim2_lab3/kernel_block_diagram.pdf) (See Section 11 for detailed breakdown)
 - **3rd Rubric Dimension (Novelty & Innovativeness):** **3.0 / 5.0 (Tier 4: Competent Domain Optimization)** — (See Section 12 for detailed breakdown)
@@ -192,6 +226,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Team Name / Directory:** `chiehhss_shukangj_yichingc_lab3`
 - **Submission Archive:** `cjs_141367_15113610_chiehhss_shukangj_yichingc_lab3.zip` (36.8 MB)
 - **Identified Members:** Chieh-Hsin Shih (`chiehhss`), Shukang Jia (`shukangj`), Yi-Ching Chen (`yichingc`)
+- **Cumulative Total Score (All 13 Rubrics):** **48.5 / 65.0 (74.6%)** — Grade: **3.73 / 5.00** (Cohort Rank: **#10 / 18** — *Occam's Razor Dual-Paradigm Study*)
 - **Rubric Dimension 1 (Submission Compliance):** **4 / 5**
 - **2nd Rubric Dimension (Block Diagram Quality):** **5.0 / 5.0 (Exemplary / Publication-Quality)** — [`blcok_diagram.png`](file:///home/user/Desktop/18643-lab3/extracted/cjs_141367_15113610_chiehhss_shukangj_yichingc_lab3/blcok_diagram.png) (See Section 11 for detailed breakdown)
 - **3rd Rubric Dimension (Novelty & Innovativeness):** **3.5 / 5.0 (Tier 4+: Competent Domain Optimization Plus)** — (See Section 12 for detailed breakdown)
@@ -218,6 +253,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Team Name / Directory:** `akrzyzan_dchan2_kodyl_lab3`
 - **Submission Archive:** `ckl_97773_15116707_akrzyzan_dchan2_kodyl_lab3.zip` (36.9 MB)
 - **Identified Members:** Ania Krzyzanska (`akrzyzan`), David Chan (`dchan2`), Kody Liang (`kodyl`)
+- **Cumulative Total Score (All 13 Rubrics):** **50.5 / 65.0 (77.7%)** — Grade: **3.88 / 5.00** (Cohort Rank: **#7 / 18** — *Deep Batching Memory Leader (182.1 OP/B)*)
 - **Rubric Dimension 1 (Submission Compliance):** **4 / 5**
 - **2nd Rubric Dimension (Block Diagram Quality):** **2.5 / 5.0 (Basic / Substantial Omissions)** — [`kernel_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/ckl_97773_15116707_akrzyzan_dchan2_kodyl_lab3/akrzyzan_dchan2_kodyl_lab3/lab3/kernel_diagram.pdf) (See Section 11 for detailed breakdown)
 - **3rd Rubric Dimension (Novelty & Innovativeness):** **4.5 / 5.0 (Tier 2: Exceptional Innovator)** — (See Section 12 for detailed breakdown)
@@ -244,6 +280,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Team Name / Directory:** `cjyu_jcestero_jrogan_otank_lab3`
 - **Submission Archive:** `crt_98394_15116513_cjyu_jcestero_jrogan_otank_lab3-1.zip` (387 KB)
 - **Identified Members:** Christian Yu (`cjyu`), Jose Cestero (`jcestero`), John Rogan (`jrogan`), Om Tank (`otank`)
+- **Cumulative Total Score (All 13 Rubrics):** **65.0 / 65.0 (100.0%)** — Grade: **5.00 / 5.00** (Cohort Rank: **#1 / 18** — *Flawless Master Sweep — All-Category Champion*)
 - **Rubric Dimension 1 (Submission Compliance):** **5 / 5 (Exemplary)**
 - **2nd Rubric Dimension (Block Diagram Quality):** **5.0 / 5.0 (Exemplary / Publication-Quality Masterpiece)** — [`datapath_block_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/crt_98394_15116513_cjyu_jcestero_jrogan_otank_lab3-1/cjyu_jcestero_jrogan_otank_lab3/datapath_block_diagram.pdf) (See Section 11 for detailed breakdown)
 - **3rd Rubric Dimension (Novelty & Innovativeness):** **5.0 / 5.0 (Tier 1: Breakthrough Pioneer)** — (See Section 12 for detailed breakdown)
@@ -270,6 +307,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Team Name / Directory:** `fpel_ldas_sienahol_lab3`
 - **Submission Archive:** `del_92659_15117835_fpel_ldas_sienahol_lab3-1.zip` (24.1 MB)
 - **Identified Members:** Feya Epel (`fpel`), Lilly Das (`ldas`), Siena Lee (`sienahol`)
+- **Cumulative Total Score (All 13 Rubrics):** **45.0 / 65.0 (69.2%)** — Grade: **3.46 / 5.00** (Cohort Rank: **#13 / 18** — *Full-IFM On-Chip Caching Baseline*)
 - **Rubric Dimension 1 (Submission Compliance):** **3 / 5**
 - **2nd Rubric Dimension (Block Diagram Quality):** **3.5 / 5.0 (Moderate Plus / Good Core Architecture)** — [`lab3 diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/del_92659_15117835_fpel_ldas_sienahol_lab3-1/fpel_ldas_sienahol_lab3/lab3 diagram.pdf) (See Section 11 for detailed breakdown)
 - **3rd Rubric Dimension (Novelty & Innovativeness):** **2.5 / 5.0 (Tier 5+: Conventional Baseline)** — (See Section 12 for detailed breakdown)
@@ -296,6 +334,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Team Name / Directory:** `mgong2_sdupont_tongwu2_lab3`
 - **Submission Archive:** `dgw_98738_15077348_mgong2_sdupont_tongwu2_lab3.zip` (72.7 MB)
 - **Identified Members:** Ming Gong (`mgong2`), Soren Dupont (`sdupont`), Tong Wu (`tongwu2`)
+- **Cumulative Total Score (All 13 Rubrics):** **62.0 / 65.0 (95.4%)** — Grade: **4.77 / 5.00** (Cohort Rank: **#3 / 18** — *The Empirical Treatise (300 MHz Champion)*)
 - **Rubric Dimension 1 (Submission Compliance):** **3 / 5**
 - **2nd Rubric Dimension (Block Diagram Quality):** **5.0 / 5.0 (Exemplary / Publication-Quality)** — [`block_diagram.png`](file:///home/user/Desktop/18643-lab3/extracted/dgw_98738_15077348_mgong2_sdupont_tongwu2_lab3/mgong2_sdupont_tongwu2_lab3/block_diagram.png) (See Section 11 for detailed breakdown)
 - **3rd Rubric Dimension (Novelty & Innovativeness):** **4.5 / 5.0 (Tier 2: Exceptional Innovator)** — (See Section 12 for detailed breakdown)
@@ -322,6 +361,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Team Name / Directory:** `dlw_lab3`
 - **Submission Archive:** `dlw_LATE_75009_15160450_dlw_lab3.zip` (31.7 MB)
 - **Identified Members:** Caleb Doan (`cdoan`), Diac Liu (`diacl`), Yuyang Wu (`yuyangw2`)
+- **Cumulative Total Score (All 13 Rubrics):** **55.5 / 65.0 (85.4%)** — Grade: **4.27 / 5.00** (Cohort Rank: **#5 / 18** — *8-Process Streaming Dataflow Champion*)
 - **Rubric Dimension 1 (Submission Compliance):** **2 / 5**
 - **2nd Rubric Dimension (Block Diagram Quality):** **3.0 / 5.0 (Moderate / Abstract Flowchart)** — [`block_diagram.png`](file:///home/user/Desktop/18643-lab3/extracted/dlw_LATE_75009_15160450_dlw_lab3/lab3/block_diagram.png) (See Section 11 for detailed breakdown)
 - **3rd Rubric Dimension (Novelty & Innovativeness):** **4.5 / 5.0 (Tier 2: Exceptional Innovator)** — (See Section 12 for detailed breakdown)
@@ -348,6 +388,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Team Name / Directory:** `freddyfu_peiranx_wenzhuol_lab3`
 - **Submission Archive:** `flx_135476_15115377_freddyfu_peiranx_wenzhuol_lab3.zip` (47.9 MB)
 - **Identified Members:** Freddy Fu (`freddyfu`), Raymond Xiang (`peiranx`), Wenzhuo Li (`wenzhuol`)
+- **Cumulative Total Score (All 13 Rubrics):** **44.0 / 65.0 (67.7%)** — Grade: **3.38 / 5.00** (Cohort Rank: **#15 / 18** — *Coordinate ROMs & Analytical Modeling*)
 - **Rubric Dimension 1 (Submission Compliance):** **3 / 5**
 - **2nd Rubric Dimension (Block Diagram Quality):** **3.5 / 5.0 (Moderate Plus / Good Core Architecture)** — [`kernel_datapath.jpg`](file:///home/user/Desktop/18643-lab3/extracted/flx_135476_15115377_freddyfu_peiranx_wenzhuol_lab3/freddyfu_peiranx_wenzhuol_lab3/kernel_datapath.jpg) (See Section 11 for detailed breakdown)
 - **3rd Rubric Dimension (Novelty & Innovativeness):** **4.0 / 5.0 (Tier 3: Notable Microarchitectural Innovator)** — (See Section 12 for detailed breakdown)
@@ -374,6 +415,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Team Name / Directory:** `alpan_shengfeg_sutongy_lab3`
 - **Submission Archive:** `gpy_151161_15119231_alpan_shengfeg_sutongy_lab3.zip` (36.8 MB)
 - **Identified Members:** Andrew Pan (`alpan`), Shengfei Gu (`shengfeg`), Sutong Yao (`sutongy`)
+- **Cumulative Total Score (All 13 Rubrics):** **62.5 / 65.0 (96.2%)** — Grade: **4.81 / 5.00** (Cohort Rank: **#2 / 18** — *Elite Dual-Engine Breakthrough*)
 - **Rubric Dimension 1 (Submission Compliance):** **4 / 5**
 - **2nd Rubric Dimension (Block Diagram Quality):** **5.0 / 5.0 (Exemplary / Course Benchmark Standard)** — [`kernel_datapath.pdf`](file:///home/user/Desktop/18643-lab3/extracted/gpy_151161_15119231_alpan_shengfeg_sutongy_lab3/alpan_shengfeg_sutongy_lab3/kernel_datapath.pdf) (See Section 11 for detailed breakdown)
 - **3rd Rubric Dimension (Novelty & Innovativeness):** **5.0 / 5.0 (Tier 1: Breakthrough Pioneer)** — (See Section 12 for detailed breakdown)
@@ -400,6 +442,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Team Name / Directory:** `garysu_rachelji_yanxinj_lab3`
 - **Submission Archive:** `jjs_143329_15117582_garysu_rachelji_yanxinj_lab3.zip` (113 KB)
 - **Identified Members:** Gary Su (`garysu`), Rachel Jiang (`rachelji`), Yanxin Jiang (`yanxinj`)
+- **Cumulative Total Score (All 13 Rubrics):** **49.0 / 65.0 (75.4%)** — Grade: **3.77 / 5.00** (Cohort Rank: **#8 / 18** — *Strong AXI Streaming Mid-Tier*)
 - **Rubric Dimension 1 (Submission Compliance):** **4 / 5**
 - **2nd Rubric Dimension (Block Diagram Quality):** **3.5 / 5.0 (Moderate Plus / Good Core Architecture)** — [`Datapath Block Diagram.png`](file:///home/user/Desktop/18643-lab3/extracted/jjs_143329_15117582_garysu_rachelji_yanxinj_lab3/garysu_rachelji_yanxinj_lab3/Datapath Block Diagram.png) (See Section 11 for detailed breakdown)
 - **3rd Rubric Dimension (Novelty & Innovativeness):** **3.5 / 5.0 (Tier 4+: Competent Domain Optimization Plus)** — (See Section 12 for detailed breakdown)
@@ -426,6 +469,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Team Name / Directory:** `jjagielo_kminihan_zrmoore_lab3`
 - **Submission Archive:** `jmm_LATE_142309_15158865_jjagielo_kminihan_zrmoore_lab3-1.zip` (152.1 MB)
 - **Identified Members:** Jason Jagielo (`jjagielo`), Kyle Minihan (`kminihan`), Zach Moore (`zrmoore`)
+- **Cumulative Total Score (All 13 Rubrics):** **53.0 / 65.0 (81.5%)** — Grade: **4.08 / 5.00** (Cohort Rank: **#6 / 18** — *Peak Hardware Elegance (92.9% Duty Cycle)*)
 - **Rubric Dimension 1 (Submission Compliance):** **3 / 5**
 - **2nd Rubric Dimension (Block Diagram Quality):** **2.5 / 5.0 (Basic / Substantial Omissions)** — [`diagram.jpg`](file:///home/user/Desktop/18643-lab3/extracted/jmm_LATE_142309_15158865_jjagielo_kminihan_zrmoore_lab3-1/lab3/diagram.jpg) (See Section 11 for detailed breakdown)
 - **3rd Rubric Dimension (Novelty & Innovativeness):** **3.5 / 5.0 (Tier 4+: Competent Domain Optimization Plus)** — (See Section 12 for detailed breakdown)
@@ -452,6 +496,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Team Name / Directory:** `aqx_jieunlim_serenas_lab3`
 - **Submission Archive:** `lsx_LATE_95470_15163599_aqx_jieunlim_serenas_lab3.zip` (84.6 MB)
 - **Identified Members:** Aaron Xu (`aqx`), Jieun Lim (`jieunlim`), Serena Shih (`serenas`)
+- **Cumulative Total Score (All 13 Rubrics):** **43.5 / 65.0 (66.9%)** — Grade: **3.35 / 5.00** (Cohort Rank: **#16 / 18** — *Conservative Baseline (19.8x speedup)*)
 - **Rubric Dimension 1 (Submission Compliance):** **3 / 5**
 - **2nd Rubric Dimension (Block Diagram Quality):** **4.5 / 5.0 (Strong Plus / Near-Exemplary)** — [`lab3_diagram.pdf`](file:///home/user/Desktop/18643-lab3/extracted/lsx_LATE_95470_15163599_aqx_jieunlim_serenas_lab3/aqx_jieunlim_serenas_lab3/lab3_diagram.pdf) (See Section 11 for detailed breakdown)
 - **3rd Rubric Dimension (Novelty & Innovativeness):** **2.5 / 5.0 (Tier 5+: Conventional Baseline)** — (See Section 12 for detailed breakdown)
@@ -478,6 +523,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Team Name / Directory:** `mpv_lab3`
 - **Submission Archive:** `mpv_142631_15119319_mpv_lab3-1.zip` (88.1 MB)
 - **Identified Members:** Kaeshav Mandyam (`kmandyam`), Krish Patel (`kpatel`), Suchir Vemulapalli (`svemulap`)
+- **Cumulative Total Score (All 13 Rubrics):** **56.0 / 65.0 (86.2%)** — Grade: **4.31 / 5.00** (Cohort Rank: **#4 / 18** — *Spatial 3x3 Banking & Paired Batching*)
 - **Rubric Dimension 1 (Submission Compliance):** **3 / 5**
 - **2nd Rubric Dimension (Block Diagram Quality):** **5.0 / 5.0 (Exemplary / Publication-Quality)** — [`mpv_lab3_block_diagram.png`](file:///home/user/Desktop/18643-lab3/extracted/mpv_142631_15119319_mpv_lab3-1/mpv_lab3/mpv_lab3_block_diagram.png) (See Section 11 for detailed breakdown)
 - **3rd Rubric Dimension (Novelty & Innovativeness):** **4.5 / 5.0 (Tier 2: Exceptional Innovator)** — (See Section 12 for detailed breakdown)
@@ -504,6 +550,7 @@ This dimension evaluates each team's adherence to the official submission specif
 - **Team Name / Directory:** `chenhao7_rzamir_sseshan_lab3`
 - **Submission Archive:** `szz_LATE_71254_15160116_chenhao7_rzamir_sseshan_lab3.zip` (159.9 MB)
 - **Identified Members:** Chenhao (Rock) Zhang (`chenhao7`), Rayyan Zamir (`rzamir`), Sanjay Seshan (`sseshan`)
+- **Cumulative Total Score (All 13 Rubrics):** **46.0 / 65.0 (70.8%)** — Grade: **3.54 / 5.00** (Cohort Rank: **#11 / 18** — *Weight Ping-Pong Buffering & Tuning*)
 - **Rubric Dimension 1 (Submission Compliance):** **3 / 5**
 - **2nd Rubric Dimension (Block Diagram Quality):** **2.0 / 5.0 (Deficient / High-Level Conceptual)** — [`Kernel Datapath.pdf`](file:///home/user/Desktop/18643-lab3/extracted/szz_LATE_71254_15160116_chenhao7_rzamir_sseshan_lab3/lab3/Kernel Datapath.pdf) (See Section 11 for detailed breakdown)
 - **3rd Rubric Dimension (Novelty & Innovativeness):** **4.0 / 5.0 (Tier 3: Notable Microarchitectural Innovator)** — (See Section 12 for detailed breakdown)
